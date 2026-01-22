@@ -1,18 +1,11 @@
 # Authors
 
-Name Name:
-  name        : "Name Name"
-  uri         : "https://name.com"
-  email       : "name@name.com"
-  bio         : "This is the first name."
-  avatar      : "bio-photo-2.jpg"
-  twitter     : "name"
-  google_plus : "Name"
-
-Name2 Name2:
-  name        : "Name2 Name2"
-  email       : "name2@name2.com"
-  bio         : "I ordered what?"
-  avatar      : "bio-photo.jpg"
-  twitter     : "name2"
-  google_plus : "Name"
+Vedant Borkute:
+  name        : "Vedant Borkute"
+  uri         : "https://vedant2100.github.io"
+  email       : "vbork001@ucr.edu"
+  bio         : "Data Scientist & Full-Stack Software Engineer. MS Computer Science at UC Riverside. Experienced in time-series forecasting, machine learning, and AI systems."
+  avatar      : "profile.png"
+  twitter     : 
+  github      : "Vedant2100"
+  linkedin    : "vedant-borkute"

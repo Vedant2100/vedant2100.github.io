@@ -1,66 +1,93 @@
 {
   "basics": {
-    "name": "Your Sidebar Name",
-    "email": "none@example.org",
-    "phone": "",
-    "website": "https://academicpages.github.io",
-    "summary": "Currently employed at Red Brick University. Short biography for the left-hand sidebar",
+    "name": "Vedant Borkute",
+    "email": "vbork001@ucr.edu",
+    "phone": "+1 951-823-2856",
+    "website": "https://vedant2100.github.io",
+    "summary": "Data Scientist and Full-Stack Software Engineer with expertise in time-series forecasting, machine learning, and building scalable systems. Currently pursuing MS Computer Science at UC Riverside.",
     "location": {
       "address": "",
-      "postalCode": "",
-      "city": "Earth",
+      "postalCode": "92507",
+      "city": "Riverside",
       "countryCode": "US",
-      "region": ""
+      "region": "California"
     },
     "profiles": [
       {
-        "network": "Google Scholar",
-        "username": "",
-        "url": "https://scholar.google.com/citations?user=PS_CX0AAAAAJ"
-      },
-      {
-        "network": "ORCID",
-        "username": "",
-        "url": "https://orcid.org/yourorcidurl"
-      },
-      {
         "network": "GitHub",
-        "username": "academicpages",
-        "url": "https://github.com/academicpages"
+        "username": "Vedant2100",
+        "url": "https://github.com/Vedant2100"
+      },
+      {
+        "network": "LinkedIn",
+        "username": "vedant-borkute",
+        "url": "https://linkedin.com/in/vedant-borkute"
+      },
+      {
+        "network": "Email",
+        "username": "2711vedant@gmail.com",
+        "url": "mailto:2711vedant@gmail.com"
       }
     ]
   },
-  "work": [],
+  "work": [
+    {
+      "name": "Data Scientist",
+      "position": "Data Scientist",
+      "startDate": "2023-08",
+      "endDate": "2025-08",
+      "summary": "Finarb.ai",
+      "highlights": [
+        "Implemented and benchmarked statistical forecasting models (SARIMA, VAR, Facebook Prophet) and deep learning approaches (LSTMs, Temporal Convolutional Networks) for pharmaceutical supply chain nodes, achieving 90% reduction in Mean Absolute Percentage Error over baseline methods",
+        "Performed comprehensive time-series diagnostics using autocorrelation plots, stationarity tests, and residual analysis; engineered lagged and augmented data using exogenous features to enhance model predictive power",
+        "Developed end-to-end forecasting pipeline with data preprocessing, feature engineering, model selection, and Docker-based containerization for reproducible deployment",
+        "Built AI Agents for feature engineering via RAG, cross-database natural language queries with SQL/Python code generation, and automated business dashboard creation with KPIs",
+        "Performed data preparation and analysis for business usecases using optimized SQL scripts; developed comprehensive Power BI dashboards for analytics and leadership insights"
+      ]
+    }
+  ],
   "education": [
     {
-      "institution": "GitHub University",
-      "area": "Ph.D in Version Control Theory",
-      "studyType": "",
-      "startDate": "",
-      "endDate": "2018",
+      "institution": "University of California, Riverside",
+      "area": "Computer Science",
+      "studyType": "Master of Science",
+      "startDate": "2025-09",
+      "endDate": "2027-03",
       "gpa": null,
       "courses": []
     },
     {
-      "institution": "GitHub University",
-      "area": "M.S. in Jekyll",
-      "studyType": "",
-      "startDate": "",
-      "endDate": "2014",
-      "gpa": null,
-      "courses": []
-    },
-    {
-      "institution": "GitHub University",
-      "area": "B.S. in GitHub",
-      "studyType": "",
-      "startDate": "",
-      "endDate": "2012",
+      "institution": "Indian Institute of Technology, Bombay",
+      "area": "Computer Science",
+      "studyType": "Bachelor of Technology",
+      "startDate": "2019-08",
+      "endDate": "2023-04",
       "gpa": null,
       "courses": []
     }
   ],
-  "skills": [],
+  "skills": [
+    {
+      "name": "Programming Languages",
+      "keywords": ["Python", "C++", "JavaScript", "R", "SQL", "Bash", "Prolog", "AWK", "Sed", "Lex", "Yacc", "LATEX", "Neo4J CQL", "MIPS"]
+    },
+    {
+      "name": "Data Science & ML",
+      "keywords": ["Pandas", "NumPy", "SciPy", "PyTorch", "TensorFlow", "MATLAB", "Scikit-learn"]
+    },
+    {
+      "name": "Data Engineering & Analytics",
+      "keywords": ["SQL", "PostgreSQL", "MongoDB", "Power BI", "Time-series forecasting", "SARIMA", "VAR", "Prophet", "LSTM", "Temporal Convolutional Networks"]
+    },
+    {
+      "name": "Web Development",
+      "keywords": ["React", "Django", "Node.js", "REST APIs", "Bootstrap"]
+    },
+    {
+      "name": "Tools & Platforms",
+      "keywords": ["Docker", "Git", "Azure DevOps", "Jira", "Confluence", "DataGrip", "RStudio", "Cursor", "Excel", "PowerPoint", "Word", "Slack"]
+    }
+  ],
   "languages": [],
   "interests": [],
   "references": [],
@@ -96,57 +123,27 @@
   ],
   "presentations": [
     {
-      "name": "Talk 1 on Relevant Topic in Your Field",
-      "event": "UC San Francisco, Department of Testing",
-      "date": "2012-03-01",
-      "location": "San Francisco, CA, USA",
-      "description": ""
+      "name": "Online Competing and Development Environment",
+      "event": "IIT Bombay, Advisor: Prof. Amitabha Sanyal",
+      "date": "2020-11-01",
+      "location": "Mumbai, Maharashtra, India",
+      "description": "Built and deployed a browser-based virtual Linux environment for cross-platform code compilation with Django backend and Bootstrap frontend. Added support for multiple languages (C++, Java, Python) and implemented timed online competitions with automated grading."
     },
     {
-      "name": "Tutorial 1 on Relevant Topic in Your Field",
-      "event": "UC-Berkeley Institute for Testing Science",
-      "date": "2013-03-01",
-      "location": "Berkeley, CA, USA",
-      "description": ""
+      "name": "Restaurant Management System",
+      "event": "IIT Bombay, Advisor: Prof. S. Sudarshan",
+      "date": "2023-05-01",
+      "location": "Mumbai, Maharashtra, India",
+      "description": "Developed a full-stack React–Node.js web app with REST APIs to manage reservations, menu, orders, and billing. Created role-based dashboards and analytics tools for real-time restaurant operations and business insights."
     },
     {
-      "name": "Talk 2 on Relevant Topic in Your Field",
-      "event": "London School of Testing",
-      "date": "2014-02-01",
-      "location": "London, UK",
-      "description": ""
-    },
-    {
-      "name": "Conference Proceeding talk 3 on Relevant Topic in Your Field",
-      "event": "Testing Institute of America 2014 Annual Conference",
-      "date": "2014-03-01",
-      "location": "Los Angeles, CA, USA",
-      "description": ""
+      "name": "Movie Recommendation System",
+      "event": "IIT Bombay, Advisor: Prof. Abir De",
+      "date": "2022-11-01",
+      "location": "Mumbai, Maharashtra, India",
+      "description": "Built a hybrid recommender using collaborative and content-based filtering with deep autoencoders (PyTorch). Engineered user–movie features to improve RMSE through multi-layer neural network tuning."
     }
   ],
-  "teaching": [
-    {
-      "course": "Teaching experience 1",
-      "institution": "University 1, Department",
-      "date": "2014-01-01",
-      "role": "Undergraduate course",
-      "description": ""
-    },
-    {
-      "course": "Teaching experience 2",
-      "institution": "University 1, Department",
-      "date": "2015-01-01",
-      "role": "Workshop",
-      "description": ""
-    }
-  ],
-  "portfolio": [
-    {
-      "name": "Portfolio item number 1",
-      "category": "portfolio",
-      "date": "",
-      "url": "",
-      "description": "Short description of portfolio item number 1<br/><img src='/images/500x300.png'>"
-    }
-  ]
+  "teaching": [],
+  "portfolio": []
 }
