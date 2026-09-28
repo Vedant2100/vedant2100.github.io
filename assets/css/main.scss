@@ -37,6 +37,42 @@
   font-size: 1.02rem;
 }
 
+@media (min-width: 925px) {
+  #main {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    column-gap: 3rem;
+    align-items: start;
+  }
+
+  #main > .sidebar {
+    position: static;
+    float: none;
+    width: auto;
+    max-width: none;
+    height: auto;
+    margin: 0;
+    padding-top: 0;
+    overflow: visible;
+  }
+
+  #main > .page,
+  #main > .archive {
+    float: none;
+    width: auto;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@media (max-width: 924px) {
+  #main > .sidebar {
+    position: static;
+    height: auto;
+    overflow: visible;
+  }
+}
+
 .home-hero {
   margin: 0 0 3rem;
   padding: 2.25rem;
