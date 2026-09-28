@@ -50,6 +50,13 @@ redirect_from:
     <h3>From noisy data to decisions</h3>
     <p>At <a href="https://finarb.ai/">Finarb AI</a>, I built forecasting pipelines and AI-assisted analytical workflows for pharmaceutical supply-chain planning, reducing mean absolute percentage error by 90% over existing baselines.</p>
   </article>
+  <article class="home-card home-card--accent">
+    <p class="home-card__eyebrow">AI FOR NAVIGATION · LLM REASONING</p>
+    <h3>Comparing reasoning strategies</h3>
+    <p>With advisor <strong>Yinglun Zhu</strong>, I studied Reactive, ReAct, Chain-of-Thought, Tree-of-Thought, and Buffer-of-Thought strategies in MiniGrid using Qwen2.5-7B-Instruct, tracking success, exploration, and token usage.</p>
+    <p><strong>Result:</strong> Up to 55% success on LavaGapS6 and 20% on LavaCrossingS9N2.</p>
+    <a class="home-card__link" href="/cv/">Read the project summary →</a>
+  </article>
 </div>
 
 ## Open-source & experiments
