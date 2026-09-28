@@ -51,9 +51,16 @@
     width: auto;
     max-width: none;
     height: auto;
-    margin: 0;
-    padding-top: 0;
+    margin: 0 !important;
+    padding-top: 0 !important;
     overflow: visible;
+  }
+
+  #main > .sidebar .author__urls,
+  #main > .sidebar .author__urls li {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   #main > .page,
