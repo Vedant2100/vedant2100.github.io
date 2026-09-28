@@ -9,10 +9,10 @@
 # Basic Site Settings
 locale                   : "en-US"
 site_theme               : "default" # The available themes options are "default", "air", "sunrise", "mint", "dirt" and "contrast"
-title                    : "Vedant Borkute | Data Scientist & Software Engineer"
+title                    : "Vedant Borkute | AI Systems & Data Science"
 title_separator          : "-"
 name                     : &name "Vedant Borkute"
-description              : &description "Vedant Borkute's academic portfolio and professional experience"   # Update this with a general description of your site, this is the default if not overridden by a page
+description              : &description "Vedant Borkute's portfolio of AI systems, data science, and research"   # Update this with a general description of your site, this is the default if not overridden by a page
 url                      : https://vedant2100.github.io # The base hostname & protocol for your site e.g. "https://[your GitHub username].github.io",
                                                            # or if you already have some other page hosted on Github then use "https://[your GitHub username].github.io/[Your Repo Name]"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
@@ -23,12 +23,12 @@ repository               : "academicpages/academicpages.github.io"
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  avatar           : "profile.png"
+  avatar           : "profile.jpg"
   name             : "Vedant Borkute"
   pronouns         : # example: "she/her"  
-  bio              : "Data Scientist & Full-Stack Software Engineer | MS Computer Science at UC Riverside | Passionate about AI, time-series forecasting, and building scalable systems"
+  bio              : "Data scientist and software engineer exploring reliable AI systems, agent governance, and machine learning"
   location         : "Riverside, California"
-  employer         : "UC Riverside"
+  employer         : "CompFly AI"
   uri              : # URL
   email            : "vbork001@ucr.edu" 
 
@@ -38,10 +38,10 @@ author:
   googlescholar    : "https://scholar.google.com/citations?user=PS_CX0AAAAAJ"
   inspire-hep      : # URL
   impactstory      : # URL
-  orcid            : "https://orcid.org/yourorcidurl"
+  orcid            : # URL
   semantic         : # URL
   ssrn             : # URL
-  pubmed           : "https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
+  pubmed           : # URL
   researchgate     : # URL
   scopus           : # URL
   zotero           : # URL
@@ -57,7 +57,7 @@ author:
 
   # Social media
   artstation       : # Username
-  bluesky          : "bsky.app" # Replace this with you Bluesky username
+  bluesky          : # Username
   facebook         : # Username
   flickr           : # Username
   foursquare       : # Username
@@ -74,7 +74,7 @@ author:
   steam            : # Username
   telegram         : # URL
   tumblr           : # Username
-  twitter          : # Username for X / Twitter
+  twitter          : "vedant275" # Username for X / Twitter
   vine             : # Username
   weibo            : # Username
   wikipedia        : # Username

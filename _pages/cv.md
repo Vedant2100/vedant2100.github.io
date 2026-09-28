@@ -7,58 +7,58 @@ redirect_from:
   - /resume
 ---
 
-{% include base_path %}
+## Education
 
-Education
-======
-* Ph.D in Version Control Theory, GitHub University, 2018 (expected)
-* M.S. in Jekyll, GitHub University, 2014
-* B.S. in GitHub, GitHub University, 2012
+**University of California, Riverside** — MS in Computer Science<br>
+September 2025 – December 2026 · Riverside, California
 
-Work experience
-======
-* Spring 2024: Academic Pages Collaborator
-  * GitHub University
-  * Duties includes: Updates and improvements to template
-  * Supervisor: The Users
+**Indian Institute of Technology, Bombay** — B.Tech in Computer Science<br>
+August 2019 – April 2023 · Mumbai, India
 
-* Fall 2015: Research Assistant
-  * GitHub University
-  * Duties included: Merging pull requests
-  * Supervisor: Professor Hub
+## Experience
 
-* Summer 2015: Research Assistant
-  * GitHub University
-  * Duties included: Tagging issues
-  * Supervisor: Professor Git
-  
-Skills
-======
-* Skill 1
-* Skill 2
-  * Sub-skill 2.1
-  * Sub-skill 2.2
-  * Sub-skill 2.3
-* Skill 3
+### Research Intern · [CompFly AI](https://compfly.ai/)
 
-Publications
-======
-  <ul>{% for post in site.publications reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
-Talks
-======
-  <ul>{% for post in site.talks reversed %}
-    {% include archive-single-talk-cv.html  %}
-  {% endfor %}</ul>
-  
-Teaching
-======
-  <ul>{% for post in site.teaching reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
-Service and leadership
-======
-* Currently signed in to 43 different slack teams
+June 2026 – September 2026 · San Francisco, California
+
+- Built a reproducible benchmark harness for governance controls across AgentDojo prompt-injection attacks and ToolEmu high-stakes tool-use scenarios.
+- Benchmarked and tuned a lightweight transformer-based prompt-injection detection pipeline, including chunking, window/stride settings, heuristic rules, and parallel OR ensembles.
+- Extended OpenTelemetry instrumentation across agent orchestration, LLM inference, and tool execution for trace-level analysis of agent turns, tool calls, handoffs, token usage, and cost.
+- Explored governance for memory-enabled agents and collaborated on experiments for an evolving deepfake detection/generation project.
+
+### Data Scientist · Finarb AI
+
+August 2023 – August 2025 · Kolkata, India
+
+- Implemented and benchmarked SARIMA, VAR, Prophet, LSTM, and Temporal Convolutional Network models for pharmaceutical supply-chain demand forecasting, reducing mean absolute percentage error by 90% over existing moving-average and exponential-smoothing baselines.
+- Developed an end-to-end forecasting pipeline covering preprocessing, feature engineering, custom-metric model selection, and Docker-based deployment across supply-chain nodes.
+- Built AI agents for RAG-based feature engineering, natural-language cross-database queries, SQL/Python code generation, and automated KPI dashboards.
+
+## Selected project
+
+### AI for Navigation: Comparative Study of LLM Reasoning Strategies
+
+Spring 2026 · Advisor: Professor Yinglun Zhu
+
+- Co-authored a controlled study comparing Reactive, ReAct, Chain-of-Thought, Tree-of-Thought, and Buffer-of-Thought strategies for sequential decision-making in MiniGrid navigation tasks.
+- Built a deterministic Python evaluation pipeline around Qwen2.5-7B-Instruct, tracking success rate, exploration steps, and token usage over 20 episodes per environment.
+- Implemented Buffer-of-Thought with structured outputs, reusable navigation templates, and safety checks for unsafe forward actions.
+- Analyzed planning-performance trade-offs across task difficulty, reaching up to 55% success on LavaGapS6 and 20% on LavaCrossingS9N2.
+
+## Teaching
+
+### Reader/Grader · CS 228: Deep Learning
+
+Spring 2026 · University of California, Riverside · Professor Zhouxing Shi
+
+Evaluated assignments and exams, provided feedback, and contributed rubric ideas. Relevant coursework also includes CS 229: Advanced Machine Learning.
+
+## Technical skills
+
+- **Languages:** Python, C++, R, JavaScript, Bash, Prolog, AWK, MIPS, Neo4j CQL, SQL, sed, Lex/Yacc, LaTeX
+- **ML and data:** PyTorch, TensorFlow, Pandas, NumPy, SciPy, MATLAB, Power BI, PostgreSQL, MongoDB
+- **Software and platforms:** React, Django, Docker, Git, Microsoft Excel, RStudio, DataGrip, PowerPoint, Word, Slack, Azure DevOps, Jira, Confluence
+
+## Accomplishments
+
+- Ranked first in OBC-PwD at IIT-JEE Advanced 2019 and placed among the top 0.8% nationwide in JEE Main among 1.3 million candidates.
