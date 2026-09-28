@@ -106,7 +106,7 @@ redirect_from:
 ## Collaboration
 
 - **CS GSA Treasurer**, UC Riverside.
-- **Reader/Grader for CS 228: Deep Learning**, with <a href="https://shizhouxing.github.io/">Professor Zhouxing Shi</a> — as a graduate student at UC Riverside, evaluated assignments and exams, gave feedback, and contributed rubric ideas.
+- **Reader/Grader for a graduate class, CS 228: Deep Learning**, with <a href="https://shizhouxing.github.io/">Professor Zhouxing Shi</a> — evaluated assignments and exams, gave feedback, and contributed rubric ideas.
 
 <div class="home-footer-note">
   <strong>Interested in collaborating?</strong> Reach me at <a href="mailto:vbork001@ucr.edu">vbork001@ucr.edu</a> or connect through <a href="https://www.linkedin.com/in/vedant-borkute/">LinkedIn</a>, and <a href="https://x.com/vedant275">X</a>.
