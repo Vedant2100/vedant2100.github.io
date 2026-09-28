@@ -52,10 +52,10 @@ redirect_from:
   </article>
   <article class="home-card home-card--accent">
     <p class="home-card__eyebrow">AI FOR NAVIGATION · LLM REASONING</p>
-    <h3>Comparing reasoning strategies</h3>
+    <h3><a href="https://github.com/Vedant2100/w26/tree/main/CS_228">Comparing reasoning strategies</a></h3>
     <p>With advisor <strong>Yinglun Zhu</strong>, I studied Reactive, ReAct, Chain-of-Thought, Tree-of-Thought, and Buffer-of-Thought strategies in MiniGrid using Qwen2.5-7B-Instruct, tracking success, exploration, and token usage.</p>
     <p><strong>Result:</strong> Up to 55% success on LavaGapS6 and 20% on LavaCrossingS9N2.</p>
-    <a class="home-card__link" href="/cv/">Read the project summary →</a>
+    <a class="home-card__link" href="https://github.com/Vedant2100/w26/tree/main/CS_228">View the project on GitHub →</a>
   </article>
 </div>
 
