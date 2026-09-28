@@ -4,14 +4,14 @@
 
 /* Color codes used for the theme */
 $primary-color              : #0ea1c5;
-$gray                       : #7a8288;
-$dark-gray                  : mix(#000, $gray, 40%);
-$darker-gray                : mix(#000, $gray, 60%);
-$light-gray                 : mix(#fff, $gray, 50%);
+$gray                       : #94a3b8;
+$dark-gray                  : #1e293b;
+$darker-gray                : #0f172a;
+$light-gray                 : #33415f;
 
-$background                 : #474747;
-$background-light           : mix(#fff, $background, 80%);
-$background-lighter         : mix(#fff, $background, 90%);
+$background                 : #0b1020;
+$background-light           : #131f38;
+$background-lighter         : #192846;
 $text                       : #ffffff;
 $link                       : #0ea1c5;
 $link-dark                  : mix(#000, $link, 25%);
@@ -53,4 +53,3 @@ html[data-theme="dark"] {
     --global-text-color-light           : #f3f3f3;
     --global-thead-color                : #{$background-lighter};
 }
-

@@ -27,7 +27,7 @@ June 2026 – September 2026 · San Francisco, California
 - Contributed the technical write-up [Evaluating Prompt-Injection Controls Beyond Detection](https://compfly.ai/resources/blog/agentdojo) to the CompFly blog.
 - Explored governance for memory-enabled agents and collaborated on experiments for an evolving deepfake detection/generation project.
 
-### Data Scientist · Finarb AI
+### Data Scientist · [Finarb AI](https://finarb.ai/)
 
 August 2023 – August 2025 · Kolkata, India
 

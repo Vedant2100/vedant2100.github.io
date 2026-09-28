@@ -14,7 +14,7 @@ redirect_from:
   <p class="home-hero__lead">I’m Vedant Borkute, a data scientist and full-stack software engineer exploring how machine learning becomes useful, measurable, and dependable in the real world.</p>
   <p>Currently pursuing an <strong>MS in Computer Science at UC Riverside</strong>, I work across agent governance, runtime security, deepfake detection, time-series forecasting, and production ML systems.</p>
   <div class="home-hero__actions">
-    <a class="btn btn--primary" href="/cv/">View CV</a>
+    <a class="btn btn--primary" href="/files/Vedant_Resume_09_26.pdf" download="Vedant_Resume_09_26.pdf">Download resume</a>
     <a class="btn" href="/concept-erasure-analysis/">Research note</a>
     <a class="btn" href="mailto:vbork001@ucr.edu">Get in touch</a>
   </div>
@@ -48,7 +48,7 @@ redirect_from:
   <article class="home-card">
     <p class="home-card__eyebrow">TIME-SERIES FORECASTING</p>
     <h3>From noisy data to decisions</h3>
-    <p>At Finarb AI, I built forecasting pipelines and AI-assisted analytical workflows for pharmaceutical supply-chain planning, reducing mean absolute percentage error by 90% over existing baselines.</p>
+    <p>At <a href="https://finarb.ai/">Finarb AI</a>, I built forecasting pipelines and AI-assisted analytical workflows for pharmaceutical supply-chain planning, reducing mean absolute percentage error by 90% over existing baselines.</p>
   </article>
 </div>
 

@@ -11,6 +11,7 @@ locale                   : "en-US"
 site_theme               : "default" # The available themes options are "default", "air", "sunrise", "mint", "dirt" and "contrast"
 default_theme            : "dark"
 title                    : "Vedant Borkute | AI Systems & Data Science"
+masthead_title           : "Vedant"
 title_separator          : "-"
 name                     : &name "Vedant Borkute"
 description              : &description "Vedant Borkute's portfolio of AI systems, data science, and research"   # Update this with a general description of your site, this is the default if not overridden by a page
