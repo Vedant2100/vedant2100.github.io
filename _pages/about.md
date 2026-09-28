@@ -1,6 +1,7 @@
 ---
+layout: single
 permalink: /
-title: "Vedant Borkute | AI Systems & Data Science"
+title: ""
 author_profile: true
 redirect_from:
   - /about/

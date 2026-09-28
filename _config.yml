@@ -9,6 +9,7 @@
 # Basic Site Settings
 locale                   : "en-US"
 site_theme               : "default" # The available themes options are "default", "air", "sunrise", "mint", "dirt" and "contrast"
+default_theme            : "dark"
 title                    : "Vedant Borkute | AI Systems & Data Science"
 title_separator          : "-"
 name                     : &name "Vedant Borkute"
@@ -27,9 +28,9 @@ author:
   name             : "Vedant Borkute"
   pronouns         : # example: "she/her"  
   bio              : "Data scientist and software engineer exploring reliable AI systems, agent governance, and machine learning"
-  location         : "Riverside, California"
-  employer         : "CompFly AI"
-  uri              : # URL
+  location         : "SF Bay Area"
+  employer         : "Finarb AI"
+  uri              : "https://finarb.ai/"
   email            : "vbork001@ucr.edu" 
 
   # Academic websites
