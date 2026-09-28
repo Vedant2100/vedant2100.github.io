@@ -40,16 +40,16 @@
 .home-hero {
   margin: 0 0 3rem;
   padding: 2.25rem;
-  border: 1px solid rgba(128, 174, 247, 0.24);
-  border-left: 3px solid var(--global-link-color);
+  border: 1px solid #dfe3e8;
+  border-left: 3px solid var(--global-base-color);
   border-radius: 0.45rem;
-  background: rgba(16, 29, 51, 0.72);
+  background: #ffffff;
 }
 
 .home-hero__eyebrow,
 .home-card__eyebrow {
   margin: 0 0 0.75rem;
-  color: var(--global-link-color);
+  color: var(--global-base-color);
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -93,13 +93,13 @@
 
 .home-card {
   padding: 1.4rem;
-  border: 1px solid rgba(128, 174, 247, 0.2);
+  border: 1px solid #e1e5ea;
   border-radius: 0.45rem;
-  background: rgba(16, 29, 51, 0.48);
+  background: #f7f8fa;
 }
 
 .home-card--accent {
-  border-top: 2px solid var(--global-link-color);
+  border-top: 2px solid var(--global-base-color);
 }
 
 .home-card h3 {
@@ -120,8 +120,15 @@
 .home-footer-note {
   margin-top: 1.5rem;
   padding: 1.2rem 1.4rem;
-  border-left: 3px solid var(--global-link-color);
-  background: rgba(16, 29, 51, 0.48);
+  border-left: 3px solid var(--global-base-color);
+  background: #f7f8fa;
+}
+
+.home-hero__availability {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e1e5ea;
+  color: var(--global-text-color);
 }
 
 @media (max-width: 700px) {

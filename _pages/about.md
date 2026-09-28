@@ -13,6 +13,7 @@ redirect_from:
   <h1>Building reliable intelligent systems.</h1>
   <p class="home-hero__lead">I’m Vedant Borkute, a curious mind with a background in data science and machine learning.</p>
   <p>Currently pursuing an <strong>MS in Computer Science at UC Riverside</strong>, I work across agent governance, runtime security, deepfake detection, time-series forecasting, and production ML systems.</p>
+  <p class="home-hero__availability"><strong>Seeking full-time opportunities starting February 2027</strong> in agent research, AI security and safety, post-training, data science, and machine learning engineering.</p>
   <div class="home-hero__actions">
     <a class="btn btn--primary" href="/files/Vedant_Resume_09_26.pdf" download="Vedant_Resume_09_26.pdf">Download resume</a>
     <a class="btn" href="mailto:vbork001@ucr.edu">Get in touch</a>
