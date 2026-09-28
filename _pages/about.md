@@ -11,9 +11,9 @@ redirect_from:
 <div class="home-hero">
   <p class="home-hero__eyebrow">AI SYSTEMS · DATA SCIENCE · RESEARCH</p>
   <h1>Building reliable intelligent systems.</h1>
-  <p class="home-hero__lead">I’m Vedant Borkute, a curious mind with a background in data science and machine learning.</p>
-  <p>Currently pursuing an <strong>MS in Computer Science at UC Riverside</strong>, I work across agent governance, runtime security, deepfake detection, time-series forecasting, and production ML systems.</p>
-  <p class="home-hero__availability"><strong>Seeking full-time opportunities starting February 2027</strong> in agent research, AI security and safety, post-training, data science, and machine learning engineering.</p>
+  <p class="home-hero__lead">I’m Vedant Borkute, a computer scientist working at the intersection of machine learning, data systems, and reliable AI.</p>
+  <p>Currently pursuing an <strong>MS in Computer Science at UC Riverside</strong> after earning a B.Tech in Computer Science from <strong>IIT Bombay</strong>, I work across intelligent agents, runtime security, deepfake detection, time-series forecasting, and production ML systems.</p>
+  <p class="home-hero__availability"><strong>Seeking full-time roles beginning February 2027</strong> — especially research engineer, machine learning engineer, and data scientist positions focused on intelligent agents, AI safety and security, LLM post-training, and dependable ML systems.</p>
   <div class="home-hero__actions">
     <a class="btn btn--primary" href="/files/Vedant_Resume_09_26.pdf" download="Vedant_Resume_09_26.pdf">Download resume</a>
     <a class="btn" href="mailto:vbork001@ucr.edu">Get in touch</a>
@@ -54,14 +54,14 @@ redirect_from:
   <article class="home-card home-card--accent">
     <p class="home-card__eyebrow">AI FOR NAVIGATION · LLM REASONING</p>
     <h3><a href="https://github.com/Vedant2100/w26/tree/main/CS_228">Comparing reasoning strategies</a></h3>
-    <p>With advisor <strong>Yinglun Zhu</strong>, I studied Reactive, ReAct, Chain-of-Thought, Tree-of-Thought, and Buffer-of-Thought strategies in MiniGrid using Qwen2.5-7B-Instruct, tracking success, exploration, and token usage.</p>
+    <p>With <strong>Yinglun Zhu</strong>, I tested Reactive, ReAct, Chain-of-Thought, Tree-of-Thought, and Buffer-of-Thought strategies in MiniGrid using Qwen2.5-7B-Instruct, tracking success, exploration, and token usage.</p>
     <p><strong>Result:</strong> Up to 55% success on LavaGapS6 and 20% on LavaCrossingS9N2.</p>
     <a class="home-card__link" href="https://github.com/Vedant2100/w26/tree/main/CS_228">View the project on GitHub →</a>
   </article>
   <article class="home-card">
     <p class="home-card__eyebrow">EE269 · PAPER PRESENTATION</p>
     <h3><a href="https://github.com/Vedant2100/EE269-Presentation">LLM safety & mechanistic interpretability</a></h3>
-    <p>For an LLM course with <strong>Professor Yinglun Zhu</strong>, I prepared a graduate-level paper presentation spanning four recent papers on LLM safety, mechanistic interpretability, and the bridge between them.</p>
+    <p>For <strong>EE 269 at UC Riverside</strong> with <strong>Professor Yinglun Zhu</strong>, I prepared a graduate-level paper presentation spanning four recent papers on LLM safety, mechanistic interpretability, and the bridge between them.</p>
     <a class="home-card__link" href="https://github.com/Vedant2100/EE269-Presentation">View the presentation on GitHub →</a>
   </article>
 </div>

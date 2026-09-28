@@ -39,7 +39,7 @@ August 2023 – August 2025 · Kolkata, India
 
 ### AI for Navigation: Comparative Study of LLM Reasoning Strategies
 
-Spring 2026 · Advisor: Professor Yinglun Zhu · [GitHub project files](https://github.com/Vedant2100/w26/tree/main/CS_228)
+Spring 2026 · With Professor Yinglun Zhu · [GitHub project files](https://github.com/Vedant2100/w26/tree/main/CS_228)
 
 - Co-authored a controlled study comparing Reactive, ReAct, Chain-of-Thought, Tree-of-Thought, and Buffer-of-Thought strategies for sequential decision-making in MiniGrid navigation tasks.
 - Built a deterministic Python evaluation pipeline around Qwen2.5-7B-Instruct, tracking success rate, exploration steps, and token usage over 20 episodes per environment.
@@ -48,7 +48,7 @@ Spring 2026 · Advisor: Professor Yinglun Zhu · [GitHub project files](https://
 
 ## Selected presentation
 
-- [LLM Safety & Mechanistic Interpretability](https://github.com/Vedant2100/EE269-Presentation) — prepared and presented a graduate-level, paper-based lecture for an LLM course with Professor Yinglun Zhu, covering four recent papers across LLM safety, mechanistic interpretability, and their intersection.
+- [LLM Safety & Mechanistic Interpretability](https://github.com/Vedant2100/EE269-Presentation) — prepared and presented a graduate-level, paper-based lecture for EE 269 at UC Riverside with Professor Yinglun Zhu, covering four recent papers across LLM safety, mechanistic interpretability, and their intersection.
 
 ## Selected open-source projects
 
