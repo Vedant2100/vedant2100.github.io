@@ -46,6 +46,10 @@ Spring 2026 · Advisor: Professor Yinglun Zhu · [GitHub project files](https://
 - Implemented Buffer-of-Thought with structured outputs, reusable navigation templates, and safety checks for unsafe forward actions.
 - Analyzed planning-performance trade-offs across task difficulty, reaching up to 55% success on LavaGapS6 and 20% on LavaCrossingS9N2.
 
+## Selected presentation
+
+- [LLM Safety & Mechanistic Interpretability](https://github.com/Vedant2100/EE269-Presentation) — prepared and presented a graduate-level, paper-based lecture for an LLM course with Professor Yinglun Zhu, covering four recent papers across LLM safety, mechanistic interpretability, and their intersection.
+
 ## Selected open-source projects
 
 - [SkillFalsifier](https://github.com/Vedant2100/skillfalsifier) — built a falsification gate that tests whether self-generated agent skills transfer to held-out and adversarial cases before promotion.
@@ -60,7 +64,7 @@ Spring 2026 · Advisor: Professor Yinglun Zhu · [GitHub project files](https://
 
 Spring 2026 · University of California, Riverside · [Professor Zhouxing Shi](https://shizhouxing.github.io/)
 
-Evaluated assignments and exams, provided feedback, and contributed rubric ideas. Relevant coursework also includes CS 229: Advanced Machine Learning.
+As a graduate student at UC Riverside, I evaluated assignments and exams, provided feedback, and contributed rubric ideas. Relevant coursework also includes CS 229: Advanced Machine Learning.
 
 ## Technical skills
 

@@ -15,7 +15,6 @@ redirect_from:
   <p>Currently pursuing an <strong>MS in Computer Science at UC Riverside</strong>, I work across agent governance, runtime security, deepfake detection, time-series forecasting, and production ML systems.</p>
   <div class="home-hero__actions">
     <a class="btn btn--primary" href="/files/Vedant_Resume_09_26.pdf" download="Vedant_Resume_09_26.pdf">Download resume</a>
-    <a class="btn" href="/concept-erasure-analysis/">Research note</a>
     <a class="btn" href="mailto:vbork001@ucr.edu">Get in touch</a>
   </div>
 </div>
@@ -56,6 +55,12 @@ redirect_from:
     <p>With advisor <strong>Yinglun Zhu</strong>, I studied Reactive, ReAct, Chain-of-Thought, Tree-of-Thought, and Buffer-of-Thought strategies in MiniGrid using Qwen2.5-7B-Instruct, tracking success, exploration, and token usage.</p>
     <p><strong>Result:</strong> Up to 55% success on LavaGapS6 and 20% on LavaCrossingS9N2.</p>
     <a class="home-card__link" href="https://github.com/Vedant2100/w26/tree/main/CS_228">View the project on GitHub →</a>
+  </article>
+  <article class="home-card">
+    <p class="home-card__eyebrow">EE269 · PAPER PRESENTATION</p>
+    <h3><a href="https://github.com/Vedant2100/EE269-Presentation">LLM safety & mechanistic interpretability</a></h3>
+    <p>For an LLM course with <strong>Professor Yinglun Zhu</strong>, I prepared a graduate-level paper presentation spanning four recent papers on LLM safety, mechanistic interpretability, and the bridge between them.</p>
+    <a class="home-card__link" href="https://github.com/Vedant2100/EE269-Presentation">View the presentation on GitHub →</a>
   </article>
 </div>
 
@@ -103,7 +108,7 @@ redirect_from:
 
 ## Teaching & collaboration
 
-I was a **Reader/Grader for CS 228: Deep Learning** with <a href="https://shizhouxing.github.io/">Professor Zhouxing Shi</a> in Spring 2026, evaluating assignments and exams, giving feedback, and contributing rubric ideas. I’m interested in teaching machine learning, data mining, and practical AI systems.
+As a graduate student at UC Riverside, I was a **Reader/Grader for CS 228: Deep Learning** with <a href="https://shizhouxing.github.io/">Professor Zhouxing Shi</a> in Spring 2026, evaluating assignments and exams, giving feedback, and contributing rubric ideas. I’m interested in teaching machine learning, data mining, and practical AI systems.
 
 <div class="home-footer-note">
   <strong>Interested in collaborating?</strong> Reach me at <a href="mailto:vbork001@ucr.edu">vbork001@ucr.edu</a> or connect through <a href="https://github.com/Vedant2100">GitHub</a>, <a href="https://www.linkedin.com/in/vedant-borkute/">LinkedIn</a>, and <a href="https://x.com/vedant275">X</a>.

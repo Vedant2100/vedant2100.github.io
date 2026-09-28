@@ -3,25 +3,25 @@
     ========================================================================== */
 
 /* Color codes used for the theme */
-$primary-color              : #0ea1c5;
-$gray                       : #94a3b8;
-$dark-gray                  : #1e293b;
-$darker-gray                : #0f172a;
-$light-gray                 : #33415f;
+$primary-color              : #6f9fe8;
+$gray                       : #91a5c1;
+$dark-gray                  : #1c2d48;
+$darker-gray                : #0a1220;
+$light-gray                 : #2a4468;
 
-$background                 : #0b1020;
-$background-light           : #131f38;
-$background-lighter         : #192846;
-$text                       : #ffffff;
-$link                       : #0ea1c5;
-$link-dark                  : mix(#000, $link, 25%);
-$link-light                 : mix(#fff, $link, 25%);
+$background                 : #0a1220;
+$background-light           : #101d33;
+$background-lighter         : #162a49;
+$text                       : #eef4ff;
+$link                       : #80aef7;
+$link-dark                  : #b9d2ff;
+$link-light                 : #5c88d4;
 
 /* Color codes used for the site */
 $danger-color               : #ee5f5b;
-$info-color                 : #2f7f93;
-$notice-color               : #7a8288;
-$success-color              : #62c462;
+$info-color                 : #6f9fe8;
+$notice-color               : #91a5c1;
+$success-color              : #83a9df;
 $warning-color              : #f89406;
 
 /* Other basic settings for the template */
@@ -41,8 +41,8 @@ html[data-theme="dark"] {
     --global-footer-bg-color            : #{$background};
     --global-border-color               : #{$light-gray};
     --global-dark-border-color          : #{$background-light};
-    --global-code-background-color      : #fafafa;
-    --global-code-text-color            : #{$darker-gray};
+    --global-code-background-color      : #0e1a2e;
+    --global-code-text-color            : #d9e5f6;
     --global-fig-caption-color          : #{$light-gray};
     --global-link-color                 : #{$link};
     --global-link-color-hover           : #{$link-dark};
@@ -50,6 +50,6 @@ html[data-theme="dark"] {
     --global-masthead-link-color        : #{$text};
     --global-masthead-link-color-hover  : #{$primary-color};
     --global-text-color                 : #{$text};
-    --global-text-color-light           : #f3f3f3;
+    --global-text-color-light           : #c9d6ea;
     --global-thead-color                : #{$background-lighter};
 }

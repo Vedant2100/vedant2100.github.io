@@ -40,9 +40,10 @@
 .home-hero {
   margin: 0 0 3rem;
   padding: 2.25rem;
-  border: 1px solid rgba(127, 127, 127, 0.24);
-  border-radius: 1rem;
-  background: linear-gradient(135deg, rgba(79, 70, 229, 0.14), rgba(14, 165, 233, 0.08));
+  border: 1px solid rgba(128, 174, 247, 0.24);
+  border-left: 3px solid var(--global-link-color);
+  border-radius: 0.45rem;
+  background: rgba(16, 29, 51, 0.72);
 }
 
 .home-hero__eyebrow,
@@ -92,13 +93,13 @@
 
 .home-card {
   padding: 1.4rem;
-  border: 1px solid rgba(127, 127, 127, 0.24);
-  border-radius: 0.85rem;
-  background: rgba(127, 127, 127, 0.06);
+  border: 1px solid rgba(128, 174, 247, 0.2);
+  border-radius: 0.45rem;
+  background: rgba(16, 29, 51, 0.48);
 }
 
 .home-card--accent {
-  border-top: 3px solid var(--global-link-color);
+  border-top: 2px solid var(--global-link-color);
 }
 
 .home-card h3 {
@@ -120,7 +121,7 @@
   margin-top: 1.5rem;
   padding: 1.2rem 1.4rem;
   border-left: 3px solid var(--global-link-color);
-  background: rgba(127, 127, 127, 0.08);
+  background: rgba(16, 29, 51, 0.48);
 }
 
 @media (max-width: 700px) {
