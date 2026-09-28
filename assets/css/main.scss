@@ -37,6 +37,22 @@
   font-size: 1.02rem;
 }
 
+#main {
+  max-width: 1120px;
+}
+
+@media (min-width: 925px) {
+  #main > .page,
+  #main > .archive {
+    float: none;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
 .home-hero {
   margin: 0 0 3rem;
   padding: 2.25rem;

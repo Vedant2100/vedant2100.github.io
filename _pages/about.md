@@ -107,9 +107,11 @@ redirect_from:
   </article>
 </div>
 
-## Teaching & collaboration
+## Collaboration
 
-As a graduate student at UC Riverside, I was a **Reader/Grader for CS 228: Deep Learning** with <a href="https://shizhouxing.github.io/">Professor Zhouxing Shi</a> in Spring 2026, evaluating assignments and exams, giving feedback, and contributing rubric ideas. I’m interested in teaching machine learning, data mining, and practical AI systems.
+I’m the **CS GSA Treasurer at UC Riverside**.
+
+As a graduate student at UC Riverside, I was a **Reader/Grader for CS 228: Deep Learning** with <a href="https://shizhouxing.github.io/">Professor Zhouxing Shi</a> in Spring 2026, evaluating assignments and exams, giving feedback, and contributing rubric ideas.
 
 <div class="home-footer-note">
   <strong>Interested in collaborating?</strong> Reach me at <a href="mailto:vbork001@ucr.edu">vbork001@ucr.edu</a> or connect through <a href="https://github.com/Vedant2100">GitHub</a>, <a href="https://www.linkedin.com/in/vedant-borkute/">LinkedIn</a>, and <a href="https://x.com/vedant275">X</a>.
