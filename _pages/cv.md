@@ -46,11 +46,19 @@ Spring 2026 · Advisor: Professor Yinglun Zhu
 - Implemented Buffer-of-Thought with structured outputs, reusable navigation templates, and safety checks for unsafe forward actions.
 - Analyzed planning-performance trade-offs across task difficulty, reaching up to 55% success on LavaGapS6 and 20% on LavaCrossingS9N2.
 
+## Selected open-source projects
+
+- [SkillFalsifier](https://github.com/Vedant2100/skillfalsifier) — built a falsification gate that tests whether self-generated agent skills transfer to held-out and adversarial cases before promotion.
+- [Terminal DreamGym](https://github.com/Vedant2100/terminal_dreamgym) — developed a local training loop that turns terminal-agent failures into practice worlds, recovery skills, and transfer evaluations.
+- [Scalable Analysis of Vegetation Anomalies](https://github.com/Vedant2100/CS226-Final-Project) — contributed to a cloud-native Big Data pipeline using Sentinel-2/Landsat imagery, AWS S3, PostGIS, PySpark, and a Flask/Leaflet dashboard; [report](https://github.com/Vedant2100/CS226---Project-Report).
+- [Image-realiser](https://github.com/Vedant2100/image-realiser) — built a CLIP-based discriminator and convolutional purifier with adversarial training, residual maps, and Grad-CAM explanations for synthetic-image forensics.
+- [Institutional memory in LLM systems](https://github.com/Vedant2100/sharedmemgov) and [LM-JEPA symbolic regression](https://github.com/Vedant2100/symreg) — explored governance and path dependence in multi-agent memory, and structured generation for scientific formula discovery.
+
 ## Teaching
 
 ### Reader/Grader · CS 228: Deep Learning
 
-Spring 2026 · University of California, Riverside · Professor Zhouxing Shi
+Spring 2026 · University of California, Riverside · [Professor Zhouxing Shi](https://shizhouxing.github.io/)
 
 Evaluated assignments and exams, provided feedback, and contributed rubric ideas. Relevant coursework also includes CS 229: Advanced Machine Learning.
 
