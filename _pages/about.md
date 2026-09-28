@@ -89,7 +89,7 @@ redirect_from:
     <a class="home-card__link" href="https://github.com/Vedant2100/CS226---Project-Report">Read the report →</a>
   </article>
   <article class="home-card">
-    <p class="home-card__eyebrow">SYNTHETIC IMAGE DETECTION: PYTORCH</p>
+    <p class="home-card__eyebrow">SYNTHETIC IMAGE DETECTION</p>
     <h3><a href="https://github.com/Vedant2100/image-realiser">Image-realiser</a></h3>
     <p>A CLIP-based discriminator and convolutional purifier for detecting and suppressing synthetic image artifacts, with adversarial training, residual maps, and Grad-CAM explanations.</p>
     <a class="home-card__link" href="https://github.com/Vedant2100/image-realiser">View on GitHub →</a>
