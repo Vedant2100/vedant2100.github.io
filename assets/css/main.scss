@@ -37,29 +37,13 @@
   font-size: 1.02rem;
 }
 
-#main {
-  max-width: 1120px;
-}
-
-@media (min-width: 925px) {
-  #main > .page,
-  #main > .archive {
-    float: none;
-    width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
-
 .home-hero {
   margin: 0 0 3rem;
   padding: 2.25rem;
-  border: 1px solid #dfe3e8;
+  border: 1px solid var(--global-border-color);
   border-left: 3px solid var(--global-base-color);
   border-radius: 0.45rem;
-  background: #ffffff;
+  background: var(--global-bg-color);
 }
 
 .home-hero__eyebrow,
@@ -109,9 +93,9 @@
 
 .home-card {
   padding: 1.4rem;
-  border: 1px solid #e1e5ea;
+  border: 1px solid var(--global-border-color);
   border-radius: 0.45rem;
-  background: #f7f8fa;
+  background: var(--global-code-background-color);
 }
 
 .home-card--accent {
@@ -137,14 +121,20 @@
   margin-top: 1.5rem;
   padding: 1.2rem 1.4rem;
   border-left: 3px solid var(--global-base-color);
-  background: #f7f8fa;
+  background: var(--global-code-background-color);
 }
 
 .home-hero__availability {
   margin-top: 1.25rem;
   padding-top: 1rem;
-  border-top: 1px solid #e1e5ea;
+  border-top: 1px solid var(--global-border-color);
   color: var(--global-text-color);
+}
+
+@media (max-width: 900px) {
+  .home-grid--two {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 700px) {
@@ -152,7 +142,8 @@
     padding: 1.4rem;
   }
 
-  .home-grid--two {
-    grid-template-columns: 1fr;
+  .home-hero__actions .btn {
+    width: 100%;
+    text-align: center;
   }
 }

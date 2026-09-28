@@ -2,8 +2,30 @@
    Various functions that we want to use within the template
    ========================================================================== */
 
-// This portfolio intentionally uses one light theme across devices.
-let determineComputedTheme = () => "light";
+// Keep light mode as the default, while allowing visitors to opt into dark mode.
+let determineThemeSetting = () => {
+  return localStorage.getItem("theme") === "dark" ? "dark" : "light";
+};
+
+let determineComputedTheme = () => determineThemeSetting();
+
+let setTheme = (theme) => {
+  const useTheme = theme === "dark" ? "dark" : "light";
+
+  if (useTheme === "dark") {
+    $("html").attr("data-theme", "dark");
+    $("#theme-icon").removeClass("fa-sun").addClass("fa-moon");
+  } else {
+    $("html").removeAttr("data-theme");
+    $("#theme-icon").removeClass("fa-moon").addClass("fa-sun");
+  }
+};
+
+let toggleTheme = () => {
+  const newTheme = determineThemeSetting() === "dark" ? "light" : "dark";
+  localStorage.setItem("theme", newTheme);
+  setTheme(newTheme);
+};
 
 /* ==========================================================================
    Plotly integration script so that Markdown codeblocks will be rendered
@@ -47,6 +69,9 @@ $(document).ready(function () {
   // SCSS SETTINGS - These should be the same as the settings in the relevant files 
   const scssLarge = 925;          // pixels, from /_sass/_themes.scss
   const scssMastheadHeight = 70;  // pixels, from the current theme (e.g., /_sass/theme/_default.scss)
+
+  setTheme();
+  $("#theme-toggle").on("click", toggleTheme);
 
   // Enable the sticky footer
   var bumpIt = function () {
