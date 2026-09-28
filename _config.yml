@@ -28,7 +28,7 @@ author:
   avatar           : "profile.jpg"
   name             : "Vedant Borkute"
   pronouns         : # example: "she/her"  
-  bio              : "Data scientist and software engineer exploring reliable AI systems, agent governance, and machine learning"
+  bio              :
   location         : "SF Bay Area"
   email            : "vbork001@ucr.edu" 
 

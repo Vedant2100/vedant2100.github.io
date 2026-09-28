@@ -11,7 +11,7 @@ redirect_from:
 <div class="home-hero">
   <p class="home-hero__eyebrow">AI SYSTEMS · DATA SCIENCE · RESEARCH</p>
   <h1>Building reliable intelligent systems.</h1>
-  <p class="home-hero__lead">I’m Vedant Borkute, a data scientist and full-stack software engineer exploring how machine learning becomes useful, measurable, and dependable in the real world.</p>
+  <p class="home-hero__lead">I’m Vedant Borkute, a curious mind with a background in data science and machine learning.</p>
   <p>Currently pursuing an <strong>MS in Computer Science at UC Riverside</strong>, I work across agent governance, runtime security, deepfake detection, time-series forecasting, and production ML systems.</p>
   <div class="home-hero__actions">
     <a class="btn btn--primary" href="/files/Vedant_Resume_09_26.pdf" download="Vedant_Resume_09_26.pdf">Download resume</a>
