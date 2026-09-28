@@ -11,7 +11,7 @@ redirect_from:
 <div class="home-hero">
   <p class="home-hero__eyebrow">AI SYSTEMS, DATA SCIENCE, AND RESEARCH</p>
   <h1>Building reliable intelligent systems.</h1>
-  <p class="home-hero__lead">I’m Vedant Borkute, a computer scientist working at the intersection of machine learning, data systems, and reliable AI.</p>
+  <p class="home-hero__lead">I’m Vedant Borkute, a computer scientist working at the intersection of agents &amp; systems.</p>
   <p>Currently pursuing an <strong>MS in Computer Science at UC Riverside</strong> after earning a B.Tech in Computer Science from <strong>IIT Bombay</strong>, I work across intelligent agents, runtime security, deepfake detection, time-series forecasting, and production ML systems.</p>
   <p class="home-hero__availability"><strong>Seeking full-time roles beginning February 2027</strong> — especially research engineer, machine learning engineer, and data scientist positions focused on intelligent agents, AI safety and security, LLM post-training, and dependable ML systems.</p>
   <div class="home-hero__actions">
@@ -28,11 +28,6 @@ redirect_from:
     <h3>Agent governance at runtime</h3>
     <p>I’m building reproducible evaluations for prompt-injection and high-stakes tool-use scenarios, improving lightweight detection pipelines, and extending OpenTelemetry traces across agent turns, tool calls, handoffs, tokens, and cost.</p>
     <a class="home-card__link" href="https://compfly.ai/resources/blog/agentdojo">Read my CompFly technical write-up →</a>
-  </article>
-  <article class="home-card">
-    <p class="home-card__eyebrow">EXPLORING</p>
-    <h3>Memory-enabled agents & deepfake detection</h3>
-    <p>I’m also experimenting with governance for memory-enabled agents and collaborating on the detector side of an evolving deepfake detection and generation project.</p>
   </article>
 </div>
 
