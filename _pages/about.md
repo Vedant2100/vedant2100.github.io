@@ -27,6 +27,7 @@ redirect_from:
     <p class="home-card__eyebrow">RESEARCH INTERN · CompFly AI</p>
     <h3>Agent governance at runtime</h3>
     <p>I’m building reproducible evaluations for prompt-injection and high-stakes tool-use scenarios, improving lightweight detection pipelines, and extending OpenTelemetry traces across agent turns, tool calls, handoffs, tokens, and cost.</p>
+    <a class="home-card__link" href="https://compfly.ai/resources/blog/agentdojo">Read my CompFly technical write-up →</a>
   </article>
   <article class="home-card">
     <p class="home-card__eyebrow">EXPLORING</p>

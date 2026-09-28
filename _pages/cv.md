@@ -24,6 +24,7 @@ June 2026 – September 2026 · San Francisco, California
 - Built a reproducible benchmark harness for governance controls across AgentDojo prompt-injection attacks and ToolEmu high-stakes tool-use scenarios.
 - Benchmarked and tuned a lightweight transformer-based prompt-injection detection pipeline, including chunking, window/stride settings, heuristic rules, and parallel OR ensembles.
 - Extended OpenTelemetry instrumentation across agent orchestration, LLM inference, and tool execution for trace-level analysis of agent turns, tool calls, handoffs, token usage, and cost.
+- Contributed the technical write-up [Evaluating Prompt-Injection Controls Beyond Detection](https://compfly.ai/resources/blog/agentdojo) to the CompFly blog.
 - Explored governance for memory-enabled agents and collaborated on experiments for an evolving deepfake detection/generation project.
 
 ### Data Scientist · Finarb AI
