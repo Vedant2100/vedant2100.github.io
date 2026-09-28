@@ -11,7 +11,7 @@ redirect_from:
 <div class="home-hero">
   <p class="home-hero__eyebrow">AI SYSTEMS, DATA SCIENCE, AND RESEARCH</p>
   <h1>Building reliable intelligent systems.</h1>
-  <p class="home-hero__lead">I’m Vedant Borkute, a computer scientist working at the intersection of agents &amp; systems.</p>
+  <p class="home-hero__lead">I’m Vedant Borkute, a curious mind with a background in data science and machine learning.</p>
   <p>Currently pursuing an <strong>MS in Computer Science at UC Riverside</strong> after earning a B.Tech in Computer Science from <strong>IIT Bombay</strong>, I work across intelligent agents, runtime security, deepfake detection, time-series forecasting, and production ML systems.</p>
   <p class="home-hero__availability"><strong>Seeking full-time roles beginning February 2027</strong> — especially research engineer, machine learning engineer, and data scientist positions focused on intelligent agents, AI safety and security, LLM post-training, and dependable ML systems.</p>
   <div class="home-hero__actions">
