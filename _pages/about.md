@@ -49,6 +49,7 @@ redirect_from:
     <p class="home-card__eyebrow">TIME-SERIES FORECASTING</p>
     <h3>From noisy data to decisions</h3>
     <p>At <a href="https://finarb.ai/">Finarb AI</a>, I built forecasting pipelines and AI-assisted analytical workflows for pharmaceutical supply-chain planning, reducing mean absolute percentage error by 90% over existing baselines.</p>
+    <a class="home-card__link" href="https://www.businesswire.com/news/home/20240205191469/en/Golden-State-Medical-Supply-GSMS-selects-Finarb-Analytics-Consulting-as-its-trusted-Partner-for-AI-enabled-Demand-Forecasting-for-their-generics-business">Read the Business Wire announcement →</a>
   </article>
   <article class="home-card home-card--accent">
     <p class="home-card__eyebrow">AI FOR NAVIGATION · LLM REASONING</p>
