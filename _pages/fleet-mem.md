@@ -11,6 +11,9 @@ classes: wide
 ---
 
 <style>
+#main { max-width: 1320px; }
+#main .page { width: 100%; max-width: none; float: none; padding-right: 0; }
+#main .page__inner-wrap, #main .page__content { width: 100%; max-width: none; }
 .fleet-blog {
   --ink: currentColor;
   width: min(1180px, calc(100vw - 52px));
@@ -398,6 +401,29 @@ A   C   D   E   F   G   ...
   <p>That check is important because there is no point evaluating a sophisticated memory governor if even the known useful memory cannot move the coding worker.</p>
 </div>
 
+<h2>How we tried to avoid another wasted experiment</h2>
+
+<div class="reading">
+  <p>We deliberately split the work into two independent repositories before either implementation could influence the other.</p>
+</div>
+
+<div class="two-up">
+  <div class="panel">
+    <h3>Agent 1</h3>
+    <p>Test the cheapest hypothesis: can SWE-ContextBench be turned into a real team-memory benchmark simply by replacing its one-pair setup with full earlier repository histories?</p>
+  </div>
+  <div class="panel">
+    <h3>Agent 2</h3>
+    <p>Test the harder hypothesis independently: can SWE-rebench V2 give us a substantially better natural benchmark built around repository history from the start?</p>
+  </div>
+</div>
+
+<div class="reading">
+  <p>The implementations were told not to share code or intermediate findings during their first audits. The only intentional overlap was the basic “no future information” rule and a small common record format for repository, earlier/later task IDs, timestamps, provenance, history IDs, environment status, and leakage class.</p>
+  <p>We also ran a separate adversarial literature/methodology review whose job was to <strong>kill the paper if the gap was already occupied</strong>. That review changed the claim materially: MemGuard and CODESKILL are too close for us to say “nobody has decided which coding-agent experiences should enter memory.” MemGauge also shows that separating write, management, and read stages is not itself a new methodological idea.</p>
+  <p>The outcome of that audit was <strong>modify, not stop</strong>: keep the project, but make the contribution repository-scoped team memory with a controlled separation between the share decision and the later show decision, both judged by executable software outcomes.</p>
+</div>
+
 <h2>We also tried building a new benchmark from scratch</h2>
 
 <div class="reading">
@@ -450,7 +476,8 @@ A   C   D   E   F   G   ...
 <tr><td><strong>MemGuard</strong></td><td>Checks whether coding memories should be admitted, handles stale/conflicting/duplicate memories, and manages later retrieval.</td><td>This rules out broad “first memory admission” claims. Our narrower focus is a controlled cross-worker team setting with separate share and show decisions.</td></tr>
 <tr><td><strong>GateMem</strong></td><td>Shared-memory governance across multiple principals.</td><td>Not executable software repair with patch-level grading.</td></tr>
 <tr><td><strong>CODESKILL / STAIR</strong></td><td>Extract, maintain, abstract, and reuse coding skills or repair plans.</td><td>They already occupy much of the “learn reusable coding knowledge” space.</td></tr>
-<tr><td><strong>Agent Memory Bench</strong></td><td>Tests present, absent, replaced, and contradictory coding memories.</td><td>Primarily tests reading from a pre-built memory collection, not workers generating and promoting memories during the run.</td></tr>
+<tr><td><strong>Agent Memory Bench</strong></td><td>Tests present, absent, replaced, contradictory, and adjacent coding memories.</td><td>Its public setup is primarily a read test over a memory collection built before the run, not workers generating and promoting memories as they work.</td></tr>
+<tr><td><strong>MemGauge</strong></td><td>Separates memory writing, management, and later exposure under matched conditions.</td><td>Shows that stage-by-stage causal separation is not itself novel; its focus is not repository-scoped coding work with executable patch grading.</td></tr>
 <tr><td><strong>Jev-Mem</strong></td><td>Fast, bounded memory-control decisions and structured retrieval control.</td><td>Useful as our lightweight controller, but not itself the novelty claim.</td></tr>
 <tr><td><strong>Shared organizational-memory deployment work</strong></td><td>Shows that shared memory for enterprise coding agents is already a real systems idea.</td><td>Shared organizational memory itself is not new; the controlled causal evaluation is the point.</td></tr>
 </tbody>
@@ -462,6 +489,27 @@ A   C   D   E   F   G   ...
 </div>
 
 <p class="standfirst"><strong>Build a controlled executable test for team memory in coding-agent fleets, separate “should this lesson become shared?” from “should this later agent see it?”, and compare a cheap fast controller with a stronger reasoning model.</strong></p>
+
+<h2>The four questions we are actually asking</h2>
+
+<div class="two-up">
+  <div class="panel">
+    <h3>1 · Is sharing everything harmful?</h3>
+    <p>If every lesson becomes team memory, do later coding agents sometimes get worse because of irrelevant or misleading history?</p>
+  </div>
+  <div class="panel">
+    <h3>2 · Can we decide early what deserves team status?</h3>
+    <p>At the moment a lesson is created—and before future tasks are known—can we make a useful share / do-not-share decision?</p>
+  </div>
+  <div class="panel">
+    <h3>3 · Is “worth sharing” different from “worth showing now”?</h3>
+    <p>A lesson can have been reasonable to keep in January and still be wrong for one particular task in July.</p>
+  </div>
+  <div class="panel">
+    <h3>4 · Can a cheap controller do this well?</h3>
+    <p>How much of a strong reasoning model’s benefit can a fast System-One/Jev-style controller recover at much lower cost and latency?</p>
+  </div>
+</div>
 
 <h2>The experiment, in plain language</h2>
 
@@ -732,6 +780,16 @@ A   C   D   E   F   G   ...
 <div>
 <p>SWE-rebench V2 offers far richer repository histories. In the pilot we froze 48 later tasks across 12 repositories, 226 earlier episodes, and 600 history links. Every later task had at least two predecessors; 36 had at least five. That is much closer to how a real organization accumulates history.</p>
 <p>But useful relationships were not established strongly enough, chronology was only approximated by created-at timestamps, and only 1/48 tasks survived full executable control validation. A serious future version should invest in relation discovery, human auditing, stronger chronology, and agent-generated earlier trajectories before claiming it as a benchmark.</p>
+</div>
+</details>
+
+<details>
+<summary>Worker-selection chronology, including the failed harness attempts</summary>
+<div>
+<p>Before the graded Luna patches, one corrected qualification job using the local/Ollama worker returned model responses but produced <strong>0/3 nonempty patches</strong>. Two runs hit a 12-step cap and the third submitted an empty patch. Because there was no usable patch, canonical FAIL_TO_PASS / PASS_TO_PASS grading was unavailable; those values were unmeasured, not zero.</p>
+<p>We traced part of that to the worker contract. The upstream Mini-SWE SWE-bench setup expects a real <code>patch.txt</code> and an exact final submission command, and its standard budget is far larger than 12 steps. Those runs were therefore treated as infrastructure failures rather than evidence that the scientific idea or benchmark had failed.</p>
+<p>The recommendation then moved to a stronger worker. Luna was chosen first for cost, because no valid memory result existed yet and switching workers before treatment did not contaminate the experiment. After the first graded Luna failures, the immediate recommendation briefly moved to Sol. A deeper inspection of the actual patches then showed partial competence, so the plan was amended again—before any memory treatment—to compare Sol and Luna on the same already-burned tasks rather than declaring Luna unusable from a tiny binary sample.</p>
+<p>The key methodological record remains: the original 2/3 full-resolution qualification gate failed; we do not erase that result. The amendment changes what we consider sufficient evidence that a worker is suitable for a memory-intervention study.</p>
 </div>
 </details>
 
