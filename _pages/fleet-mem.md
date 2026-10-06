@@ -219,16 +219,16 @@ classes: wide
 <header>
   <p class="label">Research note · October 2026 · Work in progress</p>
   <h1>Who gets to remember?</h1>
-  <p class="deck">A study of when one coding agent’s experience should become shared knowledge for future coding agents—and how to test that question without letting the benchmark answer it for us.</p>
+  <p class="deck">Shared memory can help coding agents reuse what earlier agents learned. It can also preserve stale, redundant, or misleading advice. Fleet Mem studies which experiences should become shared team knowledge, which should remain out of the shared pool, and when a later coding agent should see them.</p>
   <p class="byline">Vedant Borkute · Fleet Mem · shared memory for coding-agent fleets</p>
 </header>
 
 <div class="prose">
-  <p class="lead">A coding agent can solve a bug and leave behind more than a patch. It may discover a repository convention, a testing trick, a failure mode, or an architectural fact that could save the next agent time. The obvious idea is to keep those lessons in shared memory. The less obvious question is whether every lesson deserves to become shared knowledge at all.</p>
+  <p class="lead">A coding agent that fixes a bug may learn more than the patch itself records. It may discover a repository convention, a testing procedure, an architectural constraint, or a failure mode that would be useful to another agent months later. Persistent memory is an obvious way to reuse that experience. The difficult question is deciding what should persist.</p>
 
-  <p>That distinction matters because repositories already contain memory of their own. Code changes persist. Regression tests persist. Documentation, configuration, comments, CI rules, and naming conventions persist. A textual “lesson” may therefore be genuinely useful, redundant, stale, too broad, or actively misleading by the time a later agent sees it.</p>
+  <p>That question is especially important in software repositories because the repository already acts as a form of organizational memory. Code, regression tests, documentation, configuration, comments, and CI rules all preserve earlier decisions. An additional textual memory may therefore provide genuinely new information, merely repeat what is already encoded in the repository, or preserve advice that later becomes stale.</p>
 
-  <p>Fleet Mem asks a deliberately narrow question: <strong>when one coding agent learns something, should that experience cross from one worker into shared team memory, and when should a later worker actually be shown it?</strong> The project is not a new memory database. It is an attempt to make those two decisions measurable.</p>
+  <p>Fleet Mem studies two decisions separately. First, when an experience is produced, should it become shared team memory before any future task is known? Second, when a later task arrives, which items from that shared memory should be placed in the coding agent’s context? Both decisions are evaluated through executable software outcomes rather than by judging memory quality in isolation.</p>
 </div>
 
 <figure aria-labelledby="fig1cap">
@@ -254,74 +254,70 @@ classes: wide
     <text x="779" y="136" font-size="14">many earlier lessons</text>
     <text x="994" y="111" font-size="17">Agent B</text>
     <text x="994" y="136" font-size="14">later task</text>
-    <text x="550" y="245" font-size="17">Real repository tests tell us whether the memory helped, hurt, or changed nothing.</text>
+    <text x="550" y="245" font-size="17">Repository tests measure whether the memory helped, hurt, or changed nothing.</text>
   </g>
 </svg>
-<figcaption id="fig1cap"><strong>Figure 1.</strong> The core intervention. The share decision is made when the earlier lesson is created; the later “show” decision happens only after a new task arrives. Keeping these stages separate is the central experimental design choice.</figcaption>
+<figcaption id="fig1cap"><strong>Figure 1.</strong> Fleet Mem separates the decision to place an experience in shared memory from the decision to expose that memory to a later coding agent.</figcaption>
 </figure>
 
-<h2>From Agent Experience to Shared Team Memory</h2>
+<h2>Why shared memory needs a stronger test</h2>
 
 <div class="prose">
-  <p>The project began with a simple experimental setup: compare no shared memory, sharing everything, and a lightweight Jev-style controller that decides which lessons become shared. SWE-ContextBench was attractive because it is built around reusing earlier coding experience on later repository tasks, and because its later tasks can be graded with executable tests.</p>
+  <p>Recent work has already established that coding agents can benefit from prior experience, and that poorly matched experience can be harmful. SWE-ContextBench is built around transfer from earlier coding experience to later repository tasks. VibeMemBench studies memory systems over large historical pools. MemGuard addresses admission, stale and conflicting memories, and retrieval in coding settings. CODESKILL and STAIR extract and reuse coding knowledge. GateMem studies shared-memory governance across multiple principals. Jev-Mem provides a fast controller for several memory-management and retrieval decisions.</p>
 
-  <p>Then Jev-Mem appeared. It already handled a large amount of memory control—memory typing, relations, retrieval budgets, candidate scoring, evidence checks, and stopping. This narrowed the scope of the project: generic memory governance was no longer a defensible novelty claim, but the question of cross-worker sharing remained open.</p>
+  <p>These systems make a broad claim such as “memory governance for coding agents” too imprecise to be useful. The narrower issue considered here is <strong>cross-worker institutionalization</strong>: whether an experience produced by one coding worker should become available as shared knowledge to future workers, before those future tasks are known.</p>
 
-  <p>The detail that mattered was that the evaluated Jev-Mem configuration does not learn a keep-or-discard decision when every observation first arrives. Its active profile preserves valid observations and makes most of its selective decisions later. That left our original question alive: <em>should an experience generated by one coding worker cross an organizational boundary and become shared memory for other workers?</em></p>
+  <p>Jev-Mem is particularly relevant because it motivates lightweight, bounded control decisions, but its evaluated configuration does not learn a keep-or-discard decision for every observation at the moment it is created. Valid observations are preserved and much of the selectivity occurs later during organization and retrieval. That leaves a distinct experimental question at the boundary between one worker’s local experience and a fleet’s shared memory.</p>
 
-  <p>The project then explored a different direction. For a while the project became a comparison between storing a lesson as text and institutionalizing the same proposition as a repository-native regression test. That is a legitimate question, but it was no longer the Jev-governor paper we had set out to write.</p>
+  <p>An earlier version of the study used ChainSWE because its sequential maintenance tasks resemble a long-running coding fleet. The setting is realistic, but it also exposes a confound: later workers inherit the repository after earlier work has already changed the codebase. In that setting, the repository itself carries much of the persistent information that a separate textual memory would otherwise provide.</p>
+</div>
 
-  <p>We then moved to ChainSWE because it looked more like a real fleet: many maintenance tasks occur in sequence and later workers inherit the evolving repository. For this question, however, that realism introduced an important confound. The repository itself carried much of the persistent state that our textual memory layer was supposed to contribute.</p>
+<div class="statusline">
+  <div><strong>36</strong><span>frozen ChainSWE contexts</span></div>
+  <div><strong>14 / 36</strong><span>resolved with no shared memory</span></div>
+  <div><strong>12 / 36</strong><span>resolved when all memories were shared</span></div>
+  <div><strong>12 / 36</strong><span>resolved under the governed condition</span></div>
+</div>
+
+<div class="prose">
+  <p>The more informative observation was not the small difference in solve counts. Only seven of the 36 targets contained multiple candidate memories, most extracted memories were close to restatements of code, and the set contained almost no clear stale, conflicting, or superseded cases. The controller therefore had few meaningful choices to make. A benchmark can be sequential and realistic while still being poorly suited to evaluating memory governance.</p>
 </div>
 
 <figure aria-labelledby="fig2cap">
-<svg viewBox="0 0 1100 280" role="img" aria-label="Research trajectory">
+<svg viewBox="0 0 1100 280" role="img" aria-label="Evolution of benchmark design">
   <g class="figure-rule">
-    <path d="M65 136H1035"/>
-    <circle cx="100" cy="136" r="7"/><circle cx="280" cy="136" r="7"/>
-    <circle cx="460" cy="136" r="7"/><circle cx="640" cy="136" r="7"/>
-    <circle cx="820" cy="136" r="7"/><circle cx="1000" cy="136" r="7"/>
+    <path d="M70 136H1030"/>
+    <circle cx="120" cy="136" r="7"/>
+    <circle cx="360" cy="136" r="7"/>
+    <circle cx="600" cy="136" r="7"/>
+    <circle cx="840" cy="136" r="7"/>
   </g>
   <g class="figure-text" text-anchor="middle">
-    <text x="100" y="87" font-size="16">Original idea</text>
-    <text x="100" y="109" font-size="13">share / don't share</text>
-    <text x="280" y="180" font-size="16">Jev-Mem</text>
-    <text x="280" y="202" font-size="13">novelty concern</text>
-    <text x="460" y="87" font-size="16">Detour</text>
-    <text x="460" y="109" font-size="13">text vs regression test</text>
-    <text x="640" y="180" font-size="16">ChainSWE</text>
-    <text x="640" y="202" font-size="13">realistic sequence</text>
-    <text x="820" y="87" font-size="16">Diagnosis</text>
-    <text x="820" y="109" font-size="13">too little to govern</text>
-    <text x="1000" y="180" font-size="16">Fleet Mem</text>
-    <text x="1000" y="202" font-size="13">return to the question</text>
+    <text x="120" y="88" font-size="16">Pairwise transfer</text>
+    <text x="120" y="110" font-size="13">known related experience</text>
+    <text x="360" y="180" font-size="16">Sequential maintenance</text>
+    <text x="360" y="202" font-size="13">repository carries state</text>
+    <text x="600" y="88" font-size="16">Benchmark audit</text>
+    <text x="600" y="110" font-size="13">too few memory choices</text>
+    <text x="840" y="180" font-size="16">Repository-history pools</text>
+    <text x="840" y="202" font-size="13">many plausible earlier experiences</text>
   </g>
 </svg>
-<figcaption id="fig2cap"><strong>Figure 2.</strong> The project did not move in a straight line. The useful lesson from the detours was that benchmark realism is not enough; the benchmark must actually create decisions that the proposed controller can influence.</figcaption>
+<figcaption id="fig2cap"><strong>Figure 2.</strong> The benchmark design evolved from one known source–target pair to a repository-history setting in which multiple earlier experiences compete for shared-memory status.</figcaption>
 </figure>
 
-<div class="prose">
-  <p>The clean ChainSWE run made that failure visible. Across 36 frozen contexts, No Share resolved 14, Share-All resolved 12, and Governed resolved 12. Those numbers alone are not the important result. Only seven targets had multiple candidate memories, most extracted lessons were close to restatements of the code, and there were almost no genuine stale, conflicting, or superseded memories for the controller to distinguish.</p>
-</div>
-
-<blockquote>
-  <p>Share-All and Governed tying at 12/36 did not show that governance was useless. It showed that we had built an experiment in which the governor rarely had a meaningful decision to make.</p>
-</blockquote>
+<h2>Benchmark design: from known pairs to repository histories</h2>
 
 <div class="prose">
-  <p>This led to a stricter benchmark requirement. A good benchmark for this paper cannot merely contain sequential coding tasks. It must expose a later worker to a <strong>non-trivial history of plausible earlier experiences</strong>, while keeping the answer hidden from the memory system.</p>
-</div>
+  <p>The current benchmark is built as an overlay on SWE-ContextBench. Its repositories, experience tasks, later related tasks, timestamps, and executable evaluators are retained, but its known source-to-target relationships are hidden from the memory system. For each later task, the benchmark instead gathers all eligible earlier experiences from the same repository.</p>
 
-<h2>Benchmark Design: From Paired Transfer to Repository Histories</h2>
+  <p>This changes the role of the original relation annotation. It no longer determines which memory a later agent receives. It serves only as hidden evaluation metadata indicating that at least one earlier experience is plausibly useful. The resulting history is closer to the setting faced by a real organization: many earlier experiences exist, but the system must decide which ones deserve shared status and which ones are relevant to the task at hand.</p>
 
-<div class="prose">
-  <p>The current setup returns to SWE-ContextBench, but does not run the benchmark as published. Instead of handing a later task its one known-related earlier experience, we collect <strong>all valid earlier experiences from the same repository</strong>. The benchmark’s known source-to-target relationship is kept hidden and used only as evaluation metadata.</p>
-
-  <p>This turns a pairwise benchmark into something closer to organizational history. A later agent may now sit behind dozens of earlier experiences, some potentially useful and many not. The current clean development set contains 11 later tasks, each with between 13 and 114 earlier same-repository candidates.</p>
+  <p>The current clean development set contains 11 later tasks with between 13 and 114 earlier same-repository candidates each. This is the first structural requirement for the study: the benchmark now contains enough competing history for memory selection to be a real decision rather than a formality.</p>
 </div>
 
 <figure aria-labelledby="fig3cap">
-<svg viewBox="0 0 1100 360" role="img" aria-label="Pairwise benchmark versus Fleet Mem history">
+<svg viewBox="0 0 1100 360" role="img" aria-label="Pairwise benchmark versus repository history">
   <g class="figure-rule">
     <rect x="50" y="75" width="390" height="205" rx="4"/>
     <rect x="660" y="75" width="390" height="205" rx="4"/>
@@ -336,77 +332,73 @@ classes: wide
     <circle cx="1008" cy="265" r="28"/>
   </g>
   <g class="figure-text" text-anchor="middle">
-    <text x="245" y="48" font-size="18">Original pairwise setup</text>
+    <text x="245" y="48" font-size="18">Pairwise benchmark</text>
     <text x="155" y="153" font-size="14">known source</text>
     <text x="335" y="213" font-size="14">later task</text>
-    <text x="855" y="48" font-size="18">Fleet Mem setup</text>
+    <text x="855" y="48" font-size="18">Repository-history benchmark</text>
     <text x="855" y="310" font-size="14">13–114 earlier same-repository experiences</text>
     <text x="1008" y="270" font-size="14">later task</text>
   </g>
 </svg>
-<figcaption id="fig3cap"><strong>Figure 3.</strong> In the original pairwise setup, the benchmark can effectively point to the relevant past. Fleet Mem hides that relationship and gives the system the full eligible repository history instead.</figcaption>
+<figcaption id="fig3cap"><strong>Figure 3.</strong> The original relation is retained only for analysis. The coding agent and memory controller operate over the full eligible history, not a preselected relevant source.</figcaption>
 </figure>
 
 <div class="prose">
-  <p>To test whether this overlay was the strongest design choice, we evaluated an alternative benchmark construction in parallel. Two independent implementation tracks were run in parallel. One tested whether SWE-ContextBench could support sufficiently rich histories with minimal new machinery. The other tried to build a more native benchmark from SWE-rebench V2, which has far richer repository histories.</p>
+  <p>A second benchmark construction was evaluated in parallel using SWE-rebench V2. It provided substantially richer natural histories: 48 frozen later tasks across 12 repositories, 226 eligible earlier episodes, and 600 earlier-to-later history links. Every later task had at least two predecessors, and 36 had at least five.</p>
 
-  <p>The second path looked attractive on scale: 48 frozen later tasks across 12 repositories, 226 eligible earlier episodes, and 600 earlier-to-later history links. Every later task had at least two predecessors; 36 had at least five. But the evidence that any particular earlier task was genuinely useful was weak. We found no explicit backreferences, no same-PR or identical-patch links, only 11 high text-similarity links, 282 shared-path links, and 13 shared changed-symbol links. We also found 17 possible supersession cases and three possible conflicts, but none were human-confirmed.</p>
+  <p>History richness alone was not sufficient. The relation audit found no explicit backreferences, no same-PR or identical-patch links, 11 high text-similarity links, 282 shared-path links, and only 13 shared changed-symbol links. Seventeen edges appeared potentially superseded and three potentially conflicting, but those cases were not human-confirmed. Chronology was based on issue or pull-request creation time rather than verified completion or merge time. Most importantly, only one of 48 later tasks passed both the no-fix and reference-fix evaluator controls end to end.</p>
 
-  <p>Chronology was another problem. “Earlier” was based on issue or PR creation time, not known completion or merge time. And although the task images were mostly available, only one of 48 later tasks passed both the no-fix and reference-fix evaluator checks end-to-end. That made SWE-rebench a promising future benchmark, not a responsible primary benchmark for the current paper.</p>
+  <p>SWE-rebench therefore remains attractive for a future, more natural benchmark, but the ContextBench overlay provides a much cleaner path for the current study because it combines non-trivial history pools with known related experience and executable evaluation.</p>
 </div>
 
 <div class="table-wrap">
 <table>
 <thead>
-<tr><th>Benchmark</th><th>What it gives us</th><th>Main limitation for this study</th><th>Role now</th></tr>
+<tr><th>Benchmark</th><th>Useful property</th><th>Limitation for this study</th><th>Current role</th></tr>
 </thead>
 <tbody>
-<tr><td><strong>ChainSWE</strong></td><td>Real sequential maintenance and persistent repository state.</td><td>The repository itself carries much of the useful history; few targets had competing textual memories.</td><td>Negative/ecological evidence, not the main benchmark.</td></tr>
-<tr><td><strong>SWE-ContextBench + Fleet Mem overlay</strong></td><td>Executable later tasks, known useful relationships, timestamps, and now 13–114 earlier same-repo candidates per clean target.</td><td>Still a constructed overlay rather than a naturally complete organizational history.</td><td><strong>Primary benchmark.</strong></td></tr>
-<tr><td><strong>SWE-rebench V2</strong></td><td>Much richer natural repository histories.</td><td>Weak relation evidence, imperfect chronology, and only 1/48 fully evaluator-validated in the pilot.</td><td>Follow-up benchmark.</td></tr>
-<tr><td><strong>VibeMemBench</strong></td><td>Large historical memory pools with known useful experiences.</td><td>Excellent for memory-use tests; less clean for natural “should this be shared when first learned?” decisions.</td><td>Related work and future validation.</td></tr>
+<tr><td><strong>ChainSWE</strong></td><td>Sequential maintenance with persistent repository state.</td><td>The repository already carries much of the useful history; few targets expose competing textual memories.</td><td>Secondary evidence on repository-state redundancy.</td></tr>
+<tr><td><strong>SWE-ContextBench + history overlay</strong></td><td>Executable later tasks, known useful relationships, timestamps, and 13–114 earlier same-repository candidates per clean target.</td><td>The history pool is constructed rather than a complete naturally observed organizational history.</td><td><strong>Primary benchmark.</strong></td></tr>
+<tr><td><strong>SWE-rebench V2</strong></td><td>Richer natural repository histories.</td><td>Weak relation evidence, imperfect chronology, and only 1/48 fully evaluator-validated in the construction study.</td><td>Follow-up benchmark.</td></tr>
+<tr><td><strong>VibeMemBench</strong></td><td>Large historical pools with verified useful experience.</td><td>Well suited to memory-use evaluation; less direct for studying the share decision when an experience is first created.</td><td>Related work and possible later validation.</td></tr>
 </tbody>
 </table>
 </div>
 
-<div class="prose">
-  <p>The redesign also forced a stricter rule about time. When an earlier memory is created, the extractor and the share decision may see only the earlier task, the worker’s own trajectory, its patch, commands, tests, and repository state available at that time. They may not see the later task, hidden tests, gold patch, future commits, or whether the memory eventually helped.</p>
-
-  <p>That rule sounds obvious, but it changes how the experiment must be implemented. The decision “share this lesson” is made once, globally, when the lesson is created. It cannot quietly become “share this lesson for task B but not task C,” because that would condition the write decision on knowledge of the future.</p>
-
-  <p>We simplified the control interface for the same reason. The original design used three write states—reject, keep local, share—but if a worker disappears after its task, “keep local” and “reject” are experimentally identical. The main write decision is therefore just <strong>share / do not share</strong>. Likewise, the main later decision is <strong>show / withhold</strong>, rather than “ignore / advisory / rely,” because the latter changes the instructions given to the coding worker and introduces another variable.</p>
-</div>
-
-<h2>Experimental Design and Controls</h2>
+<h2>Experimental design</h2>
 
 <div class="prose">
-  <p>The full comparison is not simply “our governor versus no memory.” Several controls are necessary to tell different explanations apart.</p>
+  <p>The central methodological requirement is temporal separation. When an earlier experience is converted into a candidate memory, neither the extractor nor the share decision may see the future task, its hidden tests, its reference patch, later commits, or the eventual effect of the memory. The share decision is made once, when the experience is created, and applies to all future tasks.</p>
+
+  <p>The primary write decision is therefore binary: <strong>share</strong> or <strong>do not share</strong>. A three-way distinction between reject, keep local, and share was considered, but “keep local” and “reject” are experimentally indistinguishable when workers do not persist across tasks. The later decision is likewise reduced to <strong>show</strong> or <strong>withhold</strong>. More elaborate instructions such as “advisory” or “rely” would alter the coding agent’s prompt and confound memory selection with how strongly the agent is told to trust the memory.</p>
+
+  <p>The candidate-memory extractor is intentionally kept separate from the sharing policy. It should recover candidate lessons broadly rather than filtering for only high-quality or reusable lessons. Otherwise the extractor would perform part of the very decision the experiment is designed to measure.</p>
 </div>
 
 <div class="table-wrap">
 <table>
-<thead><tr><th>Condition</th><th>What the coding agent sees</th><th>What it tells us</th></tr></thead>
+<thead><tr><th>Condition</th><th>Memory available to the coding agent</th><th>Question isolated</th></tr></thead>
 <tbody>
-<tr><td><strong>No memory</strong></td><td>No earlier lessons.</td><td>Baseline.</td></tr>
-<tr><td><strong>Share everything</strong></td><td>Eligible earlier lessons under a fixed context budget.</td><td>Whether indiscriminate sharing creates noise.</td></tr>
-<tr><td><strong>Random, same amount</strong></td><td>A random subset matched to the governor’s memory count or token budget.</td><td>Whether any gain is intelligent selection or merely “less context.”</td></tr>
-<tr><td><strong>Govern sharing only</strong></td><td>Only memories approved before future tasks are known; later selection is kept fixed.</td><td>The value of the early share decision itself.</td></tr>
-<tr><td><strong>Govern showing only</strong></td><td>Broad memory is kept, but only selected items are shown for the later task.</td><td>Whether later filtering alone is enough.</td></tr>
-<tr><td><strong>Govern both</strong></td><td>Selective sharing and selective later exposure.</td><td>The full system.</td></tr>
-<tr><td><strong>Strong reasoning model</strong></td><td>The same bounded decisions are made by a more capable, more expensive LLM.</td><td>Quality versus cost and latency.</td></tr>
-<tr><td><strong>Known helpful memory</strong></td><td>The benchmark’s known relevant earlier experience is supplied directly.</td><td>Best-case check: can useful prior experience move this coding worker at all?</td></tr>
+<tr><td><strong>No memory</strong></td><td>No earlier lessons.</td><td>Baseline performance without explicit shared memory.</td></tr>
+<tr><td><strong>Share everything</strong></td><td>Eligible earlier lessons under a fixed context budget.</td><td>Whether indiscriminate sharing introduces noise or harmful guidance.</td></tr>
+<tr><td><strong>Random, matched amount</strong></td><td>A random subset matched to the governed condition by count or token budget.</td><td>Whether any improvement comes from better selection rather than simply shorter context.</td></tr>
+<tr><td><strong>Selective sharing</strong></td><td>Only memories approved before future tasks are known; later selection is fixed.</td><td>The causal effect of the early share decision.</td></tr>
+<tr><td><strong>Selective showing</strong></td><td>The broad memory bank is retained, but only selected memories are shown for the later task.</td><td>The value of filtering at use time.</td></tr>
+<tr><td><strong>Selective sharing + showing</strong></td><td>Both stages are controlled.</td><td>The complete two-stage system.</td></tr>
+<tr><td><strong>Strong reasoning controller</strong></td><td>The same bounded decisions are made by a more capable, more expensive LLM.</td><td>Quality, cost, and latency relative to a lightweight controller.</td></tr>
+<tr><td><strong>Known-relevant experience</strong></td><td>The benchmark’s linked earlier experience is supplied directly.</td><td>Whether useful memory can change this worker’s executable outcome at all.</td></tr>
 </tbody>
 </table>
 </div>
 
 <div class="prose">
-  <p>The “known helpful memory” condition comes before any expensive governance run. If even the best available prior experience does not change executable outcomes, there is no reason to believe a more complicated controller can recover a useful signal from the same worker–benchmark pair.</p>
+  <p>The last condition is a prerequisite for the full comparison. If a known relevant experience does not change executable outcomes, then the worker–benchmark combination does not contain enough observable memory signal to justify a more expensive governance experiment.</p>
 
-  <p>The lesson extractor is also kept separate from the sharing policy. It is instructed to capture candidate lessons broadly, rather than only “good, reusable, reliable” lessons. Otherwise the extractor itself would quietly perform the filtering that the governor is supposed to be evaluated on.</p>
+  <p>The primary evaluation remains the repository’s canonical software tests: task resolution, originally failing tests that become passing, and previously passing tests that regress. The experiment also records memory count and token volume, coding-agent steps and tool calls, latency, and controller cost. This makes it possible to distinguish better memory decisions from simple reductions in context size or compute.</p>
 
-  <p>We distinguish natural repository history from a secondary stress set. The main experiment should use naturally occurring experiences. A stress set can later emphasize hard cases—duplicates, over-broad advice, possible stale or superseded guidance, failed-source lessons, conflicts, and superficially similar but wrong advice—but synthetic traps cannot be the sole evidence for the paper.</p>
+  <p>A secondary stress set is planned for cases where governance should be difficult: duplicate advice, over-broad claims, possible staleness or supersession, conflicting memories, lessons derived from failed attempts, and superficially similar but incorrect guidance. Natural repository history remains the primary evaluation; synthetic or hand-constructed stress cases are supplementary rather than the basis of the main result.</p>
 
-  <p>Finally, we record when a supposed lesson may already be institutionalized in the repository through code, tests, docs, configuration, comments, or CI. A controller that declines to create redundant textual memory may be making the correct decision.</p>
+  <p>The benchmark also records whether an earlier lesson may already be encoded in the repository through code, tests, documentation, comments, configuration, or CI. Such cases are important because withholding redundant textual memory may be a correct decision rather than a failure to retain knowledge.</p>
 </div>
 
 <figure aria-labelledby="fig4cap">
@@ -420,96 +412,90 @@ classes: wide
   </g>
   <g class="figure-text" text-anchor="middle">
     <text x="130" y="93" font-size="17">History pools</text>
-    <text x="130" y="116" font-size="13">passed</text>
+    <text x="130" y="116" font-size="13">validated</text>
     <text x="365" y="178" font-size="17">Evaluator + patch path</text>
-    <text x="365" y="201" font-size="13">passed</text>
-    <text x="600" y="93" font-size="17">Can useful memory move the worker?</text>
-    <text x="600" y="116" font-size="13">current gate</text>
-    <text x="835" y="178" font-size="17">Full memory-policy comparison</text>
-    <text x="835" y="201" font-size="13">not run</text>
+    <text x="365" y="201" font-size="13">validated</text>
+    <text x="600" y="93" font-size="17">Useful-memory effect</text>
+    <text x="600" y="116" font-size="13">current validation step</text>
+    <text x="835" y="178" font-size="17">Full memory comparison</text>
+    <text x="835" y="201" font-size="13">not yet run</text>
   </g>
 </svg>
-<figcaption id="fig4cap"><strong>Figure 4.</strong> We are deliberately stopping before the headline experiment. The benchmark first has to prove that there is a memory signal worth governing.</figcaption>
+<figcaption id="fig4cap"><strong>Figure 4.</strong> The full memory comparison is intentionally gated by a simpler question: whether a known relevant experience can measurably change the coding worker’s outcome.</figcaption>
 </figure>
 
-<h2>Current Experimental Status</h2>
+<h2>Current status</h2>
 
 <div class="prose">
-  <p>The benchmark-construction side has cleared its first important check. The 11 clean development tasks all have non-trivial earlier histories, with 13–114 same-repository candidates each. A deterministic smoke run also proved that the routing machinery can produce different memory exposures across all 11 tasks. That is infrastructure evidence only, not a memory result: the placeholder policy kept all 603 candidate items local, source outcomes were not yet established, and neither Jev nor the stronger LLM policy had run.</p>
+  <p>The benchmark-construction stage has passed its structural check. All 11 clean development tasks have non-trivial earlier histories, with 13–114 same-repository candidates each. A deterministic smoke test also confirmed that the routing code can produce different memory exposures across all 11 tasks. That test is infrastructure evidence only: the placeholder policy kept all 603 candidate items local, source outcomes were not yet established, and neither the Jev controller nor the stronger LLM controller had been evaluated.</p>
 
-  <p>The current uncertainty is the coding worker. The original development rule required the worker to fully solve at least two of three test tasks. GPT-6 Luna failed that rule, and we preserve that result exactly as a failure.</p>
+  <p>The remaining pre-treatment question is worker suitability. The original development rule required the coding worker to fully resolve at least two of three qualification tasks. GPT-6 Luna failed that rule. That failure remains part of the experimental record.</p>
 
-  <p>But inspecting the actual patches changed the interpretation of what “worker suitability” should mean for a memory study. On a SymPy task, Luna submitted a real patch that fixed one of two failing tests, but the patched suite became dramatically slower and timed out after 1,800 seconds around 46%. No-patch runs were about 178–182 seconds and the reference patch completed in 323 seconds, which strongly suggests a patch-induced regression, though it was not profiler-confirmed. On a Django task, Luna fixed the reported duplicate-column case, fixed one of six failing tests, and preserved all 166 previously passing tests.</p>
+  <p>The patches nevertheless showed partial capability. On a SymPy task, Luna submitted an applicable patch that fixed one of two failing tests, but the patched suite became dramatically slower and timed out after 1,800 seconds at roughly 46% completion. No-patch runs completed in approximately 178–182 seconds, while the reference patch completed in 323 seconds. The timing evidence is consistent with a patch-induced regression, although the cause has not been confirmed by profiling. On a Django task, Luna fixed the reported duplicate-column case, fixed one of six failing tests, and preserved all 166 previously passing tests.</p>
 
-  <p>Those are not full task resolutions, but they show that the worker can inspect the repository, form a plausible hypothesis, edit code, submit a patch, and survive canonical evaluation. For this study, a partially capable worker may actually be more informative than a nearly perfect one because there is room for memory to help or hurt.</p>
+  <p>These results motivate a distinction between raw standalone solve rate and suitability for a memory-intervention study. A worker that can inspect a repository, form a plausible hypothesis, edit code, submit a valid patch, and pass canonical evaluation may still provide a useful testbed even if it does not fully solve every task—particularly when the purpose of the intervention is to measure whether additional information helps or harms.</p>
 </div>
 
 <div class="statusline">
-  <div><strong>11</strong><span>clean later tasks with non-trivial histories</span></div>
+  <div><strong>11</strong><span>clean later tasks with non-trivial repository histories</span></div>
   <div><strong>13–114</strong><span>earlier same-repository candidates per task</span></div>
-  <div><strong>0</strong><span>completed memory-policy conclusions so far</span></div>
-  <div><strong>1 / 48</strong><span>SWE-rebench targets that passed full evaluator controls in the native-benchmark pilot</span></div>
+  <div><strong>0</strong><span>completed memory-policy conclusions</span></div>
+  <div><strong>1 / 48</strong><span>SWE-rebench tasks that passed full evaluator controls in the alternative construction</span></div>
 </div>
 
 <div class="prose">
-  <p>Before the graded Luna runs, we also had a worker-integration failure that is worth preserving because it changed our methodology. A local/Ollama qualification job returned model responses but produced zero non-empty patches across three tasks; two runs hit a 12-step cap and one submitted an empty patch. That was a harness problem, not evidence about memory. The standard Mini-SWE SWE-bench workflow expects a real patch file and a much larger interaction budget. We therefore stopped treating empty-patch runs as scientific failures.</p>
+  <p>An earlier local-worker qualification run had produced model responses but no usable patches across three tasks; two runs hit a 12-step interaction cap and one submitted an empty patch. Those runs were subsequently classified as integration failures rather than evidence about memory, because the standard SWE-bench workflow expects a real patch submission and a substantially larger interaction budget.</p>
 
-  <p>The next development amendment was written and committed before any new treatment outcome: compare Luna and Sol on the same already-used tasks, choose one worker, freeze it, and only then test no-memory versus known helpful memory. At the last recorded state, the Sol route had been configured at the same effort level and all 40 repository tests passed, but Sol itself had not yet run because the required protected OpenAI environment file was unavailable in that launch environment.</p>
+  <p>Before any memory treatment, the development protocol was amended to compare Luna and Sol on the same already-used qualification tasks, select one worker, freeze that choice, and then run the no-memory versus known-relevant-experience comparison. At the latest recorded state, the Sol route had been configured at the same effort level and all 40 repository tests passed, but the Sol diagnostic itself had not run because the protected OpenAI environment file required by that launch environment was unavailable.</p>
 
-  <p>The distinction is important: <strong>no memory treatment has run yet</strong>. We have no Jev result, no Share-All versus Governed result, no scaling result, and no evidence that shared memory improves coding. The study is therefore still in the pre-treatment validation stage.</p>
+  <p>Accordingly, no memory-treatment conclusion exists yet. There is no Jev result, no Share-All versus selective-sharing result, and no scaled comparison. The current evidence establishes benchmark structure, evaluator functionality, and partial coding-worker competence; it does not establish that shared memory improves software repair.</p>
 </div>
 
-<h2>Positioning and Contribution</h2>
+<h2>Research contribution</h2>
 
 <div class="prose">
-  <p>The literature review substantially narrowed the novelty claim. SWE-ContextBench already shows that correct prior coding experience can help and mismatched experience can hurt. VibeMemBench directly studies large historical memory pools. MemGuard already covers admission, stale/conflicting memory, and retrieval in coding settings. CODESKILL and STAIR learn and reuse coding knowledge. GateMem studies shared-memory governance across multiple principals. Agent Memory Bench evaluates present, absent, replaced, contradictory, and adjacent coding memories. MemGauge already separates write, management, and later memory-use stages. Shared organizational memory for enterprise coding agents also exists as a deployment idea.</p>
+  <p>The contribution is intentionally narrower than the general idea of memory for coding agents. Prior work already covers useful and harmful experience transfer, large memory pools, memory admission, stale and conflicting memories, coding-skill extraction, shared-memory governance, and staged memory evaluation.</p>
 
-  <p>Accordingly, the contribution is not the general idea of memory governance, shared memory for coding agents, stale-memory filtering, or separating memory writing from retrieval. Each of those directions is already represented in prior work.</p>
-</div>
+  <p>Fleet Mem instead combines three elements in one controlled executable setting: <strong>experience produced by one coding worker, a future-blind decision about whether that experience becomes shared team memory, and a later decision about whether the memory is exposed to another worker</strong>. The effect of those decisions is measured through downstream repository tests rather than through a proxy score assigned to the memory itself.</p>
 
-<blockquote>
-  <p>The resulting contribution is a controlled executable study of repository-scoped team memory: decide what one coding worker should share before future tasks are known, decide what a later worker should actually see, and measure both decisions through downstream software outcomes.</p>
-</blockquote>
+  <p>Within that framework, Jev is one controller implementation rather than the contribution itself. The systems question is whether a lightweight, bounded controller can retain most of the benefit of a stronger reasoning model while reducing the cost and latency of repeatedly deliberating over organizational memory.</p>
 
-<div class="prose">
-  <p>Jev therefore serves as one controller instantiation within the study rather than defining the contribution itself. The interesting systems question is whether a fast, bounded, System-One-style controller can recover most of the benefit of a much more expensive reasoning model while avoiding the harm of indiscriminate memory sharing.</p>
+  <p>The experimental outcomes have several interpretable possibilities. If sharing everything harms performance while selective sharing improves it, the result would support explicit control over organizational memory. If a matched random subset performs as well as the controller, the apparent improvement would be better explained by shorter context than by intelligent selection. If only later filtering matters, broad storage may be acceptable provided that each worker sees a carefully selected subset. If no explicit memory condition improves on the no-memory baseline, the repository itself may already encode most of the durable organizational knowledge required for these tasks.</p>
 
-  <p>The immediate sequence is now fixed: finish the Luna–Sol comparison on the already-used tasks; select one coding worker; run the no-memory versus known-helpful-memory check on the burned development set; continue only if useful memory changes multiple real outcomes; then run the full comparison between no memory, share everything, matched random sharing, governed sharing, governed showing, the combined policy, a stronger LLM controller, and the known-helpful upper bound.</p>
-
-  <p>If known useful memory does not alter worker outcomes, the benchmark–worker combination does not provide sufficient signal for the full governance comparison. If sharing everything hurts but selective sharing helps, that supports the need for control. If matched random performs as well as the governor, then the apparent benefit came from reducing context rather than making better decisions. If no explicit memory helps at all, that would strengthen the alternative explanation that repositories already carry most of the organizational state these agents need.</p>
+  <p>The next experimental step is therefore deliberately modest: establish whether the known relevant earlier experience changes executable outcomes for the selected worker. The full governance comparison follows only if that signal is present.</p>
 </div>
 
 <p class="appendix-label">Methodological notes</p>
 
 <details>
-<summary>Leakage and chronology rules</summary>
+<summary>Leakage and chronology</summary>
 <div class="prose">
-  <p>The audit records, where available, the earlier and later task IDs, repository, timestamps, same-PR and same-commit status, whether the earlier change is already in the later task’s repository history, whether the later issue explicitly refers back to the earlier issue or nearly reveals its solution, file/symbol/patch overlap, relationship type, candidate count, environment status, and leakage risk.</p>
-  <p>Cases are separated into clean earlier work, explicit backreferences, regression/revert cases, same-PR or co-resolution cases, high-hint leakage, ambiguous ordering, already-institutionalized knowledge, possible supersession, possible conflict, and invalid environments. Questionable cases are retained for sensitivity analysis rather than silently discarded.</p>
+  <p>The benchmark records, where available, the earlier and later task IDs, repository, timestamps, same-PR and same-commit status, whether the earlier change is already present in the later repository state, explicit backreferences, solution hints, file overlap, symbol overlap, patch overlap, relationship type, candidate count, environment status, and leakage risk.</p>
+  <p>Cases are separated into clean earlier work, explicit backreferences, regression or revert cases, same-PR or co-resolution cases, high-hint leakage, ambiguous ordering, already-institutionalized knowledge, possible supersession, possible conflict, and invalid environments. Questionable cases are retained for sensitivity analysis rather than silently discarded.</p>
 </div>
 </details>
 
 <details>
 <summary>Memory representation and source modes</summary>
 <div class="prose">
-  <p>Each candidate memory is intentionally simple: a short claim plus task/repository provenance, time, source outcome, type, scope, preconditions, supporting evidence, file or symbol locations, confidence, whether it came from a failed attempt, possible staleness, possible conflict, and a provenance hash.</p>
-  <p>The code distinguishes benchmark-provided experiences used for construction checks from memories extracted from fresh coding-agent trajectories used in the intended scientific run. They are not treated as equivalent.</p>
+  <p>Each candidate memory is represented as a short claim with task and repository provenance, source time, source outcome, type, scope, preconditions, supporting evidence, relevant files or symbols, confidence, failure-derived status, possible staleness, possible conflict, and a provenance hash.</p>
+  <p>The implementation distinguishes benchmark-provided experiences used for construction checks from memories extracted from fresh coding-agent trajectories in the intended scientific run. They are not treated as equivalent sources of evidence.</p>
 </div>
 </details>
 
 <details>
-<summary>Earlier audit numbers and preserved development artifacts</summary>
+<summary>Earlier audit numbers and preserved artifacts</summary>
 <div class="prose">
-  <p>The earlier read-only SWE-ContextBench audit contained 99 later tasks and 300 source trajectories. After removing same-PR/co-resolution links and missing traces, 73 later tasks across 10 repositories retained at least one mapped earlier trajectory.</p>
-  <p>The native SWE-rebench pilot used 12 repositories, 48 frozen later tasks, 226 eligible earlier episodes, and 600 history links. Pools ranged from 2 to 75 earlier tasks with a median of 6 and mean of 12.5. It found 17 possible supersession and 3 possible conflict edges, but none were human-confirmed. Only one of 48 later tasks passed both no-fix and reference-patch evaluator controls.</p>
-  <p>The latest frozen development artifacts recorded in the research log are <code>fleet-mem-contextbench/docs/PILOT_DEVELOPMENT_REPORT.md</code>, <code>fleet-mem-contextbench/docs/PILOT_DEVELOPMENT_AMENDMENT_02.md</code>, and <code>fleet-mem-contextbench/artifacts/development/sympy_timing_diagnosis.json</code>. The frozen plan hash is <code>b6535c56e8db63dd72f4e7901960d995db533214df22e139034f99cd29f6a7f5</code>. Recorded commits include <code>cd16b80</code>, <code>d1d9e8f</code>, <code>6974290</code> for the ContextBench development work and <code>f4dadcd</code>, <code>46ddbdb</code>, <code>a79f354</code> for the native SWE-rebench benchmark work.</p>
+  <p>The earlier read-only SWE-ContextBench audit contained 99 later tasks and 300 source trajectories. After removing same-PR or co-resolution links and missing traces, 73 later tasks across 10 repositories retained at least one mapped earlier trajectory.</p>
+  <p>The SWE-rebench construction used 12 repositories, 48 frozen later tasks, 226 eligible earlier episodes, and 600 history links. Pools ranged from 2 to 75 earlier tasks, with a median of 6 and mean of 12.5. It identified 17 possible supersession and three possible conflict edges, none of which were human-confirmed. Only one of 48 later tasks passed both no-fix and reference-patch evaluator controls.</p>
+  <p>The latest frozen development artifacts recorded in the research log are <code>fleet-mem-contextbench/docs/PILOT_DEVELOPMENT_REPORT.md</code>, <code>fleet-mem-contextbench/docs/PILOT_DEVELOPMENT_AMENDMENT_02.md</code>, and <code>fleet-mem-contextbench/artifacts/development/sympy_timing_diagnosis.json</code>. The frozen plan hash is <code>b6535c56e8db63dd72f4e7901960d995db533214df22e139034f99cd29f6a7f5</code>. Recorded commits include <code>cd16b80</code>, <code>d1d9e8f</code>, <code>6974290</code> for the ContextBench development work and <code>f4dadcd</code>, <code>46ddbdb</code>, <code>a79f354</code> for the SWE-rebench construction.</p>
 </div>
 </details>
 
 <details>
-<summary>Controls we explicitly refuse to relax after seeing outcomes</summary>
+<summary>Frozen experimental controls</summary>
 <div class="prose">
-  <p>Do not tune the coding worker and memory policy at the same time. Do not change the later-task set after seeing memory outcomes. Do not use target gold information to write memories. Do not let the share decision depend on a future task. Do not interpret empty-patch or broken-harness runs as memory results. Do not call the 603-item smoke routing check a governance result. Do not run Jev before the known-helpful-memory check establishes a usable signal. Do not weaken the stop/continue rule after seeing the treatment outcomes.</p>
+  <p>The coding worker and the memory policy are not tuned simultaneously. The later-task set remains fixed once memory outcomes are observed. Target reference information is not used to write memories. The share decision does not depend on a future task. Empty-patch or broken-harness runs are not interpreted as memory outcomes. The 603-item routing smoke test is not treated as a governance result. The full controller comparison is gated by the known-relevant-experience check.</p>
 </div>
 </details>
 
@@ -529,6 +515,6 @@ classes: wide
   <li><a href="https://proceedings.mlr.press/v306/badertdinov26a.html">SWE-rebench V2</a></li>
 </ul>
 
-<p class="footer-note">This is an active research note, not a finished-results page. The benchmark construction has passed its first structural check; the main memory-policy experiment has not yet run.</p>
+<p class="footer-note">Active research note. Benchmark construction and evaluator validation are complete enough to support the next validation step; the full memory-policy experiment has not yet been run.</p>
 
 </article>
