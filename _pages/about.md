@@ -34,6 +34,12 @@ redirect_from:
 ## Selected work
 
 <div class="home-grid home-grid--two">
+  <article class="home-card">
+    <p class="home-card__eyebrow">MULTI-AGENT MEMORY: ACTIVE RESEARCH</p>
+    <h3><a href="/fleet-mem/">Who gets to remember?</a></h3>
+    <p>A research note on shared memory governance for coding-agent fleets: why the benchmark matters, what failed in earlier experiments, and the controlled write/read study we are running now.</p>
+    <a class="home-card__link" href="/fleet-mem/">Read the research note →</a>
+  </article>
   <article class="home-card home-card--accent">
     <p class="home-card__eyebrow">EE243: ADVANCED COMPUTER VISION</p>
     <h3><a href="/concept-erasure-analysis/">Concept erasure under stress</a></h3>
