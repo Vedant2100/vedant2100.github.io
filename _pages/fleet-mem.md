@@ -344,6 +344,11 @@ classes: wide
 
       <div class="mermaid-like">
         <svg viewBox="0 0 840 330" role="img" aria-label="Pairwise versus repository-history benchmark">
+          <defs>
+            <marker id="arrow2" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+              <polygon points="0 0, 8 3.5, 0 7" fill="#6b7280"></polygon>
+            </marker>
+          </defs>
           <g>
             <rect class="soft-node" x="35" y="45" width="310" height="220" rx="6"/>
             <text class="figure-text" x="190" y="76" text-anchor="middle" font-size="15" font-weight="600">Pairwise transfer</text>
@@ -351,7 +356,7 @@ classes: wide
             <circle class="node" cx="260" cy="195" r="34"/>
             <text class="figure-muted" x="120" y="150" text-anchor="middle" font-size="11">known source</text>
             <text class="figure-muted" x="260" y="200" text-anchor="middle" font-size="11">later task</text>
-            <path class="edge" marker-end="url(#arrow)" d="M153 157 L228 184"/>
+            <path class="edge" marker-end="url(#arrow2)" d="M153 157 L228 184"/>
 
             <rect class="soft-node" x="495" y="45" width="310" height="220" rx="6"/>
             <text class="figure-text" x="650" y="76" text-anchor="middle" font-size="15" font-weight="600">Fleet Mem history</text>
@@ -362,7 +367,7 @@ classes: wide
             <circle class="node" cx="700" cy="190" r="18"/>
             <circle class="node" cx="630" cy="235" r="18"/>
             <circle class="accent-node" cx="755" cy="228" r="28"/>
-            <path class="edge dashed" marker-end="url(#arrow)" d="M700 190 C725 200,735 210,748 217"/>
+            <path class="edge dashed" marker-end="url(#arrow2)" d="M700 190 C725 200,735 210,748 217"/>
             <text class="figure-muted" x="650" y="291" text-anchor="middle" font-size="11">13–114 earlier same-repository experiences</text>
           </g>
         </svg>
