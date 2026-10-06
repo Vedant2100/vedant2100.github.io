@@ -70,7 +70,7 @@ classes: wide
   color:#111827;
   line-height:1.3;
 }
-.fleet-page h1 { font-size:2.05rem; font-weight:700; margin:0 0 .8rem; letter-spacing:-.02em; }
+.fleet-page h1 { font-size:1.72rem; font-weight:700; margin:0 0 .55rem; letter-spacing:-.015em; }
 .fleet-page .subtitle {
   margin:0 auto;
   max-width:760px;
@@ -164,6 +164,27 @@ classes: wide
   margin:2rem 0;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
 }
+.fleet-page .example-strip {
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:1rem;
+  margin:1.5rem 0 2rem;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+.fleet-page .example-strip > div {
+  border:1px solid var(--border-color);
+  border-radius:6px;
+  padding:1rem;
+  background:#fff;
+}
+.fleet-page .example-strip strong {
+  display:block;
+  font-size:.86rem;
+  margin-bottom:.35rem;
+}
+.fleet-page .example-strip code {
+  font-size:.82rem;
+}
 .fleet-page .status-grid > div {
   background:var(--bg-secondary);
   border:1px solid var(--border-color);
@@ -194,7 +215,7 @@ classes: wide
   .fleet-page .main-content { max-width:100%; width:100%; }
 }
 @media (max-width:650px) {
-  .fleet-page .status-grid { grid-template-columns:1fr; }
+  .fleet-page .status-grid, .fleet-page .example-strip { grid-template-columns:1fr; }
   .fleet-page table { display:block; overflow-x:auto; }
 }
 </style>
@@ -232,6 +253,85 @@ classes: wide
 
         <p>The current benchmark overlays SWE-ContextBench with realistic same-repository histories. Its clean development set contains <strong>11 later tasks with 13–114 earlier candidate experiences each</strong>. The full memory comparison has not yet run; the current stage is validating that known useful memory can measurably change the coding worker’s outcome.</p>
       </div>
+
+      <div class="finding">
+        <p><strong>A concrete example.</strong> Suppose an earlier coding agent fixes a filesystem bug and learns: “normalize filesystem paths before comparing cache keys.” That lesson may help a later path-related bug—but a real shared memory also contains competing advice, exceptions, and failed attempts.</p>
+      </div>
+
+      <div class="mermaid-like">
+        <svg viewBox="0 0 900 525" role="img" aria-label="Illustrative path normalization memory example">
+          <defs>
+            <marker id="arrow3" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+              <polygon points="0 0, 8 3.5, 0 7" fill="#6b7280"></polygon>
+            </marker>
+          </defs>
+
+          <rect class="soft-node" x="300" y="25" width="300" height="72" rx="6"/>
+          <text class="figure-text" x="450" y="51" text-anchor="middle" font-size="15" font-weight="600">Earlier agent fixes a cache-key bug</text>
+          <text class="figure-muted" x="450" y="73" text-anchor="middle" font-size="12">Lesson: normalize filesystem paths before equality checks</text>
+
+          <path class="edge" marker-end="url(#arrow3)" d="M450 97 L450 135"/>
+
+          <text class="figure-text" x="450" y="158" text-anchor="middle" font-size="14" font-weight="600">Repository memory already contains other lessons</text>
+
+          <rect class="accent-node" x="25" y="190" width="158" height="94" rx="6"/>
+          <text class="figure-text" x="104" y="216" text-anchor="middle" font-size="12" font-weight="600">Useful</text>
+          <text class="figure-muted" x="104" y="237" text-anchor="middle" font-size="10">Normalize filesystem paths</text>
+          <text class="figure-muted" x="104" y="253" text-anchor="middle" font-size="10">before cache-key equality</text>
+
+          <rect class="soft-node" x="200" y="190" width="158" height="94" rx="6"/>
+          <text class="figure-text" x="279" y="216" text-anchor="middle" font-size="12" font-weight="600">Too broad</text>
+          <text class="figure-muted" x="279" y="237" text-anchor="middle" font-size="10">“Normalize every string</text>
+          <text class="figure-muted" x="279" y="253" text-anchor="middle" font-size="10">before comparing it”</text>
+
+          <rect class="soft-node" x="375" y="190" width="158" height="94" rx="6"/>
+          <text class="figure-text" x="454" y="216" text-anchor="middle" font-size="12" font-weight="600">Exception</text>
+          <text class="figure-muted" x="454" y="237" text-anchor="middle" font-size="10">Do not normalize URL paths</text>
+          <text class="figure-muted" x="454" y="253" text-anchor="middle" font-size="10">inside the router</text>
+
+          <rect class="soft-node" x="550" y="190" width="158" height="94" rx="6"/>
+          <text class="figure-text" x="629" y="216" text-anchor="middle" font-size="12" font-weight="600">Failed attempt</text>
+          <text class="figure-muted" x="629" y="237" text-anchor="middle" font-size="10">Lowercase every path</text>
+          <text class="figure-muted" x="629" y="253" text-anchor="middle" font-size="10">broke case-sensitive systems</text>
+
+          <rect class="soft-node" x="725" y="190" width="150" height="94" rx="6"/>
+          <text class="figure-text" x="800" y="216" text-anchor="middle" font-size="12" font-weight="600">Irrelevant</text>
+          <text class="figure-muted" x="800" y="237" text-anchor="middle" font-size="10">Serialization tests require</text>
+          <text class="figure-muted" x="800" y="253" text-anchor="middle" font-size="10">sorted dictionary keys</text>
+
+          <path class="edge" marker-end="url(#arrow3)" d="M104 284 C160 325,295 330,365 355"/>
+          <path class="edge dashed" marker-end="url(#arrow3)" d="M279 284 C315 315,350 330,395 355"/>
+          <path class="edge dashed" marker-end="url(#arrow3)" d="M454 284 L450 355"/>
+          <path class="edge dashed" marker-end="url(#arrow3)" d="M629 284 C590 315,550 335,505 355"/>
+          <path class="edge dashed" marker-end="url(#arrow3)" d="M800 284 C710 330,610 345,535 365"/>
+
+          <rect class="node" x="300" y="355" width="300" height="72" rx="6"/>
+          <text class="figure-text" x="450" y="382" text-anchor="middle" font-size="15" font-weight="600">Later agent: cache invalidation bug</text>
+          <text class="figure-muted" x="450" y="404" text-anchor="middle" font-size="11">Which memories should enter its context?</text>
+
+          <path class="edge" marker-end="url(#arrow3)" d="M450 427 L450 463"/>
+          <rect class="soft-node" x="322" y="463" width="256" height="42" rx="6"/>
+          <text class="figure-text" x="450" y="488" text-anchor="middle" font-size="12" font-weight="600">Repository tests decide whether the choice helped</text>
+        </svg>
+      </div>
+      <div class="figure-caption"><strong>Figure 1:</strong> Illustrative running example. The difficulty is not retrieving one obviously related lesson; it is deciding which memories deserve shared status and which subset a later agent should see. This example is explanatory, not an experimental result.</div>
+
+      <div class="example-strip">
+        <div>
+          <strong>No memory</strong>
+          The later agent solves the bug using only the repository and task description.
+        </div>
+        <div>
+          <strong>Share everything</strong>
+          The agent sees the useful path lesson <em>plus</em> the overgeneralization, exception, failed attempt, and irrelevant advice.
+        </div>
+        <div>
+          <strong>Governed memory</strong>
+          The system may keep the scoped filesystem lesson while withholding memories that are irrelevant or unsafe for this task.
+        </div>
+      </div>
+
+      <p>The example also explains why multiple memories matter. With only one known-relevant earlier experience, the benchmark has already solved most of the selection problem. A useful memory governor becomes measurable only when the history contains plausible alternatives that differ in scope, reliability, freshness, and relevance.</p>
 
       <h2 id="lineage">1. Research Lineage & Positioning</h2>
 
@@ -314,7 +414,7 @@ classes: wide
           </g>
         </svg>
       </div>
-      <div class="figure-caption"><strong>Figure 1:</strong> Research lineage and the position of Fleet Mem. The project sits at the intersection of shared-memory governance, coding-experience reuse, coding-memory lifecycle work, and lightweight memory control.</div>
+      <div class="figure-caption"><strong>Figure 2:</strong> Research lineage and the position of Fleet Mem. The project sits at the intersection of shared-memory governance, coding-experience reuse, coding-memory lifecycle work, and lightweight memory control.</div>
 
       <p>The project’s own trajectory follows the same convergence. It began with a broad shared-knowledge-graph idea for fresh agent generations, then focused on coding fleets because repository work exposes concrete procedural knowledge and executable outcomes. Questions of stale knowledge, revocation, scope, conflict, and promotion became central as the related-work landscape filled in. The remaining useful question was no longer whether agents can have shared memory, but <strong>what should cross the boundary from one worker’s experience into organizational memory, and how should later workers be exposed to it?</strong></p>
 
@@ -372,7 +472,7 @@ classes: wide
           </g>
         </svg>
       </div>
-      <div class="figure-caption"><strong>Figure 2:</strong> SWE-ContextBench’s known relation becomes hidden evaluation metadata; the live system sees the full eligible repository history instead.</div>
+      <div class="figure-caption"><strong>Figure 3:</strong> SWE-ContextBench’s known relation becomes hidden evaluation metadata; the live system sees the full eligible repository history instead.</div>
 
       <p>The benchmark also enforces a strict temporal boundary. When an earlier experience is converted into a candidate memory, neither the extractor nor the share decision may see the future task, hidden tests, reference patch, later commits, or the eventual effect of the memory. The share decision is made once when the experience is produced and applies to all future tasks.</p>
 
