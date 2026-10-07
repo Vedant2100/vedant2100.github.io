@@ -115,6 +115,19 @@
       font-size:.92rem;
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     }
+    pre.example-code {
+      margin:1.2rem 0;
+      padding:1rem 1.1rem;
+      overflow-x:auto;
+      background:var(--bg-secondary);
+      border:1px solid var(--border-color);
+      border-radius:4px;
+      font-size:.9rem;
+      line-height:1.55;
+    }
+    pre.example-code code {
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
+    }
     .finding {
       border-left:4px solid var(--accent);
       background:var(--bg-secondary);
@@ -223,44 +236,61 @@
       <p>The current benchmark uses SWE-ContextBench as the software-task substrate but replaces its one-known-source setup with full earlier same-repository histories. The clean development set contains <strong>11 later tasks with 13–114 earlier candidate experiences each</strong>. No full memory-policy result exists yet.</p>
 
       <h2 id="example">1. A Concrete Example</h2>
-      <p>Consider an earlier coding agent that fixes a cache-key bug and learns a narrow lesson:</p>
+
+      <p>Suppose a repository keeps track of files it has already processed. Two path strings can refer to the same file:</p>
+
+      <pre class="example-code"><code>./data/report.csv
+data/report.csv</code></pre>
+
+      <p>A naive program compares those strings literally, decides they are different, and processes the same file twice. An earlier coding agent encounters that bug and discovers the repository’s convention: <strong>normalize filesystem paths before comparing them</strong>.</p>
+
+      <pre class="example-code"><code># before
+if new_path == old_path:
+    ...
+
+# after
+if normalize(new_path) == normalize(old_path):
+    ...</code></pre>
+
+      <p>The important thing is not the exact function name. The earlier agent has learned a reusable fact about how this codebase handles file paths.</p>
 
       <div class="finding">
-        <p><strong>“Normalize filesystem paths before comparing cache keys.”</strong></p>
+        <p><strong>Candidate memory from Agent A:</strong> “In this repository, normalize filesystem paths before equality checks.”</p>
       </div>
 
-      <p>A later agent receives another cache-related bug. If the memory system contained only that one lesson, there would be little to govern. A realistic repository history is messier:</p>
+      <p>Weeks later, a fresh Agent B receives a different bug: the file watcher is reporting the same file twice because two equivalent path forms are being treated as different. Agent A’s earlier lesson could save Agent B time.</p>
+
+      <p>But a real shared memory would not contain only that one clean lesson. It might also contain:</p>
 
       <div class="mermaid">
 flowchart TB
-    A["Earlier Agent A<br/>fixes cache-key bug"] --> L["Candidate lesson:<br/>normalize filesystem paths<br/>before cache-key equality"]
-    L --> M["Shared repository memory"]
+    A["Agent A fixes duplicate file processing<br/>because equivalent paths were compared as raw strings"]
+    A --> U["Useful memory<br/>Normalize filesystem paths<br/>before comparing them"]
+    A --> O["Overgeneralized memory<br/>Normalize every string<br/>before comparing it"]
+    A --> E["Exception from another subsystem<br/>Do not rewrite URL paths<br/>inside the router"]
+    A --> F["Failed earlier attempt<br/>Lowercasing every path broke<br/>case-sensitive filesystems"]
+    A --> I["Irrelevant memory<br/>Serialization tests require<br/>sorted dictionary keys"]
 
-    M --> U["Useful<br/>Normalize filesystem paths<br/>for cache-key equality"]
-    M --> O["Too broad<br/>Normalize every string<br/>before comparing it"]
-    M --> E["Exception<br/>Do not normalize URL paths<br/>inside the router"]
-    M --> F["Failed attempt<br/>Lowercasing paths broke<br/>case-sensitive systems"]
-    M --> I["Irrelevant<br/>Serialization tests require<br/>sorted dictionary keys"]
-
-    U --> B["Later Agent B<br/>cache invalidation bug"]
-    O -. possible noise .-> B
-    E -. possible exception .-> B
-    F -. warning .-> B
+    U --> B["Agent B gets a later<br/>duplicate-file-watcher bug"]
+    O -. may mislead .-> B
+    E -. may or may not apply .-> B
+    F -. useful warning .-> B
     I -. irrelevant .-> B
 
-    B --> T["Repository tests<br/>Did the memory help or hurt?"]
+    B --> T["Repository tests determine<br/>whether the selected memory helped"]
 
     style U fill:#e1f5fe,stroke:#039be5,stroke-width:2px
       </div>
-      <div class="figure-caption"><strong>Figure 1:</strong> Illustrative example, not an experimental result. The hard problem is choosing among plausible, conflicting, over-broad, failed, and irrelevant memories—not retrieving one preselected answer.</div>
+
+      <div class="figure-caption"><strong>Figure 1:</strong> Illustrative example, not a benchmark result. The task is easy to understand when there is one earlier lesson; governance becomes necessary when the shared history contains several plausible memories with different scope and reliability.</div>
 
       <div class="three">
-        <div><strong>No memory</strong>The later agent receives only the repository and task description.</div>
-        <div><strong>Share everything</strong>The useful lesson arrives together with the exception, overgeneralization, failed attempt, and irrelevant memory.</div>
-        <div><strong>Governed memory</strong>The system can keep the narrow filesystem lesson while withholding memories that are unsafe or irrelevant for this task.</div>
+        <div><strong>No memory</strong>Agent B must rediscover the repository’s path-handling convention from code and tests.</div>
+        <div><strong>Share everything</strong>Agent B receives the correct path lesson together with an overgeneralization, an exception, a failed attempt, and irrelevant advice.</div>
+        <div><strong>Governed memory</strong>The system can preserve the scoped lesson and relevant warning while withholding advice that does not belong in Agent B’s context.</div>
       </div>
 
-      <p>This is why the project deliberately collects multiple earlier experiences. With one known-relevant source, the benchmark has already solved most of the decision problem. With a repository history, memory control becomes measurable.</p>
+      <p>This is why Fleet Mem needs multiple earlier experiences per later task. If the benchmark simply hands Agent B the one known-relevant lesson, then most of the memory-selection problem has already been solved by the benchmark.</p>
 
       <h2 id="lineage">2. Research Lineage & Positioning</h2>
       <p>The project began more broadly: could fresh agents accumulate a shared knowledge graph or organizational memory containing conventions, procedures, architecture, environment setup, and lessons from earlier work? The research question narrowed as related work filled in the surrounding space.</p>
