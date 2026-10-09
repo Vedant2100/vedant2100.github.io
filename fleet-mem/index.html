@@ -1,596 +1,420 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An exploratory study of how historical coding-task records are retained, selected, and used by later coding agents.">
   <title>Selecting Earlier Task Records for Coding Agents</title>
-  <script type="module">
-    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-    mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
-  </script>
   <style>
-    :root {
-      --bg-primary:#ffffff;
-      --bg-secondary:#f8fafc;
-      --text-primary:#1f2937;
-      --text-secondary:#4b5563;
-      --accent:#2563eb;
-      --border-color:#e5e7eb;
-    }
-    * { box-sizing:border-box; }
-    html { scroll-behavior:smooth; }
-    body {
-      font-family:Georgia,"Times New Roman",Times,serif;
-      line-height:1.8;
-      color:var(--text-primary);
-      background:var(--bg-primary);
-      margin:0;
-      padding:0;
-      -webkit-font-smoothing:antialiased;
-    }
-    .layout-wrapper {
-      display:flex;
-      flex-direction:row;
-      max-width:1400px;
-      margin:0 auto;
-      padding:2rem;
-      gap:4rem;
-      align-items:flex-start;
-      justify-content:center;
-    }
-    .toc-sidebar {
-      flex:0 0 310px;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    }
-    .toc-sticky {
-      position:sticky;
-      top:2rem;
-      background:var(--bg-secondary);
-      padding:1.4rem;
-      border-radius:8px;
-      border:1px solid var(--border-color);
-      max-height:calc(100vh - 4rem);
-      overflow-y:auto;
-    }
-    .toc-sticky h3 {
-      margin:0 0 .7rem;
-      font-size:1.05rem;
-      padding-bottom:.5rem;
-      border-bottom:1px solid var(--border-color);
-    }
-    .toc-sticky ul { list-style:none; padding:0; margin:0; }
-    .toc-sticky li { margin:.45rem 0; font-size:.9rem; }
-    .toc-sticky a { color:var(--text-secondary); text-decoration:none; display:block; }
-    .toc-sticky a:hover { color:var(--accent); }
-    .main-content { flex:1; min-width:0; max-width:850px; }
-    header { text-align:center; margin-bottom:3rem; }
-    h1,h2,h3,h4 {
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-      color:#111827;
-      line-height:1.3;
-    }
-    h1 { font-size:1.8rem; font-weight:700; margin:0 0 .65rem; letter-spacing:-.015em; }
-    .subtitle {
-      max-width:760px;
-      margin:0 auto;
-      font-size:1.08rem;
-      line-height:1.5;
-      color:var(--text-secondary);
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    }
-    .meta {
-      margin-top:.9rem;
-      color:#6b7280;
-      font-size:.9rem;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    }
-    h2 {
-      font-size:1.4rem;
-      font-weight:700;
-      margin:2.8rem 0 .85rem;
-      padding-bottom:.5rem;
-      border-bottom:1px solid var(--border-color);
-    }
-    h3 { font-size:1.13rem; margin:1.6rem 0 .45rem; }
-    p { margin:0 0 1rem; font-size:1rem; }
-    ul,ol { font-size:1rem; margin:0 0 1.5rem; padding-left:1.5rem; }
-    li { margin-bottom:.45rem; }
-    a { color:var(--accent); text-underline-offset:.14em; }
-    .back { display:inline-block; margin-bottom:1rem; font-size:.88rem; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; text-decoration:none; }
-
-    .mermaid {
-      background:#fff;
-      padding:1rem;
-      border:1px solid var(--border-color);
-      border-radius:4px;
-      margin:2rem 0 .5rem;
-      overflow-x:auto;
-    }
-    .mermaid svg { max-width:100% !important; height:auto !important; }
-    .figure-compact {
-      max-width: 760px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .figure-compact svg {
-      max-width: 760px !important;
-      height: auto !important;
-    }
-    .figure-caption {
-      text-align:center;
-      font-style:italic;
-      margin:.55rem 0 2rem;
-      color:var(--text-secondary);
-      font-size:.92rem;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    }
-    pre.example-code {
-      margin:1.2rem 0;
-      padding:1rem 1.1rem;
-      overflow-x:auto;
-      background:var(--bg-secondary);
-      border:1px solid var(--border-color);
-      border-radius:4px;
-      font-size:.9rem;
-      line-height:1.55;
-    }
-    pre.example-code code {
-      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
-    }
-    .finding {
-      border-left:4px solid var(--accent);
-      background:var(--bg-secondary);
-      padding:1rem 1.25rem;
-      margin:1.8rem 0;
-    }
-    .finding p:last-child { margin-bottom:0; }
-    .three {
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:1rem;
-      margin:1.5rem 0 2rem;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    }
-    .three > div {
-      border:1px solid var(--border-color);
-      border-radius:6px;
-      background:#fff;
-      padding:1rem;
-      font-size:.9rem;
-      line-height:1.5;
-    }
-    .three strong { display:block; margin-bottom:.35rem; }
-    .metrics > div { background:var(--bg-secondary); }
-    .metrics strong { font-size:1.45rem; line-height:1.1; }
-    .metrics span { display:block; color:var(--text-secondary); font-size:.82rem; margin-top:.3rem; }
-    .table-responsive { width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
-    table {
-      width:100%;
-      border-collapse:collapse;
-      margin:2rem 0;
-      background:#fff;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-      font-size:.92rem;
-    }
-    th,td {
-      padding:.72rem .85rem;
-      text-align:left;
-      border-bottom:1px solid var(--border-color);
-      vertical-align:top;
-    }
-    th {
-      background:var(--bg-secondary);
-      font-weight:600;
-      color:#111827;
-      border-top:1px solid var(--border-color);
-      border-bottom:2px solid var(--border-color);
-    }
-    details { margin:1rem 0; padding:.8rem 0; border-top:1px solid var(--border-color); }
-    details:last-of-type { border-bottom:1px solid var(--border-color); }
-    summary {
-      cursor:pointer;
-      font-weight:600;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    }
-    details > div { margin-top:.8rem; }
-    .references li { margin-bottom:.65rem; }
-    footer {
-      margin-top:3rem;
-      padding-top:1rem;
-      border-top:1px solid var(--border-color);
-      color:var(--text-secondary);
-      font-size:.88rem;
-    }
-    @media (max-width:1000px) {
-      .layout-wrapper { flex-direction:column; padding:1rem; gap:1rem; }
-      .toc-sidebar { flex:none; width:100%; }
-      .toc-sticky { position:static; max-height:none; }
-      .main-content { max-width:100%; width:100%; }
-    }
-    @media (max-width:650px) {
-      .three { grid-template-columns:1fr; }
-      table { min-width:720px; }
-      h1 { font-size:1.55rem; }
-    }
+    :root{--text:#1f2937;--muted:#536171;--border:#e2e8f0;--soft:#f8fafc;--blue:#2563eb;--light-blue:#eff6ff}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;color:var(--text);background:#fff;font:16px/1.75 Georgia,"Times New Roman",serif;-webkit-font-smoothing:antialiased}
+    a{color:var(--blue);text-underline-offset:2px}
+    .layout{max-width:1370px;margin:auto;display:flex;align-items:flex-start;gap:3.6rem;padding:2rem}
+    .sidebar{flex:0 0 285px;font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    .sidebar-inner{position:sticky;top:1.5rem;border:1px solid var(--border);background:var(--soft);border-radius:7px;padding:1.3rem;max-height:calc(100vh - 3rem);overflow:auto}
+    .sidebar h2{font-size:15px;margin:0 0 .65rem;padding:0 0 .5rem;border-bottom:1px solid var(--border)}
+    .sidebar ul{list-style:none;margin:0;padding:0}
+    .sidebar li{margin:0}
+    .sidebar a{display:block;text-decoration:none;color:#475569;padding:.3rem 0}
+    .sidebar a:hover,.sidebar a:focus{color:var(--blue);text-decoration:underline}
+    .sidebar .back{margin-bottom:.6rem;font-weight:600}
+    main{min-width:0;width:100%;max-width:850px}
+    header{margin:0 0 2rem;text-align:center}
+    h1,h2,h3,.sans,figcaption,table,.stat-line,.example-note,.flow,.funnel,.outcome-bars,.compare-grid,.fact-row,.compact-detail,.smallprint{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+    h1,h2,h3{color:#111827;line-height:1.32}
+    h1{font-size:1.65rem;font-weight:700;letter-spacing:-.02em;margin:.2rem 0 .5rem}
+    header .subtitle{max-width:700px;font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--muted);margin:0 auto}
+    h2{font-size:1.36rem;margin:2.85rem 0 1rem;border-bottom:1px solid var(--border);padding-bottom:.5rem;scroll-margin-top:20px}
+    h3{font-size:1.08rem;margin:1.6rem 0 .5rem}
+    p{margin:0 0 1rem}
+    ul,ol{padding-left:1.5rem;margin:0 0 1.3rem}
+    li{margin:.35rem 0}
+    code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+    p code,li code,figcaption code{font-size:.87em;background:#f1f5f9;padding:.08rem .28rem;border-radius:3px;overflow-wrap:anywhere}
+    .code-sample{background:#f8fafc;border:1px solid var(--border);border-radius:6px;padding:1rem 1.1rem;overflow-x:auto;font-size:12.5px;line-height:1.65;margin:1.15rem 0 1.4rem;white-space:pre}
+    .callout{margin:1.35rem 0 1.5rem;background:var(--soft);border-left:3px solid #64748b;padding:.85rem 1.1rem}
+    .callout p:last-child{margin-bottom:0}
+    .callout.blue{border-left-color:var(--blue)}
+    .smallprint{font-size:12px;color:var(--muted);line-height:1.55}
+    .lead{font-size:1.03rem}
+    figure{margin:1.5rem 0 2rem}
+    .figure-body{border:1px solid var(--border);background:#fff;border-radius:6px;padding:1rem}
+    figcaption{text-align:center;font-size:12.5px;line-height:1.6;color:var(--muted);font-style:italic;margin:.5rem auto 0;max-width:760px}
+    .flow{display:flex;gap:.45rem;align-items:stretch;justify-content:center}
+    .flow .step{flex:1;min-width:0;border:1px solid var(--border);border-radius:5px;padding:.72rem .6rem;text-align:center;background:var(--soft);font-size:12px;line-height:1.5}
+    .flow .step b{display:block;font-size:13px;line-height:1.4;color:#1f2937}
+    .flow .step em{display:block;color:var(--muted);font-style:normal;margin-top:.2rem}
+    .flow .arrow{align-self:center;font:20px/1 sans-serif;color:#64748b;flex:0 0 13px}
+    .flow .step.focus{background:var(--light-blue);border-color:#93c5fd}
+    .flow.four .step{font-size:11.5px}
+    .fact-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:1.4rem 0}
+    .fact{border:1px solid var(--border);border-radius:5px;background:var(--soft);padding:.75rem .65rem;text-align:center}
+    .fact strong{display:block;font-size:21px;line-height:1.1;color:#172554}
+    .fact span{display:block;color:var(--muted);font-size:11px;line-height:1.4;margin-top:.35rem}
+    .example-note{border:1px solid #bfdbfe;border-left:3px solid var(--blue);border-radius:3px;background:#f8fbff;padding:.85rem 1rem;margin:1.2rem 0 1.45rem;line-height:1.6;font-size:13px}
+    .example-note strong{display:block;margin-bottom:.28rem;font-size:13px;color:#1d4ed8}
+    .example-note code{font-size:12px;overflow-wrap:anywhere}
+    .memory-card{padding:1rem 1.1rem;border:1px solid #cbd5e1;background:var(--soft);border-radius:5px;margin:1.2rem 0;font:13px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow-wrap:anywhere}
+    .memory-card .field{display:block;color:var(--muted);font-size:11px;letter-spacing:.035em;text-transform:uppercase;font-weight:600;margin:.1rem 0 .25rem}
+    .memory-card blockquote{margin:0 0 .75rem;border-left:2px solid #94a3b8;padding-left:.75rem}
+    .memory-card .mini-row{display:flex;gap:.75rem;flex-wrap:wrap;border-top:1px solid var(--border);padding-top:.65rem}
+    .memory-card .mini-row span{font-size:12px}
+    .compare-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.7rem;margin:1.3rem 0}
+    .compare-grid div{padding:.85rem;border:1px solid var(--border);border-radius:5px;line-height:1.5;font-size:12.5px}
+    .compare-grid strong{display:block;font-size:13px;margin-bottom:.25rem}
+    .compare-grid span{color:var(--muted)}
+    .funnel{border:1px solid var(--border);padding:1rem 1.2rem;border-radius:6px}
+    .funnel-row{display:grid;grid-template-columns:162px 1fr 82px;align-items:center;gap:.8rem;margin:.7rem 0;font-size:12px}
+    .funnel-row .track{height:18px;background:#eef2f7;border-radius:3px;overflow:hidden}
+    .funnel-row .fill{height:100%;background:#718dbd;border-radius:3px}
+    .funnel-row:first-child .fill{background:#355ca8}
+    .funnel-row strong{text-align:right;font-size:13px}
+    .funnel-note{font-size:11.5px;color:var(--muted);margin:.55rem 0 0}
+    .table-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+    table{width:100%;border-collapse:collapse;font-size:12.5px;line-height:1.5;margin:1.2rem 0 1.5rem}
+    th,td{padding:.65rem .65rem;vertical-align:middle;text-align:left;border-bottom:1px solid var(--border)}
+    thead th{background:var(--soft);border-top:1px solid var(--border);border-bottom:2px solid #cbd5e1;font-size:12px}
+    td.num,th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+    tr.emph td{background:#f8fafc}
+    .outcome-bars{margin:1rem 0 1.3rem}
+    .outcome-bars .bar-row{display:grid;grid-template-columns:160px 1fr 45px;align-items:center;gap:.7rem;margin:.48rem 0;font-size:12px}
+    .outcome-bars .track{height:14px;border-radius:2px;background:#eef2f7}
+    .outcome-bars .fill{height:100%;background:#8ca5c9;border-radius:2px;min-width:0}
+    .outcome-bars .bar-row:first-child .fill{background:#315ca9}
+    .outcome-bars strong{text-align:right;font-size:12px}
+    .key-insight{border-left:3px solid var(--blue);background:#f7fbff;padding:1rem 1.1rem;margin:1.5rem 0;font-size:15px}
+    .key-insight p:last-child{margin:0}
+    .compact-detail{border-top:1px solid var(--border);padding:.75rem 0;margin:0}
+    .compact-detail:last-of-type{border-bottom:1px solid var(--border)}
+    .compact-detail summary{font-size:13px;font-weight:600;cursor:pointer}
+    .compact-detail .detail-content{margin-top:.8rem;font:14px/1.7 Georgia,"Times New Roman",serif}
+    .compact-detail table{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    .related{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem;margin:1.2rem 0}
+    .related div{border:1px solid var(--border);border-radius:4px;padding:.75rem;font-size:12px;line-height:1.5}
+    .related b{display:block;font-size:13px;margin-bottom:.2rem}
+    .related span{color:var(--muted)}
+    .references{font-size:14px}
+    .references li{margin:.45rem 0}
+    footer{border-top:1px solid var(--border);margin:2.8rem 0 0;padding:1.1rem 0;color:var(--muted);font-size:12px}
+    @media(max-width:1080px){.layout{gap:2rem}.sidebar{flex-basis:245px}}
+    @media(max-width:920px){.layout{display:block;padding:1.1rem}.sidebar{width:100%;margin-bottom:1.7rem}.sidebar-inner{position:static;max-height:none}.sidebar ul{columns:2}.sidebar li{break-inside:avoid}main{max-width:850px;margin:0 auto}}
+    @media(max-width:600px){h1{font-size:1.45rem}body{font-size:15px}.sidebar ul{columns:1}.flow{flex-wrap:wrap;gap:.35rem}.flow .step{flex:1 1 43%;min-width:110px}.flow .arrow{display:none}.fact-row{grid-template-columns:repeat(2,minmax(0,1fr))}.compare-grid,.related{grid-template-columns:1fr}.funnel-row{grid-template-columns:115px 1fr 66px;gap:.4rem;font-size:10.5px}.outcome-bars .bar-row{grid-template-columns:122px 1fr 40px;font-size:11px}.figure-body{padding:.7rem}.code-sample{font-size:11px}table{min-width:520px}}
   </style>
 </head>
 <body>
-  <div class="layout-wrapper">
-    <nav class="toc-sidebar">
-      <div class="toc-sticky">
+  <div class="layout">
+    <nav class="sidebar" aria-label="Contents">
+      <div class="sidebar-inner">
         <a class="back" href="/">← Portfolio</a>
-        <h3>Contents</h3>
+        <h2>Contents</h2>
         <ul>
-          <li><a href="#tldr">TL;DR</a></li>
-          <li><a href="#question">1. The Question</a></li>
-          <li><a href="#example">2. A Real Example</a></li>
-          <li><a href="#benchmark">3. Building the Pilot</a></li>
-          <li><a href="#records">4. What “Memory” Meant</a></li>
-          <li><a href="#design">5. Experimental Design</a></li>
-          <li><a href="#selection">6. Where the Related Records Went</a></li>
-          <li><a href="#results">7. Executable Results</a></li>
-          <li><a href="#limits">8. What the Results Do—and Do Not—Show</a></li>
-          <li><a href="#next">9. What Comes Next</a></li>
-          <li><a href="#positioning">10. Positioning</a></li>
-          <li><a href="#references">References</a></li>
+          <li><a href="#tldr">In brief</a></li>
+          <li><a href="#problem">1. The Problem</a></li>
+          <li><a href="#example">2. A Simple Example</a></li>
+          <li><a href="#dataset">3. The Dataset</a></li>
+          <li><a href="#memory">4. What Counts as a Memory?</a></li>
+          <li><a href="#experiment">5. The Experiment</a></li>
+          <li><a href="#happened">6. What Happened?</a></li>
+          <li><a href="#why">7. Why Did It Happen?</a></li>
+          <li><a href="#learned">8. What We Learned</a></li>
+          <li><a href="#next">9. What I'd Test Next</a></li>
+          <li><a href="#related">10. Related Work</a></li>
+          <li><a href="#references">References &amp; evidence</a></li>
         </ul>
       </div>
     </nav>
-
-    <main class="main-content">
+    <main>
       <header>
         <h1>Selecting Earlier Task Records for Coding Agents</h1>
-        <p class="subtitle">An exploratory study of two different decisions: what to retain from earlier repository work before future tasks are known, and what a later coding agent should actually see.</p>
-</header>
+        <p class="subtitle">Can a coding agent benefit from earlier work in the same repository? A small executable experiment on what gets saved, what gets shown, and what actually helps.</p>
+      </header>
 
-      <h2 id="tldr" style="margin-top:0;">TL;DR</h2>
+      <h2 id="tldr" style="margin-top:0">In brief</h2>
+      <p class="lead">An earlier task may contain information a later coding agent needs. But remembering every task can bury that information in unrelated history. I studied two decisions: <strong>should an earlier record be kept before the later task is known?</strong> And <strong>should a particular later agent see it?</strong></p>
+      <p>On ten SWE-ContextBench tasks, the benchmark-annotated related record reached fixed retrieval for eight targets, survived the keep/drop decision for two, and reached the later agent after read filtering for one. The tested memory conditions did not improve full-task resolution over the separately run No-Memory baseline. The experiment is most useful for understanding how historical context gets filtered—and how difficult it is to demonstrate that filtering helped.</p>
 
-      <p>A coding agent working on a new issue may benefit from an earlier issue in the same repository. But two decisions are easy to conflate: <strong>should the earlier record be retained at all?</strong> and, after a new task arrives, <strong>should that record be shown to the worker?</strong></p>
+      <h2 id="problem">1. The Problem</h2>
+      <p>Imagine two coding agents working on the same software project months apart. Agent A investigates an unexpected database behavior. Agent B encounters another issue involving the same part of the codebase. Agent B starts fresh: it can read the repository, but it does not automatically know what Agent A encountered.</p>
+      <p>A memory system might preserve some history for Agent B. That raises two different questions. <strong>At the end of Agent A's work, what deserves to be retained?</strong> Later, when Agent B's task is known, <strong>what part of that retained history should enter its prompt?</strong> The first decision cannot legitimately depend on future tasks; the second can.</p>
+      <figure>
+        <div class="figure-body">
+          <div class="flow">
+            <div class="step"><b>Earlier work</b><em>What happened?</em></div><span class="arrow" aria-hidden="true">→</span>
+            <div class="step focus"><b>Keep or drop?</b><em>Future task unknown</em></div><span class="arrow" aria-hidden="true">→</span>
+            <div class="step focus"><b>Show or hide?</b><em>New task now known</em></div><span class="arrow" aria-hidden="true">→</span>
+            <div class="step"><b>Later repair</b><em>Does it pass tests?</em></div>
+          </div>
+        </div>
+        <figcaption>Figure 1. Retaining a record and exposing it to a later agent are separate decisions.</figcaption>
+      </figure>
+      <p>The aim here was not to invent a memory database. It was to put these decisions in a setting where the downstream outcome could be checked by running software tests.</p>
 
-      <p>This pilot separated those decisions on ten SWE-ContextBench-derived target tasks. A custom source-only selector made one retain/drop decision for each earlier record without seeing any future target. A fixed retriever later considered the three most recent records for each target, and an optional target-aware selector could expose or withhold the surviving records.</p>
+      <h2 id="example">2. A Simple Example</h2>
+      <p>The running example is from <strong>Django</strong>, the Python web framework. Its ORM lets a program fetch database objects without writing raw SQL. Two methods are relevant: <code>select_related()</code> follows relationships and fetches related objects in the same query; <code>only()</code> restricts which fields are loaded initially.</p>
+      <p>In the later task (<code>django__django-35356</code>), a model refers to another instance of itself using a one-to-one relationship. The issue report gives this query, here abbreviated to its relevant lines:</p>
 
-      <div class="three metrics">
-        <div><strong>8 / 10</strong><span>targets where the benchmark-annotated related record reached the fixed top-three retrieval set</span></div>
-        <div><strong>2 / 8</strong><span>of those related records survived source-only admission</span></div>
-        <div><strong>1 / 8</strong><span>was ultimately exposed by the later read filter</span></div>
+      <pre class="code-sample"><code>class Example(models.Model):
+    name = models.CharField(max_length=32)
+    source = models.OneToOneField(
+        "self", related_name="destination",
+        on_delete=models.CASCADE
+    )
+
+Example.objects.select_related(
+    "source", "destination"
+).only(
+    "name", "source__name", "destination__name"
+)</code></pre>
+
+      <p><strong>What goes wrong?</strong> Instead of returning the requested data, Django reports a <code>FieldError</code>: <code>Example.source</code> cannot be both deferred (not loaded immediately) and traversed using <code>select_related()</code>. According to the issue, fetching either relationship separately works; combining them triggers the problem.</p>
+      <p>Now look backward. About ten months earlier, task <code>django__django-16910</code> described a different problem involving <code>only()</code>, <code>select_related()</code>, and a reverse one-to-one relationship: Django fetched more fields than expected. Its reference change touched <code>django/db/models/sql/query.py</code>.</p>
+      <p>These are <strong>related ORM problems, not identical bugs</strong>. The earlier record names a plausible area to investigate, but it does not tell Agent B how to fix the later error.</p>
+
+      <figure>
+        <div class="figure-body">
+          <div class="flow">
+            <div class="step"><b>Earlier Django issue</b><em>Reverse relation fetched extra fields</em></div><span class="arrow" aria-hidden="true">→</span>
+            <div class="step focus"><b>Historical record</b><em>Issue excerpt + changed path</em></div><span class="arrow" aria-hidden="true">→</span>
+            <div class="step"><b>Later Django issue</b><em>Combining two relations raises FieldError</em></div>
+          </div>
+        </div>
+        <figcaption>Figure 2. The actual source–target example used throughout this article, with two distinct symptoms involving the same ORM features.</figcaption>
+      </figure>
+      <p>Would showing the earlier record help a coding agent? That is the question the experiment can test; the fact that the benchmark labels the pair related is not itself proof of usefulness.</p>
+
+      <h2 id="dataset">3. The Dataset</h2>
+      <p>I used <a href="https://arxiv.org/abs/2602.08316">SWE-ContextBench Lite</a>, a benchmark of software issues with earlier experience tasks, later target tasks, and known relations between some pairs. The release contains 300 earlier experience tasks and 99 related targets.</p>
+      <p>A simple setup would give the agent the one earlier record already annotated as related to its target. But that gives away much of the retrieval problem. Instead, this study assembled a <strong>history of every strictly earlier task in the same repository</strong>. The published relation was kept out of the selectors' inputs and used only for offline analysis.</p>
+
+      <div class="fact-row">
+        <div class="fact"><strong>300</strong><span>earlier experience tasks in Lite</span></div>
+        <div class="fact"><strong>99</strong><span>later targets screened</span></div>
+        <div class="fact"><strong>11</strong><span>clean histories after structural screening</span></div>
+        <div class="fact"><strong>10</strong><span>primary targets after evaluator controls</span></div>
       </div>
 
-      <p>The end-to-end result was not a memory win. The separately executed No-Memory condition resolved <strong>2/10</strong> targets, while Share-All, Random admission, source-only selective admission, selective admission plus read filtering, and the known-related diagnostic each resolved <strong>1/10</strong>. The selective-write condition fixed more designated failing tests on some tasks, but did not resolve more tasks.</p>
+      <p>Each of the eleven clean targets had 13–114 earlier candidates. One Matplotlib target was excluded from primary analysis because the evaluator's no-change control already satisfied its failing test. The remaining ten tasks span Django, SymPy, and scikit-learn, with <strong>eight distinct resolving pull requests</strong> underlying the ten target IDs.</p>
 
-      <p>That result needs careful interpretation. The stored “memories” were not verified lessons learned by successful earlier agents: they were shortened historical issue records plus paths touched by a reference change. <strong>197 of 211 records were truncated and all 211 had unknown source-agent outcomes.</strong> Independent worker runs also disagreed even when their prompts were byte-identical. One of the two No-Memory successes exists only after a separate test-path-filtered regrade of a raw patch that had not applied.</p>
-
-      <div class="finding">
-        <p><strong>Main takeaway:</strong> this experiment is most informative as a failure analysis of information selection and experimental design. It shows exactly where benchmark-related history disappeared—retrieval, source-time admission, then target-time exposure—but it does not establish that those exclusions were correct, that memory is harmful, or that the tested selector improves coding performance.</p>
+      <div class="example-note">
+        <strong>Following the Django example</strong>
+        The later task <code>django__django-35356</code> had <strong>114</strong> earlier same-repository candidates—not just the annotated source <code>django__django-16910</code>. The selector had to operate in that larger history without being told which source the benchmark considered related.
       </div>
 
-      <h2 id="question">1. The Question</h2>
+      <p>The eleven histories contained 603 target–record entries, deduplicating to 211 distinct source records. The primary ten histories used 188 distinct sources; source-time decisions were frozen across the 211-record universe. Issue creation timestamps established ordering, although they do not prove when the corresponding repairs became available.</p>
 
-      <p>Persistent agent memory is often discussed as if “store useful experience” and “retrieve relevant experience” were one problem. They are not.</p>
+      <h2 id="memory">4. What Counts as a Memory?</h2>
+      <p>The word <em>memory</em> needs care here. The completed pilot did <strong>not</strong> store insights extracted from a successful earlier coding agent's actions. It stored a short excerpt of an earlier issue together with file paths from its reference change. The source agent's outcome was unknown.</p>
+      <p>This is the actual record associated with our earlier Django task, rendered more readably but retaining its stored text:</p>
 
-      <p>A source-time decision happens before the future task exists. It asks whether an earlier record is sufficiently bounded, reliable, and reusable to retain. A target-time decision happens later, after the new issue is known. It asks whether an already-retained record belongs in this worker’s context.</p>
-
-      <div class="mermaid">
-flowchart LR
-    S["Earlier repository task"] --> R["Historical record"]
-    R --> W{"Source-only decision<br/>SHARE or DO_NOT_SHARE"}
-    W -->|SHARE| M["Retained pool"]
-    W -->|DO_NOT_SHARE| X["Unavailable later"]
-    M --> K["Fixed retrieval:<br/>3 most recent records"]
-    K --> Q{"Target-aware decision<br/>EXPOSE or WITHHOLD"}
-    Q -->|EXPOSE| A["Later coding agent"]
-    Q -->|WITHHOLD| H["Not shown"]
-    A --> T["Canonical repository tests"]
-      </div>
-      <div class="figure-caption"><strong>Figure 1:</strong> The experiment separates source-time admission from later exposure. A source record rejected globally cannot be recovered by the later read selector.</div>
-
-      <p>Every worker run starts from a clean target repository state. The goal is not to build a new memory database; it is to make the two selection points measurable against executable software outcomes.</p>
-
-      <h2 id="example">2. A Real Example from the Pilot</h2>
-
-      <p>The cleanest example comes from Django. An earlier task, <code>django__django-16910</code>, concerned <code>QuerySet.only()</code> interacting incorrectly with <code>select_related()</code> on a reverse <code>OneToOneField</code>. The record stored by the experiment was:</p>
-
-      <div class="finding">
-        <p><strong>Stored source record:</strong> “Earlier task experience concerned: QuerySet.only() doesn't work with select_related() on a reverse OneToOneField relation. Description On Django 4.2 calling only() with select_related() on a query using the reverse lookup for a OneToOne relation does not generate the correct query. All the fields from the related model are still included in the… Its reference change touched: django/db/models/sql/query.py.”</p>
+      <div class="memory-card" aria-label="Actual Django source memory">
+        <span class="field">Source task · django__django-16910</span>
+        <blockquote>Earlier task experience concerned: QuerySet.only() doesn't work with select_related() on a reverse OneToOneField relation. Description On Django 4.2 calling only() with select_related() on a query using the reverse lookup for a OneToOne relation does not generate the correct query. All the fields from the related model are still included in the….</blockquote>
+        <span class="field">Reference change touched</span>
+        <code>django/db/models/sql/query.py</code>
+        <div class="mini-row">
+          <span><strong>Type:</strong> Earlier task example</span>
+          <span><strong>Source-agent outcome:</strong> Unknown</span>
+          <span><strong>Verified repair lesson:</strong> None</span>
+        </div>
       </div>
 
-      <p>A later task, <code>django__django-35356</code>, reported a related failure involving recursive <code>OneToOneField</code> relationships together with <code>select_related()</code> and <code>only()</code>. The benchmark annotates the earlier task as related to the later one.</p>
+      <p>The stored claim was prefixed with “Earlier task experience concerned” and suffixed with the reference-change path. It also warned the worker to inspect current code and tests rather than treat the record as an instruction. It did not contain the earlier fix as an executable recipe or evidence that an agent learned from that task.</p>
 
-      <div class="mermaid figure-compact">
-flowchart TB
-    S["Earlier task: django-16910<br/>only() + select_related()<br/>reverse OneToOneField"]
-    S --> R["Stored record<br/>truncated issue text +<br/>django/db/models/sql/query.py"]
-    R --> K["Among 3 most recent<br/>records for django-35356"]
-    K --> W["Source-only selector: SHARE"]
-    W --> Q["Target-aware selector: EXPOSE"]
-    Q --> A["GPT-6 Luna + SWE-Edit<br/>works on django-35356"]
-    A --> O["Canonical result:<br/>unresolved · F2P 0/1"]
-
-    style R fill:#e1f5fe,stroke:#039be5,stroke-width:2px
-      </div>
-      <div class="figure-caption"><strong>Figure 2:</strong> One observed source→retrieval→admission→exposure→worker path. “Related” is benchmark metadata; this run does not prove that the stored record contained a useful repair lesson.</div>
-
-      <p>This example is useful precisely because it did <em>not</em> end in a success. The earlier record survived every selection stage and reached the worker, yet the later task remained unresolved. The experiment cannot tell whether the record was insufficient, the worker failed to use it, or the relation was useful only in a richer representation than the stored card.</p>
-
-      <p>The converse also occurred. The earlier SymPy record <code>sympy__sympy-16988</code>—about duplicate handling in <code>Intersection</code> and touching <code>sympy/sets/sets.py</code>—entered the top-three history for later related tasks but received <code>DO_NOT_SHARE</code>. That single source decision was reused across three later targets. Once rejected, no later target-aware selector could recover it.</p>
-
-      <h2 id="benchmark">3. Building a Pilot Where Selection Was Actually Non-Trivial</h2>
-
-      <p>The substrate was SWE-ContextBench Lite: 300 earlier “experience” tasks, 99 related target tasks, and published source–target relationships. Those published relationships were kept hidden from ordinary retrieval and selection. Instead, each target received every strictly earlier task from the same repository as its historical candidate pool.</p>
-
-      <p>All 99 targets were screened before agent treatments. The automatic audit separated clean temporal relationships from explicit prior references, high-hint cases, same-PR/co-resolution cases, and ambiguous chronology.</p>
-
-      <div class="mermaid">
-flowchart LR
-    A["99 Lite target tasks"] --> B["11 targets pass the<br/>clean structural screen"]
-    B --> C["Candidate histories:<br/>13–114 earlier tasks"]
-    C --> D["Matplotlib control invalid:<br/>semantic no-op already resolves"]
-    D --> E["10 primary targets<br/>Django · SymPy · scikit-learn"]
-    E --> F["20/20 primary evaluator controls pass<br/>no-op unresolved + reference patch resolved"]
-
-    style E fill:#e1f5fe,stroke:#039be5,stroke-width:2px
-      </div>
-      <div class="figure-caption"><strong>Figure 3:</strong> The frozen pilot was selected before treatment outcomes. Matplotlib remained in the audit universe but was excluded from primary analysis after a model-free control showed its semantic no-op already passed the designated failing test.</div>
-
-      <p>The eleven frozen histories contained 603 target–record entries that deduplicated to <strong>211 unique source records</strong>. The ten primary histories contained 188 of those records, but source-time admission remained frozen over the full 211-record universe. The primary target pools ranged from 13 to 114 earlier same-repository records.</p>
-
-      <p>The ten primary target IDs correspond to only <strong>eight distinct resolving pull requests</strong>: two pairs of SymPy targets share a PR. The pilot also spans only three repositories. Those dependencies matter when interpreting “10 targets” as a sample size.</p>
-
-      <h2 id="records">4. What “Memory” Actually Meant in This Experiment</h2>
-
-      <p>This is the most important qualification in the study.</p>
-
-      <p>The completed pilot did <strong>not</strong> use fresh trajectories from earlier coding agents. Each source record was produced deterministically from benchmark metadata:</p>
-
-      <ul>
-        <li>up to roughly 320 characters from the earlier issue description;</li>
-        <li>the earlier task’s creation time and repository provenance;</li>
-        <li>up to eight paths touched by the source task’s reference change;</li>
-        <li>a generic warning to inspect current code and tests rather than treat the record as a prescription.</li>
-      </ul>
-
-      <div class="three metrics">
-        <div><strong>211</strong><span>unique historical records in the frozen source-decision universe</span></div>
-        <div><strong>197 / 211</strong><span>records whose stored description ends in a truncation marker</span></div>
-        <div><strong>211 / 211</strong><span>records with unknown source-agent outcome</span></div>
+      <div class="fact-row">
+        <div class="fact"><strong>211</strong><span>unique records</span></div>
+        <div class="fact"><strong>197</strong><span>truncated descriptions</span></div>
+        <div class="fact"><strong>0</strong><span>verified source-agent outcomes</span></div>
+        <div class="fact"><strong>≈320</strong><span>issue-description characters per record, at most</span></div>
       </div>
 
-      <p>The paths came from reference changes, not from an observed successful source-agent trajectory. The timestamp used for chronology was the released issue <code>created_at</code>, which is reproducible but does not prove that the corresponding repair or experience existed at that exact time.</p>
-
-      <div class="finding">
-        <p><strong>So the experiment tests selection over historical task records—not validated learned lessons.</strong> A failure to benefit from these records is not evidence that richer agent memory, verified repair summaries, or successful source trajectories would also fail.</p>
+      <div class="callout blue">
+        <p><strong>Why this matters:</strong> a historical issue record is not the same as reusable know-how. The experiment can tell us what happened when these records were selected; it cannot tell us that a learned, verified memory system would behave the same way.</p>
       </div>
 
-      <h2 id="design">5. The Experiment That Ultimately Ran</h2>
+      <h2 id="experiment">5. The Experiment</h2>
+      <p>A custom selector made a single <strong>SHARE or DO_NOT_SHARE</strong> decision for each source record before receiving any later target. For a new task, the system chose the three most recent history slots. Only retained records in those slots could reach the worker; filtered-out slots were not backfilled by older memories. A second selector could then choose <strong>EXPOSE or WITHHOLD</strong> for that specific target.</p>
 
-      <p>The protocol evolved substantially while infrastructure and worker failures were diagnosed. The completed core comparison used the following six conditions on the same ten primary target tasks:</p>
+      <figure>
+        <div class="figure-body">
+          <div class="flow four">
+            <div class="step"><b>Source record</b><em>Earlier task only</em></div><span class="arrow" aria-hidden="true">→</span>
+            <div class="step focus"><b>SHARE / DROP</b><em>Decided globally, once</em></div><span class="arrow" aria-hidden="true">→</span>
+            <div class="step"><b>Top-three slots</b><em>Fixed recency retrieval</em></div><span class="arrow" aria-hidden="true">→</span>
+            <div class="step focus"><b>EXPOSE / HIDE</b><em>Later task now visible</em></div><span class="arrow" aria-hidden="true">→</span>
+            <div class="step"><b>Agent + tests</b><em>Patch graded</em></div>
+          </div>
+        </div>
+        <figcaption>Figure 3. The exact ordering matters: source admission does not see the future target, and later retrieval cannot restore a globally rejected record.</figcaption>
+      </figure>
 
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr><th>Condition</th><th>Source-time admission</th><th>Target-time handling</th></tr>
-          </thead>
-          <tbody>
-            <tr><td><strong>A · No Memory</strong></td><td>No records retained for the worker</td><td>No record shown</td></tr>
-            <tr><td><strong>B · Share-All</strong></td><td>All records available</td><td>Expose the three fixed recent slots</td></tr>
-            <tr><td><strong>C · Random</strong></td><td>Random global subset matching the selector’s total admission count</td><td>Same fixed recent slots</td></tr>
-            <tr><td><strong>D · Selective Write</strong></td><td>Custom source-only binary selector</td><td>Same fixed recent slots</td></tr>
-            <tr><td><strong>E · Selective Write + Read</strong></td><td>Same source-only selector as D</td><td>Custom target-aware EXPOSE/WITHHOLD filter</td></tr>
-            <tr><td><strong>F · Known-Related Diagnostic</strong></td><td>Use hidden benchmark relationship metadata</td><td>Show the annotated related record(s) within the common budget</td></tr>
-          </tbody>
-        </table>
+      <p>Six conditions were completed, using the same ten targets. They represent different ways to control which history reaches the agent:</p>
+
+      <div class="compare-grid">
+        <div><strong>A · No Memory</strong><span>The worker sees only the current issue and repository.</span></div>
+        <div><strong>B · Share-All</strong><span>Expose the three latest historical records.</span></div>
+        <div><strong>C · Random</strong><span>Retain a random subset with the same global count as selective write.</span></div>
+        <div><strong>D · Selective Write</strong><span>Keep/drop each source first, then use fixed retrieval.</span></div>
+        <div><strong>E · Write + Read</strong><span>Use the same source decisions, then a later show/hide filter.</span></div>
+        <div><strong>F · Known-Related</strong><span>Diagnostic using benchmark relationship metadata, not a proven usefulness ceiling.</span></div>
       </div>
 
-      <p>The original protocol also proposed a deliberative LLM write arm (<strong>G</strong>), but it was never run and remained outside the amended A–F core.</p>
+      <p>The custom decisions used the Jev System-One API (<code>jev-1.13.0</code>) with binary prompts. <strong>They did not implement the published Jev-Mem architecture.</strong> The coding worker was GPT-6 Luna with the SWE-Edit scaffold and <code>xhigh</code> reasoning; its changes were graded with the canonical SWE-ContextBench tests through an Apptainer adapter. The full B–E core produced forty graded runs, ten per condition.</p>
 
-      <h3>The selector</h3>
+      <div class="example-note">
+        <strong>Following the Django example</strong>
+        The record for <code>django__django-16910</code> was among the fixed three recent history slots for <code>django__django-35356</code>. The source-only selector said <strong>SHARE</strong>; the target-aware selector said <strong>EXPOSE</strong>. So in condition E, the later worker really did see this earlier record.
+      </div>
 
-      <p>The selective conditions used the TypeSafe System-One API with model <code>jev-1.13.0</code> through SDK 0.7.2. The source decision was a custom binary <code>SHARE / DO_NOT_SHARE</code> question. The later decision was a custom <code>EXPOSE / WITHHOLD</code> question. This is <strong>not an evaluation of the published Jev-Mem architecture</strong>; it uses the Jev System-One API as a bounded decision service.</p>
-
-      <p>The source selector admitted <strong>123 of 211</strong> records. The target-time selector was asked about 15 admitted records and returned <strong>EXPOSE once</strong>. Saved decision rationales were empty, so the archived evidence does not support reconstructing why a particular record was accepted or rejected from prose after the fact.</p>
-
-      <h3>Fixed retrieval matters</h3>
-
-      <p>Retrieval happened <em>before</em> source admission filtering: each target first selected its three most recent historical records. Admission could remove those slots, but older retained records did not backfill them. This made the write decision directly observable, but it also made global rejection unusually consequential.</p>
-
-      <p>The random control matched the selector’s <em>global</em> number of retained records, not the amount or length of context exposed on each target. And the final experiment did not include a Share-All + target-aware-read condition, so it is not a complete 2×2 write/read factorial.</p>
-
-      <h3>The coding worker and evaluator</h3>
-
-      <p>The completed B–E runs used Microsoft’s SWE-Edit baseline scaffold (revision <code>60ca673</code>) with requested model <code>gpt-6-luna</code>, <code>xhigh</code> reasoning effort, up to 100 iterations, and an 1,800-second task budget. Every target ran from a fresh repository state. The unchanged SWE-ContextBench evaluator was executed through a project-local Apptainer compatibility layer.</p>
-
-      <details>
-        <summary>Why the repository contains so many worker amendments</summary>
-        <div>
-          <p>The execution path was deliberately preserved instead of cleaned up after the fact. Early local mini-SWE-agent runs were invalidated by command/submission-interface problems. The original Luna qualification then failed its preregistered 2-of-3 full-resolution gate: the two graded tasks were both unresolved. A planned Sol comparison never completed because of patch/application, interruption, and quota problems. Several local-model candidates produced partial coding evidence but failed operational/mechanics screens or infrastructure limits.</p>
-          <p>A later output-boundary amendment made the repository diff—not the worker’s prose or Finish marker—the authoritative prediction, and excluded test-path changes from submitted source patches. Model-free fixtures validated that boundary. A user-authorized development amendment then ran the frozen No-Memory vs known-related signal test with Luna. That test produced executable discordance on 3/10 targets, which authorized the subsequent B–E exploratory treatment run.</p>
-          <p>These amendments are part of the evidence record. They are why the final result should be read as an exploratory development pilot rather than a preregistered confirmatory effect estimate.</p>
+      <details class="compact-detail">
+        <summary>Protocol, worker qualification, and what changed during development</summary>
+        <div class="detail-content">
+          <p>The initial plan was more ambitious: fresh source-agent trajectories, stronger governance comparisons, and a fuller write/read factorial. Worker and infrastructure qualifications failed several times. The experiment was explicitly amended before treatment execution to use the available issue-derived records and a Luna signal check. That check produced three executable disagreements in ten No-Memory versus known-related pairs; it established sensitivity to context, not benefit.</p>
+          <p>The final A/F conditions came from a separate paired signal run and its test-path-filtered regrade. The B–E arms were run later under the repaired authoritative diff-collection boundary. The proposed deliberative LLM write arm G never ran. The design also lacks Share-All plus target-aware Read; therefore it cannot isolate the read filter's independent effect.</p>
         </div>
       </details>
 
-      <h2 id="selection">6. Where the Benchmark-Related Records Went</h2>
+      <h2 id="happened">6. What Happened?</h2>
+      <p>First, consider what happened to the earlier records that the benchmark had annotated as related to their later tasks.</p>
+      <figure>
+        <div class="figure-body">
+          <div class="funnel" aria-label="Annotated related-record selection funnel">
+            <div class="funnel-row"><span>Reached top-three retrieval</span><div class="track"><div class="fill" style="width:100%"></div></div><strong>8 of 10</strong></div>
+            <div class="funnel-row"><span>Survived source admission</span><div class="track"><div class="fill" style="width:25%"></div></div><strong>2 of 8</strong></div>
+            <div class="funnel-row"><span>Exposed to later agent</span><div class="track"><div class="fill" style="width:12.5%"></div></div><strong>1 of 8</strong></div>
+            <p class="funnel-note">Bars use the eight retrieved target cases as the reference width. Two other targets lost their annotated source at retrieval itself.</p>
+          </div>
+        </div>
+        <figcaption>Figure 4. The 8 → 2 → 1 selection trace measures availability of annotated related records, not whether those records would have helped.</figcaption>
+      </figure>
 
-      <p>The most stable result is not a performance number. It is the selection trace.</p>
+      <p>Across all source records, the selector admitted <strong>123/211</strong>. On the ten primary tasks, fifteen admitted records entered read decisions, and only <strong>one</strong> was exposed. Six target-level source rejections in the related-record trace came from just two distinct SymPy source decisions reused across several targets—not six independent decisions.</p>
 
-      <div class="mermaid">
-flowchart LR
-    A["10 target tasks"] --> B["Related record reaches<br/>fixed top-3 retrieval<br/><b>8 targets</b>"]
-    B --> C["Related record survives<br/>source-only admission<br/><b>2 targets</b>"]
-    C --> D["Related record exposed<br/>by target-aware read filter<br/><b>1 target</b>"]
-
-    A -. "2 related records never retrieved" .-> X["Unavailable before admission"]
-    B -. "6 target-level rejections" .-> Y["Dropped at source time"]
-    C -. "1 withheld at read time" .-> Z["Retained but not shown"]
-
-    style D fill:#e1f5fe,stroke:#039be5,stroke-width:2px
-      </div>
-      <div class="figure-caption"><strong>Figure 4:</strong> Availability of the benchmark-annotated related record. The 8→2→1 funnel describes selection behavior, not usefulness: the benchmark relation does not prove that the stored record would improve the later repair.</div>
-
-      <p>The dependence structure is easy to miss. Those six target-level source-admission losses are not six independent bad decisions. They arise from only <strong>two unique source records</strong>, each reused across three later SymPy targets. A global admission error—if it is an error—can therefore propagate across several future tasks.</p>
-
-      <p>Context quantity also changed sharply across policies:</p>
-
-      <div class="three metrics">
-        <div><strong>30</strong><span>records exposed by Share-All across ten targets</span></div>
-        <div><strong>20</strong><span>records exposed by Random admission</span></div>
-        <div><strong>15 → 1</strong><span>records exposed by selective write → selective write+read</span></div>
+      <div class="example-note">
+        <strong>Following the Django example</strong>
+        The one annotated related record that survived all stages was <code>django-16910 → django-35356</code>. It reached the agent, but the later Django bug remained unresolved: <strong>0/1</strong> designated failing tests passed. This shows exposure occurred; it does not show the information was sufficient to repair the bug.
       </div>
 
-      <p>The corresponding character/4 context estimates were 9,408, 6,267, 4,752, and 315 tokens for B, C, D, and E. These are estimates rather than tokenizer-measured memory tokens. Because context amounts were not matched per target, outcome differences cannot be cleanly attributed to selection quality alone.</p>
+      <h3>Did the memory conditions solve more tasks?</h3>
+      <div class="outcome-bars" role="img" aria-label="Resolved tasks out of ten: No Memory 2, all five other conditions 1">
+        <div class="bar-row"><span>No Memory</span><div class="track"><div class="fill" style="width:20%"></div></div><strong>2/10</strong></div>
+        <div class="bar-row"><span>Share-All</span><div class="track"><div class="fill" style="width:10%"></div></div><strong>1/10</strong></div>
+        <div class="bar-row"><span>Random</span><div class="track"><div class="fill" style="width:10%"></div></div><strong>1/10</strong></div>
+        <div class="bar-row"><span>Selective Write</span><div class="track"><div class="fill" style="width:10%"></div></div><strong>1/10</strong></div>
+        <div class="bar-row"><span>Write + Read</span><div class="track"><div class="fill" style="width:10%"></div></div><strong>1/10</strong></div>
+        <div class="bar-row"><span>Known-Related</span><div class="track"><div class="fill" style="width:10%"></div></div><strong>1/10</strong></div>
+      </div>
 
-      <h2 id="results">7. Executable Results</h2>
-
-      <p>All 40 B–E treatment grades completed and were archived with canonical-result hashes. A and F came from the earlier paired signal run and its separate test-path-filtered regrade.</p>
-
-      <div class="table-responsive">
+      <p>No memory condition improved full-task resolution in these recorded runs. Partial test progress was more mixed:</p>
+      <div class="table-wrap">
         <table>
-          <thead>
-            <tr><th>Condition</th><th>Records exposed</th><th>Resolved targets</th><th>F2P passed</th><th>P2P preserved</th></tr>
-          </thead>
+          <thead><tr><th>Condition</th><th class="num">Exposed records</th><th class="num">Resolved</th><th class="num">Failing tests fixed</th><th class="num">Passing tests preserved</th></tr></thead>
           <tbody>
-            <tr><td><strong>A · No Memory</strong></td><td>0</td><td><strong>2 / 10</strong></td><td>9 / 48</td><td><strong>2145 / 2145</strong></td></tr>
-            <tr><td><strong>B · Share-All</strong></td><td>30</td><td>1 / 10</td><td>7 / 48</td><td>2025 / 2145</td></tr>
-            <tr><td><strong>C · Random</strong></td><td>20</td><td>1 / 10</td><td>8 / 48</td><td>2025 / 2145</td></tr>
-            <tr><td><strong>D · Selective Write</strong></td><td>15</td><td>1 / 10</td><td><strong>13 / 48</strong></td><td>2025 / 2145</td></tr>
-            <tr><td><strong>E · Selective Write + Read</strong></td><td>1</td><td>1 / 10</td><td>7 / 48</td><td>2025 / 2145</td></tr>
-            <tr><td><strong>F · Known-Related Diagnostic</strong></td><td>diagnostic relation-based exposure</td><td>1 / 10</td><td>8 / 48</td><td>2025 / 2145</td></tr>
+            <tr class="emph"><td>No Memory (A)</td><td class="num">0</td><td class="num"><strong>2/10*</strong></td><td class="num">9/48</td><td class="num">2145/2145</td></tr>
+            <tr><td>Share-All (B)</td><td class="num">30</td><td class="num">1/10</td><td class="num">7/48</td><td class="num">2025/2145</td></tr>
+            <tr><td>Random (C)</td><td class="num">20</td><td class="num">1/10</td><td class="num">8/48</td><td class="num">2025/2145</td></tr>
+            <tr><td>Selective Write (D)</td><td class="num">15</td><td class="num">1/10</td><td class="num"><strong>13/48</strong></td><td class="num">2025/2145</td></tr>
+            <tr><td>Write + Read (E)</td><td class="num">1</td><td class="num">1/10</td><td class="num">7/48</td><td class="num">2025/2145</td></tr>
+            <tr><td>Known-Related (F)</td><td class="num">—</td><td class="num">1/10</td><td class="num">8/48</td><td class="num">2025/2145</td></tr>
           </tbody>
         </table>
       </div>
+      <p class="smallprint">* The No-Memory 2/10 includes one success obtained only after a separate sanitized regrade of its saved patch. The original patch on <code>sympy-21203</code> did not apply. F is a relation-based diagnostic, not a genuine upper bound. F2P/P2P totals count tests grouped inside tasks, not independent experimental trials.</p>
 
-      <p>Selective write (D) has the largest aggregate FAIL_TO_PASS count, but that does not translate into more completed tasks. Much of the difference comes from partial progress on a small number of targets—for example, 4/6 failing tests passed on <code>sympy__sympy-16946</code> while the task remained unresolved.</p>
-
-      <p>The 120 lost PASS_TO_PASS tests in every B–F aggregate are concentrated on <code>sympy__sympy-21309</code>. No-Memory preserves those tests in its separately executed run. That pattern looks dramatic, but identical-prompt evidence prevents a simple “memory caused the regression” interpretation.</p>
-
-      <div class="finding">
-        <p><strong>The read-filtered arm’s only resolved task received no memory.</strong> E exposed zero records on nine of ten targets, including its sole resolved target, <code>sympy__sympy-19235</code>. The only target where E actually exposed a record was <code>django__django-35356</code>, and that task remained unresolved.</p>
+      <p>D fixed more designated failing tests overall (13/48), but still solved just one task. The 120 passing-test regressions in B–F were concentrated on <code>sympy-21309</code>. That contrast cannot automatically be attributed to memory because worker runs differed even when their prompts were identical.</p>
+      <div class="key-insight">
+        <p><strong>The sharpest observation:</strong> the Write + Read condition E showed <em>no memory at all</em> to nine of ten targets—including the one it solved. Its only genuinely exposed target was the Django example, which remained unresolved.</p>
       </div>
-
-      <h3>Run variability is not a footnote</h3>
-
-      <p>On nine targets, E exposed zero records, making its worker prompt byte-identical to the archived No-Memory prompt. Yet independent runs sometimes produced different executable outcomes. In particular, differences on <code>sympy__sympy-21203</code> and <code>sympy__sympy-21309</code> show that a single worker run per condition is not enough to assign every outcome difference to memory.</p>
-
-      <h3>The No-Memory 2/10 result has a grading-boundary caveat</h3>
-
-      <p>The raw No-Memory prediction for <code>sympy__sympy-21203</code> did not apply in its original evaluation and was unresolved. A later test-path-filtered regrade removed test-file edits from the saved patch; that sanitized patch applied and resolved the target with 3/3 failing tests fixed and 124/124 previously passing tests preserved. The reported A total of 2/10 includes this regraded success.</p>
-
-      <p>B–E, by contrast, were executed later with the repaired authoritative output boundary; all 40 submitted treatment patches contain no test-file edits. Therefore A and B–E are not perfectly symmetric executions, even though their canonical outcomes are all archived.</p>
-
-      <details>
-        <summary>Per-target FAIL_TO_PASS counts</summary>
-        <div class="table-responsive">
-          <table>
-            <thead>
-              <tr><th>Target</th><th>Total</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>django-34176</td><td>6</td><td>1</td><td>1</td><td>1</td><td>2</td><td>1</td><td>1</td></tr>
-              <tr><td>django-35356</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-              <tr><td>scikit-learn-13771</td><td>5</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td></tr>
-              <tr><td>sympy-16342</td><td>11</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>2</td></tr>
-              <tr><td>sympy-16946</td><td>6</td><td>0</td><td>0</td><td>0</td><td>4</td><td>0</td><td>0</td></tr>
-              <tr><td>sympy-16953</td><td>11</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-              <tr><td>sympy-19235</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
-              <tr><td>sympy-21203</td><td>3</td><td>3</td><td>1</td><td>2</td><td>2</td><td>1</td><td>1</td></tr>
-              <tr><td>sympy-21309</td><td>2</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
-              <tr><td>sympy-9384</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-            </tbody>
-          </table>
+      <details class="compact-detail">
+        <summary>Per-target test counts and grading details</summary>
+        <div class="detail-content">
+          <p>F2P means tests that were failing before the repair and passed afterward. P2P means previously passing tests that remained passing. A task counts as resolved only when the evaluator's full criteria hold.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Target</th><th class="num">F2P total</th><th class="num">A</th><th class="num">B</th><th class="num">C</th><th class="num">D</th><th class="num">E</th><th class="num">F</th></tr></thead>
+              <tbody>
+                <tr><td>django-34176</td><td class="num">6</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">2</td><td class="num">1</td><td class="num">1</td></tr>
+                <tr><td>django-35356</td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+                <tr><td>scikit-learn-13771</td><td class="num">5</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td></tr>
+                <tr><td>sympy-16342</td><td class="num">11</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">2</td></tr>
+                <tr><td>sympy-16946</td><td class="num">6</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">4</td><td class="num">0</td><td class="num">0</td></tr>
+                <tr><td>sympy-16953</td><td class="num">11</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+                <tr><td>sympy-19235</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td></tr>
+                <tr><td>sympy-21203</td><td class="num">3</td><td class="num">3</td><td class="num">1</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">1</td></tr>
+                <tr><td>sympy-21309</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">1</td></tr>
+                <tr><td>sympy-9384</td><td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>The original A patch for <code>sympy-21203</code> had <code>patch_applied=false</code> and <code>resolved=false</code>; after filtering test-path edits, its saved source patch applied and fixed 3/3 failing tests while preserving 124/124 passing tests. B–E were collected under the later repaired output boundary. Those are different execution/grading histories, not clean randomized replicates.</p>
         </div>
       </details>
 
-      <h2 id="limits">8. What the Results Do—and Do Not—Show</h2>
+      <h2 id="why">7. Why Did It Happen?</h2>
+      <p>There is no single established explanation for these outcomes. The evidence does, however, show where information was removed and why attributing the final scores to the selector would be premature.</p>
 
-      <p>The tempting headline would be “memory made the coding agent worse.” The evidence does not support that claim.</p>
+      <h3>The earlier record was thin</h3>
+      <p>Our Django record said that a previous issue involved <code>only()</code>, <code>select_related()</code>, and <code>django/db/models/sql/query.py</code>. That might point a human or agent toward relevant code. But it did not include a verified repair strategy, a successful agent trajectory, or proof that applying the earlier fix would solve the later FieldError. The same limitation applies to most of the stored history.</p>
 
-      <p>What is directly observed is narrower:</p>
+      <h3>One early decision affected several later tasks</h3>
+      <p>Six of the eight retrieved related-record cases were dropped before read filtering; those six target-level losses came from only two shared SymPy source decisions. The selector's saved rationales were empty. We can observe the exclusions, but cannot truthfully explain each rejection as an identified reasoning failure, nor assume it was incorrect.</p>
 
-      <ul>
-        <li>the benchmark-related record was often unavailable by the time target-aware selection happened;</li>
-        <li>none of the tested memory conditions improved full-task resolution over the separately executed No-Memory baseline;</li>
-        <li>selective write changed partial failing-test performance on some targets;</li>
-        <li>the read-filtered arm mostly reduced to no memory at all;</li>
-        <li>independent worker runs varied enough to confound single-run causal comparisons.</li>
-      </ul>
+      <h3>The read filter almost eliminated memory exposure</h3>
+      <p>E showed zero historical records on nine tasks. That makes E a poor test of whether <em>using memory</em> helps: its sole resolved task was among the nine receiving none. The Django case was the exception—its source record was shown—but exposure did not produce a resolved repair.</p>
 
-      <p>Several unresolved issues prevent a stronger conclusion.</p>
-
-      <div class="table-responsive">
-        <table>
-          <thead><tr><th>Limitation</th><th>Why it matters</th></tr></thead>
-          <tbody>
-            <tr><td><strong>No verified useful-memory positive control</strong></td><td>The historical record may never have contained a repair lesson capable of helping the worker.</td></tr>
-            <tr><td><strong>Issue proxies, not learned agent memories</strong></td><td>197/211 records are truncated and every source outcome is unknown.</td></tr>
-            <tr><td><strong>Single independent worker run per condition</strong></td><td>Prompt-identical A/E runs sometimes disagree, so treatment and worker variance are entangled.</td></tr>
-            <tr><td><strong>Different A/F grading path</strong></td><td>One reported No-Memory success appears only after a separate sanitized regrade.</td></tr>
-            <tr><td><strong>Unequal context quantity</strong></td><td>B/C/D/E exposed 30/20/15/1 records; Random is globally count-matched, not target-context matched.</td></tr>
-            <tr><td><strong>Missing Share-All + Read condition</strong></td><td>The independent causal effect of target-time read filtering cannot be identified.</td></tr>
-            <tr><td><strong>Small dependent sample</strong></td><td>10 IDs come from 3 repositories and only 8 distinct resolving PRs.</td></tr>
-            <tr><td><strong>Approximate chronology</strong></td><td>Issue creation time does not establish when a source repair or usable experience became available.</td></tr>
-          </tbody>
-        </table>
+      <h3>The worker and comparison were not stable enough for causal claims</h3>
+      <p>On nine E targets, the archived worker prompts were byte-identical to No Memory, yet independently executed workers sometimes produced different patches or grades, notably on <code>sympy-21203</code> and <code>sympy-21309</code>. The A/F runs also used a distinct regrading path. Meanwhile the memory conditions exposed unequal amounts of context: B/C/D/E used 30/20/15/1 records across the ten targets. Random admission matched the selector's global retained count, not per-target exposure.</p>
+      <div class="callout">
+        <p>The missing <strong>Share-All + target-aware Read</strong> cell means we cannot separately estimate the effect of the read decision, or its interaction with source admission. The available arms compare policy bundles rather than a complete factorial experiment.</p>
       </div>
 
-      <p>The known-related condition is also not an “oracle upper bound.” A benchmark relationship says the earlier task is related; it does not certify that this particular 320-character record is useful to this worker. Its 3/10 executable discordance against No Memory establishes behavioral sensitivity to context, not positive transfer.</p>
+      <h2 id="learned">8. What We Learned</h2>
+      <p>The strongest finding is about <strong>the measurement problem</strong>. A study of memory admission needs to establish that useful information exists in the records being admitted. Otherwise dropping an annotated “related” issue is not necessarily a mistake. A study of memory exposure also needs evidence that the worker actually saw and could use that information.</p>
+      <p>The Django case makes the distinction concrete. A related record made it through every filter, and the later repair still failed. This says what happened to one historical issue summary; it does not refute the value of a detailed, validated memory. Conversely, when a record was dropped earlier, we could not know whether its absence caused a downstream failure.</p>
+      <p>So the correct conclusion is limited: <strong>in this exploratory pilot, the tested historical-record selection policies did not demonstrate improved task resolution.</strong> The selection trace is real, and the experimental confounds are real. There is no established causal benefit—or universal harm—from memory governance here.</p>
 
-      <h2 id="next">9. The Experiment Suggested by These Results</h2>
-
-      <p>The next study should make useful information a demonstrated property of the setup before evaluating governance.</p>
-
+      <h2 id="next">9. What I'd Test Next</h2>
+      <p>The next experiment should make the Django-style transfer question answerable before comparing elaborate policies:</p>
       <ol>
-        <li><strong>Use verified source-agent experience.</strong> Generate a real earlier trajectory, record whether it succeeded, and extract a concise lesson grounded in that trajectory rather than an issue proxy.</li>
-        <li><strong>Establish a positive control first.</strong> Directly inject a known useful lesson and require repeated executable improvement on at least some targets before evaluating selectors.</li>
-        <li><strong>Repeat worker runs under one grading boundary.</strong> Use the same authoritative patch collection, same evaluator path, and multiple seeds/runs for each condition.</li>
-        <li><strong>Complete the write/read factorial.</strong> Add Share-All + target-aware Read so admission and exposure can be separated experimentally.</li>
-        <li><strong>Match context at the target level.</strong> Compare the selector against random and relevance baselines with the same number and approximate length of exposed records per target.</li>
-        <li><strong>Scale only after these checks pass.</strong> The current ten-target pilot is useful for debugging the measurement problem; it is not a population-level estimate of coding-agent memory.</li>
+        <li><strong>Record a successful earlier agent.</strong> Save the actual inspected files, attempted fixes, tests, outcome, and a narrow lesson—not only issue prose and reference paths.</li>
+        <li><strong>Prove the lesson can help.</strong> For the later ORM issue, compare repeated runs with no memory against runs given the verified earlier lesson directly. If it does not improve the worker, a retention policy cannot recover that benefit.</li>
+        <li><strong>Then test admission.</strong> Put the useful record among many plausible earlier Django records, freeze a source-only keep/drop decision, and check whether that information remains available.</li>
+        <li><strong>Isolate exposure and match budgets.</strong> Add the missing Share-All + Read condition and compare against equally sized random and relevance-selected context on each target.</li>
+        <li><strong>Repeat with one grading pipeline.</strong> Use the same patch collection and evaluator for all arms, multiple worker runs, and distinct underlying pull requests before drawing a causal conclusion.</li>
       </ol>
-
-      <div class="finding">
-        <p>The experiment did answer one useful question: <strong>where can potentially relevant history disappear?</strong> In this setup, the largest bottleneck was not target-time retrieval. It was the earlier, future-blind admission decision. Whether that bottleneck is beneficial cannot be known until the retained information is first shown to be useful.</p>
+      <div class="example-note">
+        <strong>What success would look like in the Django example</strong>
+        First show that an earlier, evidence-backed ORM lesson reproducibly helps repair <code>django-35356</code>. Then show that a future-blind admission policy retains it and a later read policy exposes it—without paying for many irrelevant records. Only then would the pipeline support a claim about effective shared memory.
       </div>
 
-      <h2 id="positioning">10. Where This Sits Relative to Prior Work</h2>
-
-      <p>The narrow framing matters because several adjacent systems already study coding-agent memory.</p>
-
-      <div class="table-responsive">
-        <table>
-          <thead><tr><th>Work</th><th>Relevant idea</th><th>Difference here</th></tr></thead>
-          <tbody>
-            <tr><td><strong>SWE-ContextBench</strong></td><td>Tests whether prior coding context can help later related tasks.</td><td>This pilot turns its relationships into hidden evaluation metadata and studies a future-blind retain decision before later exposure.</td></tr>
-            <tr><td><strong>ReasoningBank</strong></td><td>Builds reusable reasoning memories from agent interactions.</td><td>The completed pilot did not use learned trajectories; it used historical issue-based records.</td></tr>
-            <tr><td><strong>MemGuard</strong></td><td>Studies lifecycle control and verification for coding-agent memories.</td><td>This pilot focuses on the observable source-admission → later-exposure path in a small executable task set.</td></tr>
-            <tr><td><strong>Jev-Mem</strong></td><td>System-One-controlled agentic memory and efficient retrieval.</td><td>The experiment did not run Jev-Mem’s published architecture; it used custom binary decisions through the Jev System-One API.</td></tr>
-            <tr><td><strong>ChainSWE</strong></td><td>Sequential software maintenance where repository state persists across tasks.</td><td>Each worker here resets on a target task; the intervention is explicit historical context rather than accumulated repository state.</td></tr>
-          </tbody>
-        </table>
+      <h2 id="related">10. Related Work / Where This Fits</h2>
+      <p>This project sits between prior coding-context benchmarks and memory-management methods. The surrounding literature already establishes that agent memory and governance are active research areas; the novelty here is not the existence of a “keep” button.</p>
+      <div class="related">
+        <div><b><a href="https://arxiv.org/abs/2602.08316">SWE-ContextBench</a></b><span>Provides real coding tasks and annotated relationships. This study hides those relationships during source admission and ordinary retrieval.</span></div>
+        <div><b><a href="https://arxiv.org/abs/2509.25140">ReasoningBank</a></b><span>Studies memories derived from agent interactions. This pilot's records were issue-derived proxies, not extracted learned experience.</span></div>
+        <div><b><a href="https://arxiv.org/abs/2608.21867">MemGuard</a></b><span>Explores verification and lifecycle governance for agent memory. The pilot here traces two selection decisions with executable tasks.</span></div>
+        <div><b><a href="https://arxiv.org/abs/2609.23986">Jev-Mem</a></b><span>Studies System-One agentic memory. This experiment used custom binary Jev API choices, not Jev-Mem's published memory system.</span></div>
+        <div><b><a href="https://arxiv.org/abs/2607.02606">ChainSWE</a></b><span>Studies sequential repairs with persistent repository state. The later workers here restart and receive explicit historical records.</span></div>
       </div>
+      <p>The most defensible contribution is a transparent, executable pilot that traces when benchmark-related context disappears between source-only admission and later exposure—and shows why stronger controls are needed before judging the benefit of memory selection.</p>
 
-      <p>The useful contribution of this pilot is therefore methodological rather than architectural: it makes a source-only retain decision reusable across later tasks, traces exactly where benchmark-related records disappear, and exposes the controls needed before a causal claim about memory selection is credible.</p>
-
-      <h2 id="references">References & Reproducibility</h2>
-
-      <ol class="references">
-        <li><a href="https://arxiv.org/abs/2602.08316">SWE Context Bench: A Benchmark for Context Learning in Coding</a></li>
-        <li><a href="https://arxiv.org/abs/2509.25140">ReasoningBank</a></li>
-        <li><a href="https://arxiv.org/abs/2608.21867">MemGuard</a></li>
-        <li><a href="https://arxiv.org/abs/2609.23986">Jev-Mem</a></li>
-        <li><a href="https://arxiv.org/abs/2607.02606">ChainSWE</a></li>
-        <li><a href="https://github.com/Vedant2100/agent-fleet-memory-governance">Experiment repository</a> · final evidence branch: <code>handoff/aamas-2027-evidence</code></li>
-      </ol>
-
-      <details>
-        <summary>Frozen evidence identifiers</summary>
-        <div>
-          <p>Experiment code commit: <code>1cedbc0035cb867cfebde398019e313c2a5b02cb</code>.</p>
-          <p>Final v15 evidence archive: <code>fleet-mem-aamas-2027-v15-15703d8ecbb6.zip</code>, SHA-256 <code>260db688e040671dc9f2c7a095573992dc6ceda3b271ebe1852a2e90d19b4586</code>, 4,571,951 bytes. The repository’s handoff manifest records verified Google Drive readback and the evidence branch preserves the versioned archive.</p>
-          <p>The final handoff reports 40/40 B–E canonical treatment grades and independently verified canonical-result hashes. The proposed G arm remains unrun outside the amended A–F core.</p>
+      <h2 id="references">References &amp; Reproducibility</h2>
+      <p>The complete experiment, protocol amendments, frozen pool definitions, implementation, recorded treatment outcomes, reviewer critiques, and paper revisions are available in the <a href="https://github.com/Vedant2100/agent-fleet-memory-governance">experiment repository</a>, primarily on <code>handoff/aamas-2027-evidence</code>.</p>
+      <ul class="references">
+        <li><a href="https://github.com/Vedant2100/agent-fleet-memory-governance/blob/handoff/aamas-2027-evidence/artifacts/smoke/pools/django__django-35356.json">Actual Django source–target candidate pool</a></li>
+        <li><a href="https://github.com/Vedant2100/agent-fleet-memory-governance/blob/handoff/aamas-2027-evidence/paper/round-3/main.tex">Final exploratory manuscript draft (Round 3)</a></li>
+        <li><a href="https://github.com/Vedant2100/agent-fleet-memory-governance/blob/handoff/aamas-2027-evidence/paper/round-3/claim-evidence-ledger.md">Claim-to-evidence ledger</a></li>
+        <li><a href="https://github.com/Vedant2100/agent-fleet-memory-governance/blob/handoff/aamas-2027-evidence/reviews/round-2.md">Independent scientific critique</a></li>
+        <li><a href="https://github.com/Vedant2100/agent-fleet-memory-governance/pull/1">Experiment evidence handoff, including v15 archive</a></li>
+      </ul>
+      <details class="compact-detail">
+        <summary>Frozen versions and evidence checks</summary>
+        <div class="detail-content">
+          <p>Experiment code commit: <code>1cedbc0035cb867cfebde398019e313c2a5b02cb</code>. Final v15 evidence archive SHA-256: <code>260db688e040671dc9f2c7a095573992dc6ceda3b271ebe1852a2e90d19b4586</code>. All 40 B–E canonical-grade hashes were independently checked in the handoff audit. The proposed deliberative LLM write arm G was not run. The work is a completed exploratory core pilot, not a confirmatory effect estimate.</p>
         </div>
       </details>
-
-      <footer>
-        Exploratory research note based on the frozen October 2026 experiment. The results are a completed core pilot, not a confirmatory effect estimate and not evidence that memory selection improves coding-agent reliability.
-      </footer>
+      <footer>Exploratory research note. Conclusions refer to this frozen small pilot and its specific historical-task-record representation.</footer>
     </main>
   </div>
 </body>
