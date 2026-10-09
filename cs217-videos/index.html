@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Short, carefully selected CS 217 CUDA and GPU architecture videos mapped to the Fall 2026 UCR syllabus.">
+<title>CS 217 · Short Video Guide</title>
+<style>
+:root{--ink:#1c1c1c;--muted:#666;--line:#ddd;--paper:#fbfbfa;--link:#225b85}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;line-height:1.45}
+.wrap{max-width:990px;margin:auto;padding:34px 24px 90px}
+small,.muted{color:var(--muted)}a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+.eyebrow{font:600 11px/1.2 ui-monospace,monospace;letter-spacing:.13em;text-transform:uppercase;color:#666}
+h1{font-size:clamp(28px,4vw,42px);letter-spacing:-.04em;margin:12px 0 8px;line-height:1.13;font-weight:650}
+.lead{margin:0;color:#555;max-width:690px;font-size:15px}
+.summary{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 28px}.pill{border:1px solid #ddd;border-radius:18px;padding:6px 10px;font-size:12px;color:#555}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 18px;align-items:center}
+button{background:white;color:#333;border:1px solid #d4d4d4;border-radius:6px;padding:8px 12px;font-size:13px;cursor:pointer}
+button[aria-pressed="true"]{background:#222;color:#fff;border-color:#222}
+input[type=search]{border:1px solid #d4d4d4;padding:10px 12px;border-radius:6px;background:white;min-width:190px;flex:1}
+h2{font-size:19px;letter-spacing:-.02em;margin:36px 0 6px}.section-note{font-size:13px;color:#777;margin:0 0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:12px}
+.card{background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column}
+.thumb{height:140px;display:block;background:#efefef;position:relative;overflow:hidden}.thumb img{width:100%;height:100%;object-fit:cover}.thumb .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.83);color:white;border-radius:8px;padding:5px 12px;font-size:19px}
+.placeholder{height:140px;display:grid;place-items:center;font-size:13px;color:#777;background:#f4f4f4}
+.details{padding:14px 15px 13px;flex:1;display:flex;flex-direction:column}.dateline{font-size:11px;color:#777;display:flex;justify-content:space-between;gap:8px}
+.topic{font-size:15px;font-weight:650;margin:5px 0 4px;line-height:1.3}.vidtitle{font-size:13px;margin:3px 0;color:#555}
+.why{font-size:12px;color:#666;margin:8px 0 12px;flex:1}
+.foot{display:flex;gap:9px;justify-content:space-between;align-items:center;font-size:12px}
+.done{display:inline-flex;align-items:center;gap:5px;color:#666;cursor:pointer;white-space:nowrap}
+.done input{accent-color:#333;width:15px;height:15px}.card.completed{opacity:.55}.card.completed .topic{text-decoration:line-through}
+.alt{font-size:12px;padding:9px 12px;border-left:2px solid #999;background:#f1f1f0;margin:22px 0}
+footer{border-top:1px solid #ddd;padding-top:18px;margin-top:42px;color:#737373;font-size:12px}
+@media(max-width:560px){.wrap{padding:24px 15px 64px}.grid{grid-template-columns:1fr}.thumb{height:160px}}
+</style></head><body><main class="wrap">
+<div class="eyebrow">UC Riverside · Fall 2026 · Stamina study guide</div>
+<h1>CS 217 / GPU Architecture<br>Short video guide</h1>
+<p class="lead">One closely matching YouTube segment per topic, in syllabus order. Skip full lectures, watch the core idea, then spend 10 minutes applying it. Checked videos stay checked on this browser.</p>
+<div class="summary"><span class="pill">Midterm · Oct 28</span><span class="pill">Final · Dec 2</span><span class="pill">A1 · Oct 12</span><span class="pill">A2 · Oct 19</span><span class="pill">A3 · Oct 26</span><span class="pill">A4 · Nov 16</span><span class="pill">A5 · Nov 25</span></div>
+<div class="controls">
+<button data-filter="all" aria-pressed="true">All topics</button>
+<button data-filter="pre" aria-pressed="false">Before midterm</button>
+<button data-filter="post" aria-pressed="false">After midterm</button>
+<button data-filter="unwatched" aria-pressed="false">Unwatched</button>
+<input id="q" type="search" placeholder="Find a topic (e.g. reduction)" aria-label="Search syllabus topics">
+</div>
+<div id="stats" class="muted" style="font-size:12px;margin-bottom:8px"></div>
+<div id="content"></div>
+<p class="alt"><strong>Coverage notes:</strong> Matrix addition uses a closely related vector-add kernel. The November 2 and November 25 communication reference is longer. The TMA card uses NVIDIA's official documentation because a verified short standalone YouTube video wasn't found. Guest lecture TBD (Nov 4) and TBD topic (Nov 23) are excluded until their subjects are announced.</p>
+<footer>Sources: <a href="https://ppc.cs.aalto.fi/lecture4/" target="_blank" rel="noopener">Aalto GPU lessons</a> · <a href="https://github.com/CoffeeBeforeArch/cuda_programming" target="_blank" rel="noopener">CoffeeBeforeArch code</a> · <a href="https://developer.nvidia.com/cuda/tile" target="_blank" rel="noopener">NVIDIA CUDA Tile</a> · <a href="https://nvidia.github.io/cccl/unstable/cccl/tma.html" target="_blank" rel="noopener">NVIDIA TMA</a><br>Mapped from the UCR CS 217 Fall 2026 schedule. Dates and assignment labels are from the posted schedule, not deadlines in this page.</footer>
+</main><script>
+const items=[["2026-09-28","Sep 28","GPU / OS & architecture overview","Programming Parallel Computers: GPU programming","Aalto University","13 min","zmQja08aDNY","Background: why GPUs are built for parallel work.","pre"],["2026-09-30","Sep 30","CUDA C and parallelism","GPU programming with CUDA","Aalto University","18 min","zBRjekrOdCU","Kernels, blocks, threads, indexing and launch syntax.","pre"],["2026-10-05","Oct 5","GPU architecture and warp scheduling","How does the GPU execute code?","Aalto University","17 min","6dkeFhXCpsk","Execution masks and warp scheduling.","pre"],["2026-10-05","Oct 5","Thread blocks, warps, shared memory","Warps, blocks, and shared memory","Aalto University","11 min","ctPgNWHWqtQ","Shared memory and cooperation inside a block.","pre"],["2026-10-05","Oct 5","Assignment 1: Matrix addition","CUDA Crash Course: Vector Addition","CoffeeBeforeArch / Nick","14 min","2NgpYFdsduY","Closest starter kernel; adapt vector indexing to 2D matrices.","pre"],["2026-10-07","Oct 7","CUDA memory types and access patterns","Memory access patterns in CUDA programs","Aalto University","15 min","4PlOJgOnf_k","Shows what good and bad GPU memory accesses look like.","pre"],["2026-10-07","Oct 7","Reduction algorithm","CUDA Crash Course: Sum Reduction Part 1","CoffeeBeforeArch / Nick","11 min","bpbit8SPMxU","Begin with a working baseline reduction kernel.","pre"],["2026-10-07","Oct 7","Control divergence","How does the GPU execute code?","Aalto University","17 min","6dkeFhXCpsk","Revisit the execution-mask / branch-divergence explanation.","pre"],["2026-10-12","Oct 12","Unified memory","CUDA Crash Course: Unified Memory Vector Add","CoffeeBeforeArch / Nick","10 min","84iwCupHW14","Managed allocations and simpler host-device data access.","pre"],["2026-10-14","Oct 14","Matrix multiplication & tiling","CUDA Crash Course: Cache Tiled Matrix Multiplication","CoffeeBeforeArch / Nick","20 min","3xfyiWhtvZw","Reusable tiles in shared memory; high overlap with A3.","pre"],["2026-10-19","Oct 19","DRAM, coalescing and memory performance","CUDA Crash Course: Why Coalescing Matters","CoffeeBeforeArch / Nick","8 min","_qSP455IekE","Why neighboring threads should read neighboring addresses.","pre"],["2026-10-21","Oct 21","CUDA streams: overlap compute and memory","NVIDIA: Streams (21:19–35:42 chapter)","NVIDIA Developer","14 min chapter","pyW9St8uM8w","Open at the Streams chapter of a longer video; stop at 35:42.","pre","1279"],["2026-10-26","Oct 26","Midterm review","Review: execution + reduction + tiling","Self-review","15–30 min","6dkeFhXCpsk","Use the videos above to revisit warps, memory, and reductions.","review"],["2026-11-02","Nov 2","Multi-GPU interconnects & communication","GPU MODE Lecture 17: NCCL","GPU MODE","Longer reference","T22e3fgit-A","Detailed treatment of collective GPU communication; not a short video.","post"],["2026-11-09","Nov 9","Histogram + atomic operations","CUDA Crash Course: Optimizing Histogram Kernels","CoffeeBeforeArch / Nick","17 min","v4DGiuU53h8","Global vs shared-memory atomics; direct overlap with A4.","post"],["2026-11-16","Nov 16","Tile-based programming models","CUDA: Cache Tiled Matrix Multiplication","CoffeeBeforeArch / Nick","20 min","3xfyiWhtvZw","Good tiling foundation; see NVIDIA cuTile reference for newer model.","post"],["2026-11-18","Nov 18","Tensor Cores","Tensor Cores Explained","CodeLucky","5 min","HUXrOsbzh-Y","Fast overview of matrix units and mixed precision.","post"],["2026-11-18","Nov 18","Tensor Memory Accelerator (TMA)","NVIDIA Hopper architecture: TMA","NVIDIA Developer","Short written supplement","","TMA is newer and not fully covered by the videos above.","post"],["2026-11-25","Nov 25","Multi-chip GPU architecture and trends","GPU MODE Lecture 17: NCCL","GPU MODE","Longer reference","T22e3fgit-A","Partial overlap on GPU-to-GPU communication; not a survey of multi-chip architectures.","post"]];
+let filter='all';const key='ucr-cs217-video-guide-v1';let checked={};try{checked=JSON.parse(localStorage.getItem(key)||'{}')}catch(e){}
+const groups=[['pre','Before the midterm','September 28 – October 21'],['review','Review','October 26 – October 28'],['post','After the midterm','November 2 – November 25']];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function videoURL(r){if(!r[6])return 'https://nvidia.github.io/cccl/unstable/cccl/tma.html';let u='https://www.youtube.com/watch?v='+r[6];if(r[9])u+='&t='+r[9]+'s';return u}
+function render(){
+const q=document.querySelector('#q').value.trim().toLowerCase();let groupsHtml='';
+for(const [id,title,subtitle] of groups){const arr=items.map((r,i)=>({r,i})).filter(({r,i})=>r[8]===id && (filter==='all'||filter===id||(filter==='unwatched'&&!checked[i]))&&(!q||r.slice(1,8).join(' ').toLowerCase().includes(q)));if(!arr.length)continue;
+groupsHtml+='<section><h2>'+title+'</h2><p class="section-note">'+subtitle+'</p><div class="grid">'+arr.map(({r,i})=>{
+const u=videoURL(r), done=!!checked[i],video=!!r[6];return '<article class="card '+(done?'completed':'')+'">'+(video?'<a class="thumb" target="_blank" rel="noopener noreferrer" href="'+u+'"><img loading="lazy" alt="" src="https://i.ytimg.com/vi/'+r[6]+'/hqdefault.jpg"><span class="play">▶</span></a>':'<div class="placeholder">Official NVIDIA reference (not a video)</div>')+
+'<div class="details"><div class="dateline"><span>'+esc(r[1])+'</span><span>'+esc(r[5])+'</span></div><div class="topic">'+esc(r[2])+'</div><div class="vidtitle">'+esc(r[3])+' · '+esc(r[4])+'</div><p class="why">'+esc(r[7])+'</p><div class="foot"><a target="_blank" rel="noopener noreferrer" href="'+u+'">'+(video?'Watch on YouTube ↗':'Read reference ↗')+'</a><label class="done"><input type="checkbox" data-id="'+i+'" '+(done?'checked':'')+'> Done</label></div></div></article>'
+}).join('')+'</div></section>'}
+document.querySelector('#content').innerHTML=groupsHtml||'<p class="muted">No matching videos.</p>';
+document.querySelector('#stats').textContent=Object.keys(checked).filter(k=>checked[k]).length+' of '+items.length+' topics checked';
+document.querySelectorAll('input[data-id]').forEach(el=>el.onchange=()=>{checked[el.dataset.id]=el.checked;try{localStorage.setItem(key,JSON.stringify(checked))}catch(e){}render()});
+}
+document.querySelectorAll('button[data-filter]').forEach(el=>el.addEventListener('click',()=>{filter=el.dataset.filter;document.querySelectorAll('button[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===el)));render()}));
+document.querySelector('#q').addEventListener('input',render);render();
+</script></body></html>
