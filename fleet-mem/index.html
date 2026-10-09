@@ -102,6 +102,34 @@
     @media(max-width:920px){.layout{display:block;padding:1.1rem}.sidebar{width:100%;margin-bottom:1.7rem}.sidebar-inner{position:static;max-height:none}.sidebar ul{columns:2}.sidebar li{break-inside:avoid}main{max-width:850px;margin:0 auto}}
     @media(max-width:600px){h1{font-size:1.45rem}body{font-size:15px}.sidebar ul{columns:1}.flow{flex-wrap:wrap;gap:.35rem}.flow .step{flex:1 1 43%;min-width:110px}.flow .arrow{display:none}.fact-row{grid-template-columns:repeat(2,minmax(0,1fr))}.compare-grid,.related{grid-template-columns:1fr}.funnel-row{grid-template-columns:115px 1fr 66px;gap:.4rem;font-size:10.5px}.outcome-bars .bar-row{grid-template-columns:122px 1fr 40px;font-size:11px}.figure-body{padding:.7rem}.code-sample{font-size:11px}table{min-width:520px}}
 
+
+    /* Compact, source-grounded example trace and Jev I/O */
+    .trace-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem}
+    .trace-cell{position:relative;border:1px solid var(--border);background:var(--soft);border-radius:5px;padding:.75rem;min-height:108px;font:11.5px/1.48 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-width:0}
+    .trace-cell strong,.gov-step strong{display:block;color:#1f2937;font-size:13px;line-height:1.4;margin:.25rem 0 .4rem}
+    .trace-cell span:not(.trace-number){display:block;color:var(--muted)}
+    .trace-number,.gov-eyebrow{display:block;color:#64748b;font-size:10px;letter-spacing:.025em;text-transform:uppercase;font-weight:700}
+    .trace-cell.good,.gov-step.answer{border-color:#93c5fd;background:var(--light-blue)}
+    .trace-cell.result{border-color:#cbd5e1;background:#f1f5f9}
+    .trace-cell code{font-size:10px;overflow-wrap:anywhere}
+    .trace-diagram .trace-note{font:11.5px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--muted);margin:.8rem 0 0}
+    .governor-io .figure-body{padding:1rem}
+    .governor-io h3{font-size:14px;margin:0 0 .85rem;text-align:center}
+    .governor-stage{display:grid;grid-template-columns:minmax(0,1.1fr) 16px minmax(0,1fr) 16px minmax(0,1fr);gap:.4rem;align-items:stretch;margin-bottom:.7rem;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    .gov-step{border:1px solid var(--border);background:var(--soft);border-radius:5px;padding:.75rem;min-width:0;font-size:11.5px;line-height:1.5}
+    .gov-step.governor{border-color:#93c5fd;background:#eff6ff}
+    .gov-step span:not(.gov-eyebrow){display:block;color:var(--muted)}
+    .gov-step code{font-size:10.5px;overflow-wrap:anywhere}
+    .gov-direction{display:flex;align-items:center;justify-content:center;color:#64748b;font-size:17px;font-family:Arial,sans-serif}
+    .gov-detail{margin-top:.4rem;font-size:10.5px}
+    .governor-io .gov-bottom{font:11.5px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--muted);border-top:1px solid var(--border);padding-top:.7rem;margin:.75rem 0 0}
+    .worker-io-loop{font:11.5px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--muted);margin:.7rem 0 0;background:var(--soft);padding:.6rem;border-radius:4px}
+    @media(max-width:600px){
+      .trace-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .governor-stage{grid-template-columns:1fr}
+      .gov-direction{transform:rotate(90deg);min-height:12px}
+    }
+
     /* Coding worker input / output overview */
     .worker-io {margin:1.3rem 0 1.9rem}
     .worker-io .figure-body{padding:1rem}
@@ -197,15 +225,19 @@ Example.objects.select_related(
       <p>Now look backward. About ten months earlier, task <code>django__django-16910</code> described a different problem involving <code>only()</code>, <code>select_related()</code>, and a reverse one-to-one relationship: Django fetched more fields than expected. Its reference change touched <code>django/db/models/sql/query.py</code>.</p>
       <p>These are <strong>related ORM problems, not identical bugs</strong>. The earlier record names a plausible area to investigate, but it does not tell Agent B how to fix the later error.</p>
 
-      <figure>
+      <figure class="trace-diagram" aria-label="The Django record's actual route through the experiment">
         <div class="figure-body">
-          <div class="flow">
-            <div class="step"><b>Earlier Django issue</b><em>Reverse relation fetched extra fields</em></div><span class="arrow" aria-hidden="true">→</span>
-            <div class="step focus"><b>Historical record</b><em>Issue excerpt + changed path</em></div><span class="arrow" aria-hidden="true">→</span>
-            <div class="step"><b>Later Django issue</b><em>Combining two relations raises FieldError</em></div>
+          <div class="trace-grid">
+            <div class="trace-cell"><span class="trace-number">01 · Earlier task</span><strong>django-16910</strong><span>An ORM issue: extra fields were fetched</span></div>
+            <div class="trace-cell"><span class="trace-number">02 · Stored record</span><strong>Issue excerpt + file path</strong><span><code>django/db/models/sql/query.py</code></span></div>
+            <div class="trace-cell good"><span class="trace-number">03 · Jev write decision</span><strong>SHARE</strong><span>The record stays available</span></div>
+            <div class="trace-cell"><span class="trace-number">04 · Later task</span><strong>django-35356</strong><span>Among 114 earlier candidates, the record reaches the top-three slots</span></div>
+            <div class="trace-cell good"><span class="trace-number">05 · Jev read decision</span><strong>EXPOSE</strong><span>The coding worker receives the record</span></div>
+            <div class="trace-cell result"><span class="trace-number">06 · Worker + tests</span><strong>Unresolved · 0/1</strong><span>The designated failing test still fails</span></div>
           </div>
+          <p class="trace-note">Both issues concern Django ORM relationships, but they are not the same bug. Reaching the worker did not guarantee the earlier record was a useful fix.</p>
         </div>
-        <figcaption>Figure 2. The actual source–target example used throughout this article, with two distinct symptoms involving the same ORM features.</figcaption>
+        <figcaption>Figure 2. One observed path from an earlier Django issue to a later, unsuccessful repair. The choices and outcome shown here are recorded results, not illustrative guesses.</figcaption>
       </figure>
       <p>Would showing the earlier record help a coding agent? That is the question the experiment can test; the fact that the benchmark labels the pair related is not itself proof of usefulness.</p>
 
@@ -288,6 +320,32 @@ Example.objects.select_related(
       <p>The custom decisions used the Jev System-One API (<code>jev-1.13.0</code>) with binary prompts. <strong>They did not implement the published Jev-Mem architecture.</strong> The coding worker was GPT-6 Luna with the SWE-Edit scaffold and <code>xhigh</code> reasoning; its changes were graded with the canonical SWE-ContextBench tests through an Apptainer adapter. The full B–E core produced forty graded runs, ten per condition.</p>
 
 
+      <p>Jev does not write the fix. It makes two small choices about whether the earlier Django record can reach the coding agent:</p>
+
+      <figure class="governor-io" aria-label="Inputs and outputs of both Jev memory decisions">
+        <div class="figure-body">
+          <h3>What goes into Jev—and what comes back?</h3>
+          <div class="governor-stage">
+            <div class="gov-step"><span class="gov-eyebrow">WRITE · INPUT</span><strong>Earlier Django record</strong><span>Issue text, source task ID, file path, date, repository, source outcome (unknown)</span><span class="gov-detail">Future Django task is not provided.</span></div>
+            <span class="gov-direction" aria-hidden="true">→</span>
+            <div class="gov-step governor"><span class="gov-eyebrow">JEV · SOURCE DECISION</span><strong>Keep this record?</strong><span>Choose <code>SHARE</code> or <code>DO_NOT_SHARE</code></span></div>
+            <span class="gov-direction" aria-hidden="true">→</span>
+            <div class="gov-step answer"><span class="gov-eyebrow">ACTUAL OUTPUT</span><strong>SHARE</strong><span>The Django record remains eligible for later retrieval</span></div>
+          </div>
+          <div class="governor-stage">
+            <div class="gov-step"><span class="gov-eyebrow">READ · INPUT</span><strong>Later Django issue + one record</strong><span>Current issue text and the earlier record selected into the top-three history slots</span><span class="gov-detail">Evaluated separately for each surviving record.</span></div>
+            <span class="gov-direction" aria-hidden="true">→</span>
+            <div class="gov-step governor"><span class="gov-eyebrow">JEV · TARGET DECISION</span><strong>Show it to the agent?</strong><span>Choose <code>EXPOSE</code> or <code>WITHHOLD</code></span></div>
+            <span class="gov-direction" aria-hidden="true">→</span>
+            <div class="gov-step answer"><span class="gov-eyebrow">ACTUAL OUTPUT</span><strong>EXPOSE</strong><span>The Django record is added to the worker's task prompt</span></div>
+          </div>
+          <p class="gov-bottom"><strong>Important:</strong> Jev only chooses whether a historical record is retained or shown. It does not inspect the live checkout, edit Django code, or run the tests. This was a custom binary use of the Jev System-One API, not the published Jev-Mem system.</p>
+        </div>
+        <figcaption>Figure 4. Both decisions use the same earlier Django record, but only the second sees the later task. The recorded output was SHARE at write time and EXPOSE at read time.</figcaption>
+      </figure>
+
+      <p>The coding agent does the actual programming. Here is what it receives, what it can do inside its Apptainer environment, and what comes back for grading:</p>
+
       <figure class="worker-io">
         <div class="figure-body">
           <h3>Inside the coding-agent run</h3>
@@ -309,8 +367,8 @@ Example.objects.select_related(
                 <li>Search through the repository</li>
                 <li>Run shell commands and tests</li>
                 <li>Edit source code with an editor or shell</li>
-                <li>Check its changes and try again</li>
-                <li>Finish (at most 100 steps / 30 minutes)</li>
+                <li>Read command output or test failures, then adjust the patch</li>
+                <li>Repeat the edit → run → inspect loop (up to 100 steps / 30 minutes)</li>
               </ul>
             </div>
             <div class="worker-box">
@@ -323,6 +381,7 @@ Example.objects.select_related(
               </ul>
             </div>
           </div>
+          <p class="worker-io-loop"><strong>Feedback inside the worker:</strong> command or test output goes back to the agent so it can revise its changes before finishing.</p>
           <div class="worker-io-divider"><strong>Then a separate test run grades the proposed fix:</strong></div>
           <div class="worker-io-grade">
             <div class="step"><b>Worker's source patch</b>The proposed Django fix</div>
@@ -333,7 +392,7 @@ Example.objects.select_related(
           </div>
           <p class="privacy-line"><strong>Hidden from the worker:</strong> the benchmark's answer patch, future outcomes, and which older issue the benchmark marked as related.</p>
         </div>
-        <figcaption>Figure 4. The actual experiment used SWE-Edit, not mini-swe-agent. Both the worker and the grader used Apptainer, in separate runs. In the Django example, the earlier record was shown, but the later bug remained unresolved.</figcaption>
+        <figcaption>Figure 5. The actual experiment used SWE-Edit, not mini-swe-agent. Both the worker and the grader used Apptainer, in separate runs. In the Django example, the earlier record was shown, but the later bug remained unresolved.</figcaption>
       </figure>
 
       <div class="example-note">
@@ -360,7 +419,7 @@ Example.objects.select_related(
             <p class="funnel-note">Bars use the eight retrieved target cases as the reference width. Two other targets lost their annotated source at retrieval itself.</p>
           </div>
         </div>
-        <figcaption>Figure 5. The 8 → 2 → 1 selection trace measures availability of annotated related records, not whether those records would have helped.</figcaption>
+        <figcaption>Figure 6. The 8 → 2 → 1 selection trace measures availability of annotated related records, not whether those records would have helped.</figcaption>
       </figure>
 
       <p>Across all source records, the selector admitted <strong>123/211</strong>. On the ten primary tasks, fifteen admitted records entered read decisions, and only <strong>one</strong> was exposed. Six target-level source rejections in the related-record trace came from just two distinct SymPy source decisions reused across several targets—not six independent decisions.</p>
