@@ -107,6 +107,15 @@
       overflow-x:auto;
     }
     .mermaid svg { max-width:100% !important; height:auto !important; }
+    .figure-compact {
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .figure-compact svg {
+      max-width: 760px !important;
+      height: auto !important;
+    }
     .figure-caption {
       text-align:center;
       font-style:italic;
@@ -232,8 +241,7 @@
       <header>
         <h1>Selecting Earlier Task Records for Coding Agents</h1>
         <p class="subtitle">An exploratory study of two different decisions: what to retain from earlier repository work before future tasks are known, and what a later coding agent should actually see.</p>
-        <p class="meta">Vedant Borkute · October 2026 · <a href="https://github.com/Vedant2100/agent-fleet-memory-governance">experiment repository</a></p>
-      </header>
+</header>
 
       <h2 id="tldr" style="margin-top:0;">TL;DR</h2>
 
@@ -287,7 +295,7 @@ flowchart LR
 
       <p>A later task, <code>django__django-35356</code>, reported a related failure involving recursive <code>OneToOneField</code> relationships together with <code>select_related()</code> and <code>only()</code>. The benchmark annotates the earlier task as related to the later one.</p>
 
-      <div class="mermaid">
+      <div class="mermaid figure-compact">
 flowchart TB
     S["Earlier task: django-16910<br/>only() + select_related()<br/>reverse OneToOneField"]
     S --> R["Stored record<br/>truncated issue text +<br/>django/db/models/sql/query.py"]
