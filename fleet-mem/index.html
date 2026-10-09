@@ -101,6 +101,31 @@
     @media(max-width:1080px){.layout{gap:2rem}.sidebar{flex-basis:245px}}
     @media(max-width:920px){.layout{display:block;padding:1.1rem}.sidebar{width:100%;margin-bottom:1.7rem}.sidebar-inner{position:static;max-height:none}.sidebar ul{columns:2}.sidebar li{break-inside:avoid}main{max-width:850px;margin:0 auto}}
     @media(max-width:600px){h1{font-size:1.45rem}body{font-size:15px}.sidebar ul{columns:1}.flow{flex-wrap:wrap;gap:.35rem}.flow .step{flex:1 1 43%;min-width:110px}.flow .arrow{display:none}.fact-row{grid-template-columns:repeat(2,minmax(0,1fr))}.compare-grid,.related{grid-template-columns:1fr}.funnel-row{grid-template-columns:115px 1fr 66px;gap:.4rem;font-size:10.5px}.outcome-bars .bar-row{grid-template-columns:122px 1fr 40px;font-size:11px}.figure-body{padding:.7rem}.code-sample{font-size:11px}table{min-width:520px}}
+
+    /* Coding worker input / output overview */
+    .worker-io {margin:1.3rem 0 1.9rem}
+    .worker-io .figure-body{padding:1rem}
+    .worker-io h3{font-size:14px;margin:0 0 .8rem;text-align:center}
+    .worker-io-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr) minmax(0,1fr);gap:.65rem;align-items:stretch;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    .worker-box{border:1px solid var(--border);background:var(--soft);border-radius:5px;padding:.75rem;min-width:0}
+    .worker-box h4{font-size:12px;line-height:1.35;margin:0 0 .45rem;color:#1e293b}
+    .worker-box ul{font-size:11.5px;line-height:1.48;padding-left:1rem;margin:0}
+    .worker-box li{margin:.3rem 0}
+    .worker-box code{font-size:10px;overflow-wrap:anywhere}
+    .worker-box.center{background:var(--light-blue);border-color:#93c5fd}
+    .worker-box.center h4{color:#1d4ed8}
+    .worker-caption{font:11px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--muted);margin:.35rem 0 .6rem}
+    .worker-io-divider{margin:.85rem 0 .65rem;border-top:1px solid var(--border);padding-top:.75rem;font:12px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    .worker-io-grade{display:grid;grid-template-columns:minmax(0,1fr) 18px minmax(0,1.15fr) 18px minmax(0,1fr);gap:.4rem;align-items:center;font:11px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    .worker-io-grade .step{border:1px solid var(--border);padding:.6rem;border-radius:4px;min-width:0;overflow-wrap:anywhere;background:#fff}
+    .worker-io-grade .step b{display:block;font-size:11.5px}
+    .worker-io-grade .arrow{text-align:center;color:#64748b;font-size:17px}
+    .worker-io .privacy-line{font:11px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--muted);margin:.8rem 0 0}
+    @media(max-width:600px){
+      .worker-io-grid{grid-template-columns:1fr}
+      .worker-io-grade{grid-template-columns:1fr}
+      .worker-io-grade .arrow{transform:rotate(90deg);justify-self:center}
+    }
   </style>
 </head>
 <body>
@@ -262,6 +287,55 @@ Example.objects.select_related(
 
       <p>The custom decisions used the Jev System-One API (<code>jev-1.13.0</code>) with binary prompts. <strong>They did not implement the published Jev-Mem architecture.</strong> The coding worker was GPT-6 Luna with the SWE-Edit scaffold and <code>xhigh</code> reasoning; its changes were graded with the canonical SWE-ContextBench tests through an Apptainer adapter. The full B–E core produced forty graded runs, ten per condition.</p>
 
+
+      <figure class="worker-io">
+        <div class="figure-body">
+          <h3>Inside the coding-agent run</h3>
+          <div class="worker-io-grid">
+            <div class="worker-box">
+              <h4>1. What goes in</h4>
+              <ul>
+                <li><strong>New issue:</strong> Django's <code>only()</code> / <code>select_related()</code> error</li>
+                <li><strong>Code:</strong> a clean Django checkout at the task's starting commit</li>
+                <li><strong>Past record (sometimes):</strong> the earlier Django issue summary and file path</li>
+                <li><strong>Instructions:</strong> find the bug, edit the code, test the fix</li>
+              </ul>
+            </div>
+            <div class="worker-box center">
+              <h4>2. Coding agent · SWE-Edit + GPT-6 Luna</h4>
+              <div class="worker-caption"><strong>Runs inside an Apptainer task image</strong> with Django's code and dependencies</div>
+              <ul>
+                <li>Find and read source files</li>
+                <li>Search through the repository</li>
+                <li>Run shell commands and tests</li>
+                <li>Edit source code with an editor or shell</li>
+                <li>Check its changes and try again</li>
+                <li>Finish (at most 100 steps / 30 minutes)</li>
+              </ul>
+            </div>
+            <div class="worker-box">
+              <h4>3. What comes out</h4>
+              <ul>
+                <li><strong>Code patch:</strong> the actual changed source files, collected as a Git diff</li>
+                <li><strong>Run record:</strong> commands, responses, and status</li>
+                <li><strong>End state:</strong> finished, timed out, or otherwise stopped</li>
+                <li><strong>Not submitted:</strong> changes to test files</li>
+              </ul>
+            </div>
+          </div>
+          <div class="worker-io-divider"><strong>Then a separate test run grades the proposed fix:</strong></div>
+          <div class="worker-io-grade">
+            <div class="step"><b>Worker's source patch</b>The proposed Django fix</div>
+            <span class="arrow" aria-hidden="true">→</span>
+            <div class="step"><b>Apptainer test environment</b>Apply the patch and run the benchmark's tests</div>
+            <span class="arrow" aria-hidden="true">→</span>
+            <div class="step"><b>Score</b>Did it apply? Which tests passed? Was the issue fixed?</div>
+          </div>
+          <p class="privacy-line"><strong>Hidden from the worker:</strong> the benchmark's answer patch, future outcomes, and which older issue the benchmark marked as related.</p>
+        </div>
+        <figcaption>Figure 4. The actual experiment used SWE-Edit, not mini-swe-agent. Both the worker and the grader used Apptainer, in separate runs. In the Django example, the earlier record was shown, but the later bug remained unresolved.</figcaption>
+      </figure>
+
       <div class="example-note">
         <strong>Following the Django example</strong>
         The record for <code>django__django-16910</code> was among the fixed three recent history slots for <code>django__django-35356</code>. The source-only selector said <strong>SHARE</strong>; the target-aware selector said <strong>EXPOSE</strong>. So in condition E, the later worker really did see this earlier record.
@@ -286,7 +360,7 @@ Example.objects.select_related(
             <p class="funnel-note">Bars use the eight retrieved target cases as the reference width. Two other targets lost their annotated source at retrieval itself.</p>
           </div>
         </div>
-        <figcaption>Figure 4. The 8 → 2 → 1 selection trace measures availability of annotated related records, not whether those records would have helped.</figcaption>
+        <figcaption>Figure 5. The 8 → 2 → 1 selection trace measures availability of annotated related records, not whether those records would have helped.</figcaption>
       </figure>
 
       <p>Across all source records, the selector admitted <strong>123/211</strong>. On the ten primary tasks, fifteen admitted records entered read decisions, and only <strong>one</strong> was exposed. Six target-level source rejections in the related-record trace came from just two distinct SymPy source decisions reused across several targets—not six independent decisions.</p>
