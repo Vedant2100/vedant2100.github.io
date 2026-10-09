@@ -110,6 +110,22 @@
     .trace-diagram,.governor-io,.worker-io{margin:1.45rem 0 1.9rem}
     .trace-diagram .figure-body,.governor-io .figure-body,.worker-io .figure-body{padding:.65rem}
     @media(max-width:600px){.flowchart-frame{min-width:780px}}
+
+    /* Annotation-only Jev selection tables. Not calibrated accuracy matrices. */
+    .selection-matrices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem;margin:1.2rem 0 1rem}
+    .selection-matrix{border:1px solid var(--border);border-radius:6px;padding:.9rem;min-width:0}
+    .selection-matrix h4{font-size:13px;line-height:1.4;margin:0 0 .25rem;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    .selection-matrix .matrix-scope{font-size:11.5px;line-height:1.5;color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin-bottom:.4rem}
+    .selection-matrix table{margin:.6rem 0;min-width:0;font-size:12px}
+    .selection-matrix th,.selection-matrix td{padding:.55rem .38rem}
+    .selection-matrix .selection-focus{background:#eff6ff;font-weight:700;color:#1d4ed8}
+    .selection-matrix .matrix-total td{font-weight:700;border-top:2px solid #cbd5e1;background:var(--soft)}
+    .selection-matrix .matrix-takeaway{font-size:12px;line-height:1.5;margin:.7rem 0 0}
+    .matrix-disclaimer{font-size:13px;color:var(--muted);line-height:1.65}
+    @media(max-width:690px){
+      .selection-matrices{grid-template-columns:1fr}
+      .selection-matrix table{width:100%;min-width:0}
+    }
   </style>
 </head>
 <body>
@@ -332,6 +348,49 @@ Example.objects.select_related(
       </figure>
 
       <p>Across all source records, the selector admitted <strong>123/211</strong>. On the ten primary tasks, fifteen admitted records entered read decisions, and only <strong>one</strong> was exposed. Six target-level source rejections in the related-record trace came from just two distinct SymPy source decisions reused across several targets—not six independent decisions.</p>
+
+
+      <h3>How often did Jev keep or show a related record?</h3>
+      <p>There is no verified answer key for which memories would actually help a repair. But the benchmark tells us which earlier issue it <em>marked as related</em> to each later issue. We can compare Jev's choices against those annotations.</p>
+
+      <div class="selection-matrices">
+        <div class="selection-matrix">
+          <h4>1. Keep or drop an earlier record?</h4>
+          <p class="matrix-scope">30 history slots across the ten later tasks</p>
+          <table>
+            <thead><tr><th>Earlier record</th><th class="num">Kept</th><th class="num">Dropped</th></tr></thead>
+            <tbody>
+              <tr><td>Marked related</td><td class="num selection-focus">2</td><td class="num selection-focus">6</td></tr>
+              <tr><td>Not marked related</td><td class="num">13</td><td class="num">9</td></tr>
+              <tr class="matrix-total"><td>Total</td><td class="num">15</td><td class="num">15</td></tr>
+            </tbody>
+          </table>
+          <p class="matrix-takeaway"><strong>2 of 8</strong> annotated related records survived the first Jev decision.</p>
+        </div>
+        <div class="selection-matrix">
+          <h4>2. Show or hide a kept record?</h4>
+          <p class="matrix-scope">15 retained records that reached the read decision</p>
+          <table>
+            <thead><tr><th>Earlier record</th><th class="num">Shown</th><th class="num">Hidden</th></tr></thead>
+            <tbody>
+              <tr><td>Marked related</td><td class="num selection-focus">1</td><td class="num selection-focus">1</td></tr>
+              <tr><td>Not marked related</td><td class="num">0</td><td class="num">13</td></tr>
+              <tr class="matrix-total"><td>Total</td><td class="num">1</td><td class="num">14</td></tr>
+            </tbody>
+          </table>
+          <p class="matrix-takeaway"><strong>1 of 2</strong> retained related records was shown to the worker.</p>
+        </div>
+      </div>
+
+      <p class="matrix-disclaimer"><strong>These are annotation-based confusion matrices, not correctness scores.</strong> “Not marked related” means the benchmark did not label that source–target pair as related; it does <em>not</em> prove the record was useless. A related record is not necessarily a helpful repair instruction either. So the 13 kept-but-unannotated records cannot be called false acceptances, nor the nine dropped records correct rejections. There is no defensible true-positive/false-positive accuracy, precision, or specificity for actual memory usefulness.</p>
+      <details class="compact-detail">
+        <summary>How the counts were calculated</summary>
+        <div class="detail-content">
+          <p>The write governor made <strong>211 unique source decisions</strong> overall: 123 SHARE and 88 DO_NOT_SHARE. The matrix above instead evaluates the <strong>30 candidate slots</strong> retrieved for ten later tasks (three per task): eight slots contained the benchmark's annotated related source, and 22 did not. Of those 30 slots, 15 belonged to globally shared sources. Two were annotated related (2 kept; 6 dropped); the other 13 were not annotated (13 kept; 9 dropped).</p>
+          <p>The read governor then decided on those 15 retained candidate slots. It exposed one annotated related record (the Django example) and withheld fourteen records: one annotated related and thirteen not annotated. These counts are at the <strong>target–record slot</strong> level, not 30 independent write calls: the six annotated write exclusions are repeated uses of only two rejected SymPy source records. Across all 211 unique source records, no independently verified relevance/usefulness labels are available to create a genuine global confusion matrix.</p>
+          <p>See the <a href="https://github.com/Vedant2100/agent-fleet-memory-governance/blob/handoff/aamas-2027-evidence/paper/round-3/main.tex">Round 3 results</a> and the <a href="https://github.com/Vedant2100/agent-fleet-memory-governance/blob/handoff/aamas-2027-evidence/paper/round-3/claim-evidence-ledger.md">evidence ledger</a>.</p>
+        </div>
+      </details>
 
       <div class="example-note">
         <strong>Following the Django example</strong>
