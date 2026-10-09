@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fleet Mem — Who Gets to Remember?</title>
+  <title>Selecting Earlier Task Records for Coding Agents</title>
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
     mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
@@ -213,246 +213,376 @@
         <h3>Contents</h3>
         <ul>
           <li><a href="#tldr">TL;DR</a></li>
-          <li><a href="#example">1. A Concrete Example</a></li>
-          <li><a href="#lineage">2. Research Lineage</a></li>
-          <li><a href="#benchmark">3. Benchmark Design</a></li>
-          <li><a href="#experiment">4. Experimental Design</a></li>
-          <li><a href="#status">5. Current Status</a></li>
-          <li><a href="#references">6. References</a></li>
+          <li><a href="#question">1. The Question</a></li>
+          <li><a href="#example">2. A Real Example</a></li>
+          <li><a href="#benchmark">3. Building the Pilot</a></li>
+          <li><a href="#records">4. What “Memory” Meant</a></li>
+          <li><a href="#design">5. Experimental Design</a></li>
+          <li><a href="#selection">6. Where the Related Records Went</a></li>
+          <li><a href="#results">7. Executable Results</a></li>
+          <li><a href="#limits">8. What the Results Do—and Do Not—Show</a></li>
+          <li><a href="#next">9. What Comes Next</a></li>
+          <li><a href="#positioning">10. Positioning</a></li>
+          <li><a href="#references">References</a></li>
         </ul>
       </div>
     </nav>
 
     <main class="main-content">
       <header>
-        <h1>Who Gets to Remember?</h1>
-        <p class="subtitle">Shared memory for coding-agent fleets: deciding which experiences become team knowledge, when later agents should see them, and whether those decisions improve real software outcomes.</p>
-        <p class="meta">Vedant Borkute · Fleet Mem · Research note · October 2026</p>
+        <h1>Selecting Earlier Task Records for Coding Agents</h1>
+        <p class="subtitle">An exploratory study of two different decisions: what to retain from earlier repository work before future tasks are known, and what a later coding agent should actually see.</p>
+        <p class="meta">Vedant Borkute · October 2026 · <a href="https://github.com/Vedant2100/agent-fleet-memory-governance">experiment repository</a></p>
       </header>
 
       <h2 id="tldr" style="margin-top:0;">TL;DR</h2>
-      <p>A coding agent can finish a task with useful experience that is not fully captured by the patch: a repository convention, a testing procedure, a failure mode, or an architectural assumption. Shared memory can preserve that experience for future agents, but it can also preserve stale, redundant, overgeneralized, or misleading advice.</p>
-      <p><strong>Fleet Mem</strong> separates two decisions: whether an experience should become shared team knowledge before future tasks are known, and whether a later coding agent should see that memory for its current task. Both decisions are evaluated with executable repository tests.</p>
-      <p>The current benchmark uses SWE-ContextBench as the software-task substrate but replaces its one-known-source setup with full earlier same-repository histories. The clean development set contains <strong>11 later tasks with 13–114 earlier candidate experiences each</strong>. No full memory-policy result exists yet.</p>
 
-      <h2 id="example">1. A Concrete Example</h2>
+      <p>A coding agent working on a new issue may benefit from an earlier issue in the same repository. But two decisions are easy to conflate: <strong>should the earlier record be retained at all?</strong> and, after a new task arrives, <strong>should that record be shown to the worker?</strong></p>
 
-      <p>Suppose a repository keeps track of files it has already processed. Two path strings can refer to the same file:</p>
-
-      <pre class="example-code"><code>./data/report.csv
-data/report.csv</code></pre>
-
-      <p>A naive program compares those strings literally, decides they are different, and processes the same file twice. An earlier coding agent encounters that bug and discovers the repository’s convention: <strong>normalize filesystem paths before comparing them</strong>.</p>
-
-      <pre class="example-code"><code># before
-if new_path == old_path:
-    ...
-
-# after
-if normalize(new_path) == normalize(old_path):
-    ...</code></pre>
-
-      <p>The important thing is not the exact function name. The earlier agent has learned a reusable fact about how this codebase handles file paths.</p>
-
-      <div class="finding">
-        <p><strong>Candidate memory from Agent A:</strong> “In this repository, normalize filesystem paths before equality checks.”</p>
-      </div>
-
-      <p>Weeks later, a fresh Agent B receives a different bug: the file watcher is reporting the same file twice because two equivalent path forms are being treated as different. Agent A’s earlier lesson could save Agent B time.</p>
-
-      <p>But a real shared memory would not contain only that one clean lesson. It might also contain:</p>
-
-      <div class="mermaid">
-flowchart TB
-    A["Agent A fixes duplicate file processing<br/>because equivalent paths were compared as raw strings"]
-    A --> U["Useful memory<br/>Normalize filesystem paths<br/>before comparing them"]
-    A --> O["Overgeneralized memory<br/>Normalize every string<br/>before comparing it"]
-    A --> E["Exception from another subsystem<br/>Do not rewrite URL paths<br/>inside the router"]
-    A --> F["Failed earlier attempt<br/>Lowercasing every path broke<br/>case-sensitive filesystems"]
-    A --> I["Irrelevant memory<br/>Serialization tests require<br/>sorted dictionary keys"]
-
-    U --> B["Agent B gets a later<br/>duplicate-file-watcher bug"]
-    O -. may mislead .-> B
-    E -. may or may not apply .-> B
-    F -. useful warning .-> B
-    I -. irrelevant .-> B
-
-    B --> T["Repository tests determine<br/>whether the selected memory helped"]
-
-    style U fill:#e1f5fe,stroke:#039be5,stroke-width:2px
-      </div>
-
-      <div class="figure-caption"><strong>Figure 1:</strong> Illustrative example, not a benchmark result. The task is easy to understand when there is one earlier lesson; governance becomes necessary when the shared history contains several plausible memories with different scope and reliability.</div>
-
-      <div class="three">
-        <div><strong>No memory</strong>Agent B must rediscover the repository’s path-handling convention from code and tests.</div>
-        <div><strong>Share everything</strong>Agent B receives the correct path lesson together with an overgeneralization, an exception, a failed attempt, and irrelevant advice.</div>
-        <div><strong>Governed memory</strong>The system can preserve the scoped lesson and relevant warning while withholding advice that does not belong in Agent B’s context.</div>
-      </div>
-
-      <p>This is why Fleet Mem needs multiple earlier experiences per later task. If the benchmark simply hands Agent B the one known-relevant lesson, then most of the memory-selection problem has already been solved by the benchmark.</p>
-
-      <h2 id="lineage">2. Research Lineage & Positioning</h2>
-      <p>The project began more broadly: could fresh agents accumulate a shared knowledge graph or organizational memory containing conventions, procedures, architecture, environment setup, and lessons from earlier work? The research question narrowed as related work filled in the surrounding space.</p>
-
-      <div class="mermaid">
-flowchart TB
-    ROOT["Agents reuse past experience"]
-
-    ROOT --> SG["Shared-memory governance<br/>GateMem and related work"]
-    ROOT --> CR["Coding experience reuse<br/>SWE-ContextBench · VibeMemBench"]
-    ROOT --> CM["Coding-memory lifecycle<br/>MemGuard · CODESKILL · STAIR"]
-    ROOT --> JC["Fast memory control<br/>Jev-Mem"]
-
-    ORIG["Original project direction<br/>shared knowledge graph / organizational memory"]
-    GOV["Narrower question<br/>which experiences deserve team status?"]
-    CHAIN["ChainSWE experiment<br/>sequential realism, but repository state<br/>already carried much of the memory"]
-
-    ORIG --> GOV
-    GOV --> FM["Fleet Mem<br/>future-blind sharing + later exposure<br/>+ executable downstream evaluation"]
-    CHAIN -. benchmark lesson .-> FM
-
-    SG --> FM
-    CR --> FM
-    CM --> FM
-    JC --> FM
-
-    FM --> GAP["Position of this work<br/>not memory governance broadly;<br/>controlled cross-worker sharing and exposure<br/>in repository-scoped coding fleets"]
-
-    style FM fill:#e1f5fe,stroke:#039be5,stroke-width:3px
-      </div>
-      <div class="figure-caption"><strong>Figure 2:</strong> Research lineage and where Fleet Mem sits. The contribution lies at the intersection of shared-memory governance, coding-experience reuse, coding-memory lifecycle work, and lightweight memory control.</div>
-
-      <p>Jev is therefore useful as a controller, not as the novelty claim. The experiment should remain meaningful if Jev is replaced by deterministic rules or a stronger deliberative LLM. The scientific object is the controlled decision boundary between one worker’s experience and a fleet’s shared memory.</p>
-
-      <h3>Why ChainSWE was not enough</h3>
-      <p>ChainSWE initially looked ideal because later coding agents inherit an evolving repository. In practice, that same persistence made explicit textual memory difficult to isolate: code, tests, and repository state already carried much of the useful information.</p>
+      <p>This pilot separated those decisions on ten SWE-ContextBench-derived target tasks. A custom source-only selector made one retain/drop decision for each earlier record without seeing any future target. A fixed retriever later considered the three most recent records for each target, and an optional target-aware selector could expose or withhold the surviving records.</p>
 
       <div class="three metrics">
-        <div><strong>14 / 36</strong><span>No shared memory resolved</span></div>
-        <div><strong>12 / 36</strong><span>Share-all resolved</span></div>
-        <div><strong>12 / 36</strong><span>Governed resolved</span></div>
+        <div><strong>8 / 10</strong><span>targets where the benchmark-annotated related record reached the fixed top-three retrieval set</span></div>
+        <div><strong>2 / 8</strong><span>of those related records survived source-only admission</span></div>
+        <div><strong>1 / 8</strong><span>was ultimately exposed by the later read filter</span></div>
       </div>
 
-      <p>More importantly, only seven targets contained multiple candidate memories, and clear conflict or supersession cases were rare. The controller therefore had little meaningful choice.</p>
+      <p>The end-to-end result was not a memory win. The separately executed No-Memory condition resolved <strong>2/10</strong> targets, while Share-All, Random admission, source-only selective admission, selective admission plus read filtering, and the known-related diagnostic each resolved <strong>1/10</strong>. The selective-write condition fixed more designated failing tests on some tasks, but did not resolve more tasks.</p>
+
+      <p>That result needs careful interpretation. The stored “memories” were not verified lessons learned by successful earlier agents: they were shortened historical issue records plus paths touched by a reference change. <strong>197 of 211 records were truncated and all 211 had unknown source-agent outcomes.</strong> Independent worker runs also disagreed even when their prompts were byte-identical. One of the two No-Memory successes exists only after a separate test-path-filtered regrade of a raw patch that had not applied.</p>
 
       <div class="finding">
-        <p><strong>Benchmark lesson.</strong> Sequential tasks are not enough. The benchmark must create a non-trivial pool of earlier experiences while hiding which ones will matter later.</p>
+        <p><strong>Main takeaway:</strong> this experiment is most informative as a failure analysis of information selection and experimental design. It shows exactly where benchmark-related history disappeared—retrieval, source-time admission, then target-time exposure—but it does not establish that those exclusions were correct, that memory is harmful, or that the tested selector improves coding performance.</p>
       </div>
 
-      <h2 id="benchmark">3. Benchmark Design</h2>
-      <p>The current benchmark returns to SWE-ContextBench but changes how its source-to-target relationships are used. The original relationship remains hidden metadata; it no longer chooses what the later coding agent receives.</p>
+      <h2 id="question">1. The Question</h2>
 
-      <p>For each later task, Fleet Mem gathers all eligible earlier experiences from the same repository. The current clean development set has <strong>11 later tasks, each with 13–114 earlier candidates</strong>.</p>
+      <p>Persistent agent memory is often discussed as if “store useful experience” and “retrieve relevant experience” were one problem. They are not.</p>
+
+      <p>A source-time decision happens before the future task exists. It asks whether an earlier record is sufficiently bounded, reliable, and reusable to retain. A target-time decision happens later, after the new issue is known. It asks whether an already-retained record belongs in this worker’s context.</p>
 
       <div class="mermaid">
 flowchart LR
-    subgraph P["Original pairwise setup"]
-      S1["Known related source"] --> T1["Later task"]
-    end
-
-    subgraph F["Fleet Mem setup"]
-      A1["Earlier task A"] --> POOL["Repository history<br/>13–114 candidates"]
-      A2["Earlier task C"] --> POOL
-      A3["Earlier task D"] --> POOL
-      A4["Earlier task E"] --> POOL
-      POOL --> G["Share / do not share"]
-      G --> MEM["Shared memory"]
-      MEM --> R["Show / withhold"]
-      R --> T2["Later task"]
-    end
-
-    style MEM fill:#e1f5fe,stroke:#039be5,stroke-width:2px
+    S["Earlier repository task"] --> R["Historical record"]
+    R --> W{"Source-only decision<br/>SHARE or DO_NOT_SHARE"}
+    W -->|SHARE| M["Retained pool"]
+    W -->|DO_NOT_SHARE| X["Unavailable later"]
+    M --> K["Fixed retrieval:<br/>3 most recent records"]
+    K --> Q{"Target-aware decision<br/>EXPOSE or WITHHOLD"}
+    Q -->|EXPOSE| A["Later coding agent"]
+    Q -->|WITHHOLD| H["Not shown"]
+    A --> T["Canonical repository tests"]
       </div>
-      <div class="figure-caption"><strong>Figure 3:</strong> SWE-ContextBench’s known relation becomes hidden evaluation metadata. The live system instead operates over the full eligible repository history.</div>
+      <div class="figure-caption"><strong>Figure 1:</strong> The experiment separates source-time admission from later exposure. A source record rejected globally cannot be recovered by the later read selector.</div>
 
-      <p>A strict temporal boundary prevents future information from leaking into the share decision. When an earlier experience is converted into memory, neither the extractor nor the share controller may see the later task, hidden tests, reference patch, later commits, or eventual memory effect.</p>
+      <p>Every worker run starts from a clean target repository state. The goal is not to build a new memory database; it is to make the two selection points measurable against executable software outcomes.</p>
 
-      <p>A parallel construction using SWE-rebench V2 tested a more natural history-first benchmark. It produced 48 later tasks across 12 repositories, 226 earlier episodes, and 600 history links. The histories were richer, but relation quality and evaluator readiness were not sufficient: chronology depended on issue/PR creation time, useful links were difficult to establish, and only <strong>1 of 48</strong> targets passed both no-fix and reference-fix evaluator controls. That path is deferred rather than discarded.</p>
+      <h2 id="example">2. A Real Example from the Pilot</h2>
 
-      <div class="table-responsive">
-        <table>
-          <thead><tr><th>Benchmark</th><th>Strength</th><th>Limitation here</th><th>Role</th></tr></thead>
-          <tbody>
-            <tr><td><strong>ChainSWE</strong></td><td>Sequential maintenance</td><td>Repository state already carries much of the memory; few competing memories</td><td>Secondary evidence</td></tr>
-            <tr><td><strong>SWE-ContextBench + history overlay</strong></td><td>Executable tasks, known useful relations, non-trivial same-repo histories</td><td>Constructed organizational history</td><td><strong>Primary</strong></td></tr>
-            <tr><td><strong>SWE-rebench V2</strong></td><td>Richer natural histories</td><td>Weak relation evidence, imperfect chronology, 1/48 fully evaluator-validated</td><td>Follow-up</td></tr>
-            <tr><td><strong>VibeMemBench</strong></td><td>Large histories with known useful experience</td><td>Stronger for read-side memory use than future-blind sharing</td><td>Related work / future validation</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <h2 id="experiment">4. Experimental Design</h2>
-      <p>The main experiment separates two decisions. At source time, the system chooses <strong>share / do not share</strong>. At later task time, it chooses <strong>show / withhold</strong>. The source-time decision is made once and cannot depend on which future task eventually arrives.</p>
-
-      <div class="table-responsive">
-        <table>
-          <thead><tr><th>Condition</th><th>What the coding agent sees</th><th>What it isolates</th></tr></thead>
-          <tbody>
-            <tr><td><strong>No memory</strong></td><td>No earlier lessons</td><td>Baseline</td></tr>
-            <tr><td><strong>Share everything</strong></td><td>Eligible earlier lessons under a fixed budget</td><td>Cost of indiscriminate sharing</td></tr>
-            <tr><td><strong>Random, matched amount</strong></td><td>A random subset with the same count/token budget as governed memory</td><td>Smart selection vs simply less context</td></tr>
-            <tr><td><strong>Selective sharing</strong></td><td>Only memories approved before future tasks are known</td><td>Value of the source-time decision</td></tr>
-            <tr><td><strong>Selective showing</strong></td><td>Broad memory bank, filtered for the later task</td><td>Value of read-side filtering</td></tr>
-            <tr><td><strong>Selective sharing + showing</strong></td><td>Both stages controlled</td><td>Full system</td></tr>
-            <tr><td><strong>Strong reasoning controller</strong></td><td>Same decisions made by a stronger LLM</td><td>Quality vs cost/latency</td></tr>
-            <tr><td><strong>Known-relevant experience</strong></td><td>The benchmark’s linked earlier experience is supplied directly</td><td>Whether useful memory can move the worker at all</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <p>The final row is deliberately tested first. If a known relevant earlier experience cannot change executable outcomes, there is no useful memory signal for a more elaborate controller to recover.</p>
-
-      <p>The candidate-memory extractor is held separate from the governor and is expected to capture candidate lessons broadly. Otherwise extraction itself would quietly perform the selection being evaluated.</p>
-
-      <h2 id="status">5. Current Status</h2>
-
-      <div class="three metrics">
-        <div><strong>11</strong><span>clean later tasks with non-trivial histories</span></div>
-        <div><strong>13–114</strong><span>earlier same-repository candidates per task</span></div>
-        <div><strong>0</strong><span>completed memory-policy conclusions</span></div>
-      </div>
-
-      <p>The benchmark-construction stage has passed its structural check. A routing smoke test confirmed that the infrastructure can create different memory exposures, but that is not a governance result.</p>
-
-      <p>The remaining pre-treatment question is coding-worker suitability. GPT-6 Luna failed the original 2-of-3 full-resolution qualification rule. Its actual patches nevertheless showed partial competence: on a SymPy task it fixed one of two failing tests but introduced a severe performance regression; on a Django task it fixed the reported duplicate-column case, fixed one of six failing tests, and preserved all 166 previously passing tests.</p>
-
-      <p>The current sequence is therefore: compare Luna and Sol on the same already-used development tasks, freeze one worker, then compare no memory against the known-relevant earlier experience. The full governance comparison proceeds only if that simpler test establishes a measurable memory effect.</p>
+      <p>The cleanest example comes from Django. An earlier task, <code>django__django-16910</code>, concerned <code>QuerySet.only()</code> interacting incorrectly with <code>select_related()</code> on a reverse <code>OneToOneField</code>. The record stored by the experiment was:</p>
 
       <div class="finding">
-        <p><strong>Current boundary.</strong> Fleet Mem does not yet show that shared memory improves coding-agent performance. The present evidence establishes the benchmark structure, executable evaluation path, and experimental controls needed to test that claim.</p>
+        <p><strong>Stored source record:</strong> “Earlier task experience concerned: QuerySet.only() doesn't work with select_related() on a reverse OneToOneField relation. Description On Django 4.2 calling only() with select_related() on a query using the reverse lookup for a OneToOne relation does not generate the correct query. All the fields from the related model are still included in the… Its reference change touched: django/db/models/sql/query.py.”</p>
       </div>
 
-      <details>
-        <summary>Methodological controls</summary>
-        <div><p>The worker and memory policy are not tuned simultaneously. Future-task information is not used to write memories. The share decision is made once before later tasks are known. The task set is not changed after memory outcomes are observed. Broken-harness or empty-patch runs are not interpreted as memory results.</p></div>
-      </details>
+      <p>A later task, <code>django__django-35356</code>, reported a related failure involving recursive <code>OneToOneField</code> relationships together with <code>select_related()</code> and <code>only()</code>. The benchmark annotates the earlier task as related to the later one.</p>
+
+      <div class="mermaid">
+flowchart TB
+    S["Earlier task: django-16910<br/>only() + select_related()<br/>reverse OneToOneField"]
+    S --> R["Stored record<br/>truncated issue text +<br/>django/db/models/sql/query.py"]
+    R --> K["Among 3 most recent<br/>records for django-35356"]
+    K --> W["Source-only selector: SHARE"]
+    W --> Q["Target-aware selector: EXPOSE"]
+    Q --> A["GPT-6 Luna + SWE-Edit<br/>works on django-35356"]
+    A --> O["Canonical result:<br/>unresolved · F2P 0/1"]
+
+    style R fill:#e1f5fe,stroke:#039be5,stroke-width:2px
+      </div>
+      <div class="figure-caption"><strong>Figure 2:</strong> One observed source→retrieval→admission→exposure→worker path. “Related” is benchmark metadata; this run does not prove that the stored record contained a useful repair lesson.</div>
+
+      <p>This example is useful precisely because it did <em>not</em> end in a success. The earlier record survived every selection stage and reached the worker, yet the later task remained unresolved. The experiment cannot tell whether the record was insufficient, the worker failed to use it, or the relation was useful only in a richer representation than the stored card.</p>
+
+      <p>The converse also occurred. The earlier SymPy record <code>sympy__sympy-16988</code>—about duplicate handling in <code>Intersection</code> and touching <code>sympy/sets/sets.py</code>—entered the top-three history for later related tasks but received <code>DO_NOT_SHARE</code>. That single source decision was reused across three later targets. Once rejected, no later target-aware selector could recover it.</p>
+
+      <h2 id="benchmark">3. Building a Pilot Where Selection Was Actually Non-Trivial</h2>
+
+      <p>The substrate was SWE-ContextBench Lite: 300 earlier “experience” tasks, 99 related target tasks, and published source–target relationships. Those published relationships were kept hidden from ordinary retrieval and selection. Instead, each target received every strictly earlier task from the same repository as its historical candidate pool.</p>
+
+      <p>All 99 targets were screened before agent treatments. The automatic audit separated clean temporal relationships from explicit prior references, high-hint cases, same-PR/co-resolution cases, and ambiguous chronology.</p>
+
+      <div class="mermaid">
+flowchart LR
+    A["99 Lite target tasks"] --> B["11 targets pass the<br/>clean structural screen"]
+    B --> C["Candidate histories:<br/>13–114 earlier tasks"]
+    C --> D["Matplotlib control invalid:<br/>semantic no-op already resolves"]
+    D --> E["10 primary targets<br/>Django · SymPy · scikit-learn"]
+    E --> F["20/20 primary evaluator controls pass<br/>no-op unresolved + reference patch resolved"]
+
+    style E fill:#e1f5fe,stroke:#039be5,stroke-width:2px
+      </div>
+      <div class="figure-caption"><strong>Figure 3:</strong> The frozen pilot was selected before treatment outcomes. Matplotlib remained in the audit universe but was excluded from primary analysis after a model-free control showed its semantic no-op already passed the designated failing test.</div>
+
+      <p>The eleven frozen histories contained 603 target–record entries that deduplicated to <strong>211 unique source records</strong>. The ten primary histories contained 188 of those records, but source-time admission remained frozen over the full 211-record universe. The primary target pools ranged from 13 to 114 earlier same-repository records.</p>
+
+      <p>The ten primary target IDs correspond to only <strong>eight distinct resolving pull requests</strong>: two pairs of SymPy targets share a PR. The pilot also spans only three repositories. Those dependencies matter when interpreting “10 targets” as a sample size.</p>
+
+      <h2 id="records">4. What “Memory” Actually Meant in This Experiment</h2>
+
+      <p>This is the most important qualification in the study.</p>
+
+      <p>The completed pilot did <strong>not</strong> use fresh trajectories from earlier coding agents. Each source record was produced deterministically from benchmark metadata:</p>
+
+      <ul>
+        <li>up to roughly 320 characters from the earlier issue description;</li>
+        <li>the earlier task’s creation time and repository provenance;</li>
+        <li>up to eight paths touched by the source task’s reference change;</li>
+        <li>a generic warning to inspect current code and tests rather than treat the record as a prescription.</li>
+      </ul>
+
+      <div class="three metrics">
+        <div><strong>211</strong><span>unique historical records in the frozen source-decision universe</span></div>
+        <div><strong>197 / 211</strong><span>records whose stored description ends in a truncation marker</span></div>
+        <div><strong>211 / 211</strong><span>records with unknown source-agent outcome</span></div>
+      </div>
+
+      <p>The paths came from reference changes, not from an observed successful source-agent trajectory. The timestamp used for chronology was the released issue <code>created_at</code>, which is reproducible but does not prove that the corresponding repair or experience existed at that exact time.</p>
+
+      <div class="finding">
+        <p><strong>So the experiment tests selection over historical task records—not validated learned lessons.</strong> A failure to benefit from these records is not evidence that richer agent memory, verified repair summaries, or successful source trajectories would also fail.</p>
+      </div>
+
+      <h2 id="design">5. The Experiment That Ultimately Ran</h2>
+
+      <p>The protocol evolved substantially while infrastructure and worker failures were diagnosed. The completed core comparison used the following six conditions on the same ten primary target tasks:</p>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr><th>Condition</th><th>Source-time admission</th><th>Target-time handling</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>A · No Memory</strong></td><td>No records retained for the worker</td><td>No record shown</td></tr>
+            <tr><td><strong>B · Share-All</strong></td><td>All records available</td><td>Expose the three fixed recent slots</td></tr>
+            <tr><td><strong>C · Random</strong></td><td>Random global subset matching the selector’s total admission count</td><td>Same fixed recent slots</td></tr>
+            <tr><td><strong>D · Selective Write</strong></td><td>Custom source-only binary selector</td><td>Same fixed recent slots</td></tr>
+            <tr><td><strong>E · Selective Write + Read</strong></td><td>Same source-only selector as D</td><td>Custom target-aware EXPOSE/WITHHOLD filter</td></tr>
+            <tr><td><strong>F · Known-Related Diagnostic</strong></td><td>Use hidden benchmark relationship metadata</td><td>Show the annotated related record(s) within the common budget</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The original protocol also proposed a deliberative LLM write arm (<strong>G</strong>), but it was never run and remained outside the amended A–F core.</p>
+
+      <h3>The selector</h3>
+
+      <p>The selective conditions used the TypeSafe System-One API with model <code>jev-1.13.0</code> through SDK 0.7.2. The source decision was a custom binary <code>SHARE / DO_NOT_SHARE</code> question. The later decision was a custom <code>EXPOSE / WITHHOLD</code> question. This is <strong>not an evaluation of the published Jev-Mem architecture</strong>; it uses the Jev System-One API as a bounded decision service.</p>
+
+      <p>The source selector admitted <strong>123 of 211</strong> records. The target-time selector was asked about 15 admitted records and returned <strong>EXPOSE once</strong>. Saved decision rationales were empty, so the archived evidence does not support reconstructing why a particular record was accepted or rejected from prose after the fact.</p>
+
+      <h3>Fixed retrieval matters</h3>
+
+      <p>Retrieval happened <em>before</em> source admission filtering: each target first selected its three most recent historical records. Admission could remove those slots, but older retained records did not backfill them. This made the write decision directly observable, but it also made global rejection unusually consequential.</p>
+
+      <p>The random control matched the selector’s <em>global</em> number of retained records, not the amount or length of context exposed on each target. And the final experiment did not include a Share-All + target-aware-read condition, so it is not a complete 2×2 write/read factorial.</p>
+
+      <h3>The coding worker and evaluator</h3>
+
+      <p>The completed B–E runs used Microsoft’s SWE-Edit baseline scaffold (revision <code>60ca673</code>) with requested model <code>gpt-6-luna</code>, <code>xhigh</code> reasoning effort, up to 100 iterations, and an 1,800-second task budget. Every target ran from a fresh repository state. The unchanged SWE-ContextBench evaluator was executed through a project-local Apptainer compatibility layer.</p>
 
       <details>
-        <summary>Natural history and stress cases</summary>
-        <div><p>The primary benchmark uses natural repository histories. A secondary stress set may include duplicate advice, over-broad memories, failed-source lessons, stale or superseded guidance, conflicts, and superficially similar but wrong guidance.</p></div>
+        <summary>Why the repository contains so many worker amendments</summary>
+        <div>
+          <p>The execution path was deliberately preserved instead of cleaned up after the fact. Early local mini-SWE-agent runs were invalidated by command/submission-interface problems. The original Luna qualification then failed its preregistered 2-of-3 full-resolution gate: the two graded tasks were both unresolved. A planned Sol comparison never completed because of patch/application, interruption, and quota problems. Several local-model candidates produced partial coding evidence but failed operational/mechanics screens or infrastructure limits.</p>
+          <p>A later output-boundary amendment made the repository diff—not the worker’s prose or Finish marker—the authoritative prediction, and excluded test-path changes from submitted source patches. Model-free fixtures validated that boundary. A user-authorized development amendment then ran the frozen No-Memory vs known-related signal test with Luna. That test produced executable discordance on 3/10 targets, which authorized the subsequent B–E exploratory treatment run.</p>
+          <p>These amendments are part of the evidence record. They are why the final result should be read as an exploratory development pilot rather than a preregistered confirmatory effect estimate.</p>
+        </div>
       </details>
+
+      <h2 id="selection">6. Where the Benchmark-Related Records Went</h2>
+
+      <p>The most stable result is not a performance number. It is the selection trace.</p>
+
+      <div class="mermaid">
+flowchart LR
+    A["10 target tasks"] --> B["Related record reaches<br/>fixed top-3 retrieval<br/><b>8 targets</b>"]
+    B --> C["Related record survives<br/>source-only admission<br/><b>2 targets</b>"]
+    C --> D["Related record exposed<br/>by target-aware read filter<br/><b>1 target</b>"]
+
+    A -. "2 related records never retrieved" .-> X["Unavailable before admission"]
+    B -. "6 target-level rejections" .-> Y["Dropped at source time"]
+    C -. "1 withheld at read time" .-> Z["Retained but not shown"]
+
+    style D fill:#e1f5fe,stroke:#039be5,stroke-width:2px
+      </div>
+      <div class="figure-caption"><strong>Figure 4:</strong> Availability of the benchmark-annotated related record. The 8→2→1 funnel describes selection behavior, not usefulness: the benchmark relation does not prove that the stored record would improve the later repair.</div>
+
+      <p>The dependence structure is easy to miss. Those six target-level source-admission losses are not six independent bad decisions. They arise from only <strong>two unique source records</strong>, each reused across three later SymPy targets. A global admission error—if it is an error—can therefore propagate across several future tasks.</p>
+
+      <p>Context quantity also changed sharply across policies:</p>
+
+      <div class="three metrics">
+        <div><strong>30</strong><span>records exposed by Share-All across ten targets</span></div>
+        <div><strong>20</strong><span>records exposed by Random admission</span></div>
+        <div><strong>15 → 1</strong><span>records exposed by selective write → selective write+read</span></div>
+      </div>
+
+      <p>The corresponding character/4 context estimates were 9,408, 6,267, 4,752, and 315 tokens for B, C, D, and E. These are estimates rather than tokenizer-measured memory tokens. Because context amounts were not matched per target, outcome differences cannot be cleanly attributed to selection quality alone.</p>
+
+      <h2 id="results">7. Executable Results</h2>
+
+      <p>All 40 B–E treatment grades completed and were archived with canonical-result hashes. A and F came from the earlier paired signal run and its separate test-path-filtered regrade.</p>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr><th>Condition</th><th>Records exposed</th><th>Resolved targets</th><th>F2P passed</th><th>P2P preserved</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>A · No Memory</strong></td><td>0</td><td><strong>2 / 10</strong></td><td>9 / 48</td><td><strong>2145 / 2145</strong></td></tr>
+            <tr><td><strong>B · Share-All</strong></td><td>30</td><td>1 / 10</td><td>7 / 48</td><td>2025 / 2145</td></tr>
+            <tr><td><strong>C · Random</strong></td><td>20</td><td>1 / 10</td><td>8 / 48</td><td>2025 / 2145</td></tr>
+            <tr><td><strong>D · Selective Write</strong></td><td>15</td><td>1 / 10</td><td><strong>13 / 48</strong></td><td>2025 / 2145</td></tr>
+            <tr><td><strong>E · Selective Write + Read</strong></td><td>1</td><td>1 / 10</td><td>7 / 48</td><td>2025 / 2145</td></tr>
+            <tr><td><strong>F · Known-Related Diagnostic</strong></td><td>diagnostic relation-based exposure</td><td>1 / 10</td><td>8 / 48</td><td>2025 / 2145</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Selective write (D) has the largest aggregate FAIL_TO_PASS count, but that does not translate into more completed tasks. Much of the difference comes from partial progress on a small number of targets—for example, 4/6 failing tests passed on <code>sympy__sympy-16946</code> while the task remained unresolved.</p>
+
+      <p>The 120 lost PASS_TO_PASS tests in every B–F aggregate are concentrated on <code>sympy__sympy-21309</code>. No-Memory preserves those tests in its separately executed run. That pattern looks dramatic, but identical-prompt evidence prevents a simple “memory caused the regression” interpretation.</p>
+
+      <div class="finding">
+        <p><strong>The read-filtered arm’s only resolved task received no memory.</strong> E exposed zero records on nine of ten targets, including its sole resolved target, <code>sympy__sympy-19235</code>. The only target where E actually exposed a record was <code>django__django-35356</code>, and that task remained unresolved.</p>
+      </div>
+
+      <h3>Run variability is not a footnote</h3>
+
+      <p>On nine targets, E exposed zero records, making its worker prompt byte-identical to the archived No-Memory prompt. Yet independent runs sometimes produced different executable outcomes. In particular, differences on <code>sympy__sympy-21203</code> and <code>sympy__sympy-21309</code> show that a single worker run per condition is not enough to assign every outcome difference to memory.</p>
+
+      <h3>The No-Memory 2/10 result has a grading-boundary caveat</h3>
+
+      <p>The raw No-Memory prediction for <code>sympy__sympy-21203</code> did not apply in its original evaluation and was unresolved. A later test-path-filtered regrade removed test-file edits from the saved patch; that sanitized patch applied and resolved the target with 3/3 failing tests fixed and 124/124 previously passing tests preserved. The reported A total of 2/10 includes this regraded success.</p>
+
+      <p>B–E, by contrast, were executed later with the repaired authoritative output boundary; all 40 submitted treatment patches contain no test-file edits. Therefore A and B–E are not perfectly symmetric executions, even though their canonical outcomes are all archived.</p>
 
       <details>
-        <summary>Already-institutionalized knowledge</summary>
-        <div><p>A lesson may already be encoded in implementation, tests, documentation, comments, configuration, or CI. Such cases are tracked because declining to create redundant textual memory can be the correct organizational decision.</p></div>
+        <summary>Per-target FAIL_TO_PASS counts</summary>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr><th>Target</th><th>Total</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>django-34176</td><td>6</td><td>1</td><td>1</td><td>1</td><td>2</td><td>1</td><td>1</td></tr>
+              <tr><td>django-35356</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+              <tr><td>scikit-learn-13771</td><td>5</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td></tr>
+              <tr><td>sympy-16342</td><td>11</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>2</td></tr>
+              <tr><td>sympy-16946</td><td>6</td><td>0</td><td>0</td><td>0</td><td>4</td><td>0</td><td>0</td></tr>
+              <tr><td>sympy-16953</td><td>11</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+              <tr><td>sympy-19235</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+              <tr><td>sympy-21203</td><td>3</td><td>3</td><td>1</td><td>2</td><td>2</td><td>1</td><td>1</td></tr>
+              <tr><td>sympy-21309</td><td>2</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+              <tr><td>sympy-9384</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+            </tbody>
+          </table>
+        </div>
       </details>
 
-      <h2 id="references">6. References</h2>
-      <ol class="references">
-        <li><a href="https://arxiv.org/abs/2602.08316">SWE-ContextBench</a></li>
-        <li><a href="https://arxiv.org/abs/2607.02606">ChainSWE</a></li>
-        <li><a href="https://arxiv.org/abs/2609.23570">VibeMemBench</a></li>
-        <li><a href="https://arxiv.org/abs/2608.21867">MemGuard</a></li>
-        <li><a href="https://arxiv.org/abs/2606.18829">GateMem</a></li>
-        <li><a href="https://arxiv.org/pdf/2609.23986">Jev-Mem</a></li>
-        <li><a href="https://arxiv.org/abs/2605.25430">CODESKILL</a></li>
-        <li><a href="https://arxiv.org/abs/2603.15401">SWE-Skills-Bench</a></li>
-        <li><a href="https://github.com/GiulioDER/agent-memory-bench">Agent Memory Bench</a></li>
-        <li><a href="https://proceedings.mlr.press/v306/badertdinov26a.html">SWE-rebench V2</a></li>
+      <h2 id="limits">8. What the Results Do—and Do Not—Show</h2>
+
+      <p>The tempting headline would be “memory made the coding agent worse.” The evidence does not support that claim.</p>
+
+      <p>What is directly observed is narrower:</p>
+
+      <ul>
+        <li>the benchmark-related record was often unavailable by the time target-aware selection happened;</li>
+        <li>none of the tested memory conditions improved full-task resolution over the separately executed No-Memory baseline;</li>
+        <li>selective write changed partial failing-test performance on some targets;</li>
+        <li>the read-filtered arm mostly reduced to no memory at all;</li>
+        <li>independent worker runs varied enough to confound single-run causal comparisons.</li>
+      </ul>
+
+      <p>Several unresolved issues prevent a stronger conclusion.</p>
+
+      <div class="table-responsive">
+        <table>
+          <thead><tr><th>Limitation</th><th>Why it matters</th></tr></thead>
+          <tbody>
+            <tr><td><strong>No verified useful-memory positive control</strong></td><td>The historical record may never have contained a repair lesson capable of helping the worker.</td></tr>
+            <tr><td><strong>Issue proxies, not learned agent memories</strong></td><td>197/211 records are truncated and every source outcome is unknown.</td></tr>
+            <tr><td><strong>Single independent worker run per condition</strong></td><td>Prompt-identical A/E runs sometimes disagree, so treatment and worker variance are entangled.</td></tr>
+            <tr><td><strong>Different A/F grading path</strong></td><td>One reported No-Memory success appears only after a separate sanitized regrade.</td></tr>
+            <tr><td><strong>Unequal context quantity</strong></td><td>B/C/D/E exposed 30/20/15/1 records; Random is globally count-matched, not target-context matched.</td></tr>
+            <tr><td><strong>Missing Share-All + Read condition</strong></td><td>The independent causal effect of target-time read filtering cannot be identified.</td></tr>
+            <tr><td><strong>Small dependent sample</strong></td><td>10 IDs come from 3 repositories and only 8 distinct resolving PRs.</td></tr>
+            <tr><td><strong>Approximate chronology</strong></td><td>Issue creation time does not establish when a source repair or usable experience became available.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The known-related condition is also not an “oracle upper bound.” A benchmark relationship says the earlier task is related; it does not certify that this particular 320-character record is useful to this worker. Its 3/10 executable discordance against No Memory establishes behavioral sensitivity to context, not positive transfer.</p>
+
+      <h2 id="next">9. The Experiment Suggested by These Results</h2>
+
+      <p>The next study should make useful information a demonstrated property of the setup before evaluating governance.</p>
+
+      <ol>
+        <li><strong>Use verified source-agent experience.</strong> Generate a real earlier trajectory, record whether it succeeded, and extract a concise lesson grounded in that trajectory rather than an issue proxy.</li>
+        <li><strong>Establish a positive control first.</strong> Directly inject a known useful lesson and require repeated executable improvement on at least some targets before evaluating selectors.</li>
+        <li><strong>Repeat worker runs under one grading boundary.</strong> Use the same authoritative patch collection, same evaluator path, and multiple seeds/runs for each condition.</li>
+        <li><strong>Complete the write/read factorial.</strong> Add Share-All + target-aware Read so admission and exposure can be separated experimentally.</li>
+        <li><strong>Match context at the target level.</strong> Compare the selector against random and relevance baselines with the same number and approximate length of exposed records per target.</li>
+        <li><strong>Scale only after these checks pass.</strong> The current ten-target pilot is useful for debugging the measurement problem; it is not a population-level estimate of coding-agent memory.</li>
       </ol>
 
-      <footer>Active research note. The full memory-policy experiment has not yet been run.</footer>
+      <div class="finding">
+        <p>The experiment did answer one useful question: <strong>where can potentially relevant history disappear?</strong> In this setup, the largest bottleneck was not target-time retrieval. It was the earlier, future-blind admission decision. Whether that bottleneck is beneficial cannot be known until the retained information is first shown to be useful.</p>
+      </div>
+
+      <h2 id="positioning">10. Where This Sits Relative to Prior Work</h2>
+
+      <p>The narrow framing matters because several adjacent systems already study coding-agent memory.</p>
+
+      <div class="table-responsive">
+        <table>
+          <thead><tr><th>Work</th><th>Relevant idea</th><th>Difference here</th></tr></thead>
+          <tbody>
+            <tr><td><strong>SWE-ContextBench</strong></td><td>Tests whether prior coding context can help later related tasks.</td><td>This pilot turns its relationships into hidden evaluation metadata and studies a future-blind retain decision before later exposure.</td></tr>
+            <tr><td><strong>ReasoningBank</strong></td><td>Builds reusable reasoning memories from agent interactions.</td><td>The completed pilot did not use learned trajectories; it used historical issue-based records.</td></tr>
+            <tr><td><strong>MemGuard</strong></td><td>Studies lifecycle control and verification for coding-agent memories.</td><td>This pilot focuses on the observable source-admission → later-exposure path in a small executable task set.</td></tr>
+            <tr><td><strong>Jev-Mem</strong></td><td>System-One-controlled agentic memory and efficient retrieval.</td><td>The experiment did not run Jev-Mem’s published architecture; it used custom binary decisions through the Jev System-One API.</td></tr>
+            <tr><td><strong>ChainSWE</strong></td><td>Sequential software maintenance where repository state persists across tasks.</td><td>Each worker here resets on a target task; the intervention is explicit historical context rather than accumulated repository state.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The useful contribution of this pilot is therefore methodological rather than architectural: it makes a source-only retain decision reusable across later tasks, traces exactly where benchmark-related records disappear, and exposes the controls needed before a causal claim about memory selection is credible.</p>
+
+      <h2 id="references">References & Reproducibility</h2>
+
+      <ol class="references">
+        <li><a href="https://arxiv.org/abs/2602.08316">SWE Context Bench: A Benchmark for Context Learning in Coding</a></li>
+        <li><a href="https://arxiv.org/abs/2509.25140">ReasoningBank</a></li>
+        <li><a href="https://arxiv.org/abs/2608.21867">MemGuard</a></li>
+        <li><a href="https://arxiv.org/abs/2609.23986">Jev-Mem</a></li>
+        <li><a href="https://arxiv.org/abs/2607.02606">ChainSWE</a></li>
+        <li><a href="https://github.com/Vedant2100/agent-fleet-memory-governance">Experiment repository</a> · final evidence branch: <code>handoff/aamas-2027-evidence</code></li>
+      </ol>
+
+      <details>
+        <summary>Frozen evidence identifiers</summary>
+        <div>
+          <p>Experiment code commit: <code>1cedbc0035cb867cfebde398019e313c2a5b02cb</code>.</p>
+          <p>Final v15 evidence archive: <code>fleet-mem-aamas-2027-v15-15703d8ecbb6.zip</code>, SHA-256 <code>260db688e040671dc9f2c7a095573992dc6ceda3b271ebe1852a2e90d19b4586</code>, 4,571,951 bytes. The repository’s handoff manifest records verified Google Drive readback and the evidence branch preserves the versioned archive.</p>
+          <p>The final handoff reports 40/40 B–E canonical treatment grades and independently verified canonical-result hashes. The proposed G arm remains unrun outside the amended A–F core.</p>
+        </div>
+      </details>
+
+      <footer>
+        Exploratory research note based on the frozen October 2026 experiment. The results are a completed core pilot, not a confirmatory effect estimate and not evidence that memory selection improves coding-agent reliability.
+      </footer>
     </main>
   </div>
 </body>
