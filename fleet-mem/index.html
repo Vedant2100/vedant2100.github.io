@@ -133,7 +133,7 @@
 
       <h2 id="tldr" style="margin-top:0">In brief</h2>
       <p class="lead">An earlier task may contain information a later coding agent needs. But remembering every task can bury that information in unrelated history. I studied two decisions: <strong>should an earlier record be kept before the later task is known?</strong> And <strong>should a particular later agent see it?</strong></p>
-      <p>On ten SWE-ContextBench tasks, the benchmark-annotated related record reached fixed retrieval for eight targets, survived the keep/drop decision for two, and reached the later agent after read filtering for one. The tested memory conditions did not improve full-task resolution over the separately run No-Memory baseline. The experiment is most useful for understanding how historical context gets filtered—and how difficult it is to demonstrate that filtering helped.</p>
+      <p>We tried this on ten real coding tasks. The system often filtered out an earlier issue that was related to the new task, so the coding agent never saw it. Giving agents past issue summaries did not lead to more completed fixes in these runs. But that does not mean memory is useless: these summaries were not proven solutions, and this small experiment cannot tell us what better memories would do.</p>
 
       <h2 id="problem">1. The Problem</h2>
       <p>Imagine two coding agents working on the same software project months apart. Agent A investigates an unexpected database behavior. Agent B encounters another issue involving the same part of the codebase. Agent B starts fresh: it can read the repository, but it does not automatically know what Agent A encountered.</p>
