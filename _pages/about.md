@@ -74,7 +74,7 @@ redirect_from:
     <p class="home-card__eyebrow">AGENT EVALUATION: HACKATHON</p>
     <h3><a href="https://github.com/Vedant2100/skillfalsifier">SkillFalsifier</a></h3>
     <p>A falsification gate for self-improving agents: generated skills must transfer to held-out and adversarial cases before they are promoted.</p>
-    <a class="home-card__link" href="https://github.com/Vedant2100/skillfalsifier">View on GitHub →</a>
+    <a class="home-card__link" href="/skillfalsifier/">Try the live policy demo →</a> · <a class="home-card__link" href="/posts/skillfalsifier/">Read the technical blog →</a> · <a href="https://github.com/Vedant2100/skillfalsifier">GitHub ↗</a>
   </article>
   <article class="home-card">
     <p class="home-card__eyebrow">AGENT TRAINING: HACKATHON</p>
