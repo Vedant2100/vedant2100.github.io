@@ -29,7 +29,7 @@ html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#f8fafc;col
 #diagram .paper.source rect{stroke:#c36e2c;stroke-width:2.5}
 #diagram .graph-title{font-size:29px;letter-spacing:-.7px;font-weight:780;fill:#112b49}
 #diagram .graph-sub{font-size:15px;fill:#68798c}
-#tooltip{position:fixed;z-index:5;display:none;width:min(420px,calc(100vw - 22px));max-height:min(82dvh,720px);overflow-y:auto;pointer-events:none;border:1px solid #ccd8e8;border-radius:11px;background:rgba(255,255,255,.98);box-shadow:0 14px 42px #14253a24;padding:16px 18px;font-size:13px;line-height:1.43}
+#tooltip{position:fixed;z-index:5;display:none;width:min(420px,calc(100vw - 22px));max-height:min(82dvh,720px);overflow-y:auto;pointer-events:auto;border:1px solid #ccd8e8;border-radius:11px;background:rgba(255,255,255,.98);box-shadow:0 14px 42px #14253a24;padding:16px 18px;font-size:13px;line-height:1.43}
 #tooltip.show{display:block}
 #tooltip .tt-title{font-weight:800;line-height:1.25;font-size:16px;margin:0 0 5px}
 #tooltip .tt-venue{font-size:11px;font-weight:650;color:#58728a;margin-bottom:11px}
@@ -133,21 +133,22 @@ for(const lane of lanes)for(const id of lane.ids){
  put(make("text",{x:p.x+12,y:p.y+48,class:"paper-venue"},g),n.venue.replace("Preprint · 2026 rev.","Preprint 2026").slice(0,27));
  g.addEventListener("pointerenter",ev=>show(id,ev));
  g.addEventListener("pointermove",ev=>place(ev));
- g.addEventListener("pointerleave",()=>hide());
+ g.addEventListener("pointerleave",()=>{hideTimer=setTimeout(hide,320)});
  g.addEventListener("focus",()=>show(id,null));
  g.addEventListener("blur",()=>hide());
  g.addEventListener("click",ev=>{ev.stopPropagation();show(id,ev)});
  g.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();show(id,null)}});
  cards[id]=g;
 }
-let active=null;
+let active=null, hideTimer=null;
 const escapeHTML=v=>String(v??"Not verified").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function show(id,ev){
+ clearTimeout(hideTimer);
  const n=N[id],d=D[id]||[];
  active=id;
  const parents=E.filter(e=>e.target===id).length,children=E.filter(e=>e.source===id).length;
  const fields=[["Domain",d[1]],["Dataset",d[2]],["Harness",d[3]],["Experiments",d[4]],["Publication",n.venue]];
- tt.innerHTML='<div class="tt-title">'+escapeHTML(n.title)+'</div><div class="tt-venue">'+escapeHTML(n.venue)+'</div><p class="tt-intro">'+escapeHTML(d[0]||n.note)+'</p><dl>'+fields.map(([k,v])=>'<div><dt>'+k+'</dt><dd>'+escapeHTML(v)+'</dd></div>').join("")+'</dl><div class="tt-bottom">Cites '+parents+' papers in this map · Cited by '+children+' included papers · <a href="'+encodeURI(n.url)+'" target="_blank" rel="noopener">Paper ↗</a></div>';
+ tt.innerHTML='<div class="tt-title">'+escapeHTML(n.title)+'</div><div class="tt-venue">'+escapeHTML(n.venue)+'</div><p class="tt-intro">'+escapeHTML(d[0]||n.note)+'</p><dl>'+fields.map(([k,v])=>'<div><dt>'+k+'</dt><dd>'+escapeHTML(v)+'</dd></div>').join("")+'</dl><div class="tt-bottom">Cites '+parents+' papers in this map · Cited by '+children+' included papers · <a href="'+encodeURI(n.url)+'" target="_blank" rel="noopener">Open paper ↗</a></div>';
  tt.classList.add("show");
  const connected=new Set([id]);
  for(const edge of paths){
@@ -178,7 +179,10 @@ function place(ev){
  y=Math.max(8,Math.min(y,window.innerHeight-h-8));
  tt.style.left=x+"px";tt.style.top=y+"px";
 }
+tt.addEventListener('pointerenter',()=>clearTimeout(hideTimer));
+tt.addEventListener('pointerleave',()=>hide());
 function hide(){
+ clearTimeout(hideTimer);
  active=null;tt.classList.remove("show");
  for(const edge of paths){edge.el.classList.remove("hot-in","hot-out","dim");edge.el.removeAttribute("marker-end")}
  for(const g of Object.values(cards))g.classList.remove("dim","focused","related","source");
