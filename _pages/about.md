@@ -38,7 +38,7 @@ redirect_from:
     <p class="home-card__eyebrow">MULTI-AGENT MEMORY: ACTIVE RESEARCH</p>
     <h3><a href="/fleet-mem/">Who gets to remember?</a></h3>
     <p>A research note on shared memory governance for coding-agent fleets: why the benchmark matters, what failed in earlier experiments, and the controlled write/read study we are running now.</p>
-    <a class="home-card__link" href="/fleet-mem/">Research note →</a> · <a class="home-card__link" href="/posts/continual-agent-learning/">Continual-learning technical blog →</a>
+    <a class="home-card__link" href="/fleet-mem/">Research note →</a> · <a class="home-card__link" href="/posts/continual-agent-learning/">Real-data continual learning write-up →</a> · <a class="home-card__link" href="/replaygate/">ReplayGate live experiment →</a>
   </article>
   <article class="home-card home-card--accent">
     <p class="home-card__eyebrow">EE243: ADVANCED COMPUTER VISION</p>
