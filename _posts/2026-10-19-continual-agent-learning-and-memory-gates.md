@@ -1,67 +1,80 @@
 ---
 layout: single
-title: "When should an agent keep what it learned?"
+title: "ReplayGate: where should an adapting system keep its experience?"
 date: 2026-10-19
 permalink: /posts/continual-agent-learning/
 author_profile: true
 tags:
   - continual-learning
-  - agent-memory
-  - evaluation
-  - self-improvement
+  - replay
+  - agents
+  - evaluations
 ---
 
-*Two independent experiments on a practical question: how do we tell a useful persistent update from something that only looks useful?*
+*One real, executed experiment on the tradeoff between adapting model weights and retaining examples in memory.*
 
-**[Interactive evaluation demo](/skillfalsifier/)** · **[Runnable SkillFalsifier code](https://github.com/Vedant2100/skillfalsifier)** · **[Coding-agent memory research](/fleet-mem/)**
+[**Explore the new interactive results dashboard**](/replaygate/) · [**Runnable Python experiment and raw protocols**](https://github.com/Vedant2100/role-work-forge-artifacts/tree/main/projects/prime-intellect-continual-memory) · [**Actual measured result JSON**](https://github.com/Vedant2100/role-work-forge-artifacts/blob/main/projects/prime-intellect-continual-memory/results_summary.json)
 
-## The question
+## The continual-learning question
 
-An agent finishes a task and learns something: a debugging trick, a rule about a tool, or a shortcut through a workflow. We could store it in memory, add it to a shared playbook, use it as new training data, or discard it. Which choice makes the *next* agent better, without breaking something that already worked?
+When a system learns something new, should that change the model's weights, persist in a memory store, or be replayed during later training? How much of its *earlier* ability survives?
 
-I have been exploring that question from two directions: sharing historical experience between coding agents, and evaluating new skills generated from an agent's past errors.
+This question matters to continual-learning systems and self-improving agents, but there is a prerequisite before making claims about coding agents: run a controlled benchmark where retention and adaptation can actually be measured. I built **ReplayGate**, a separate experimental project, to do that.
 
-## 1. Does sharing more memory help a coding agent?
+**This is not the earlier SkillFalsifier demo.** ReplayGate trains a real online learner, performs sequential evaluation, and draws its interactive chart from actual run output.
 
-My [coding-agent memory research](/fleet-mem/) investigates two different decisions:
+## Real public data, not made-up tasks
 
-- **Promotion:** which past experiences deserve to become shared memory?
-- **Exposure:** which saved memories should be shown to a later agent facing a new task?
+The data comes directly from the [UCI Optical Recognition of Handwritten Digits dataset](https://archive.ics.uci.edu/dataset/80/optical+recognition+of+handwritten+digits), provided by \`sklearn.datasets.load_digits()\`. It has **1,797 real handwritten digit images**, each represented by 64 pixel intensities.
 
-On a clean 11-target development set from SWE-ContextBench, earlier same-repository experiences served as candidate memories. The memory conditions we evaluated **did not improve full-task resolution over the no-memory baseline**.
+I split the dataset into training and untouched test examples using a stratified 75/25 split separately for three fixed random seeds (7, 13, 29). Each model encounters five tasks in sequence: digits 0–1, 2–3, 4–5, 6–7 and finally 8–9.
 
-This is a negative result, not a proof that memory cannot work. An earlier experience can look relevant and still be ignored, misapplied, or distracting. A memory relevance metric is not a substitute for running the downstream agent.
+The experiment uses **no handcrafted examples, mock benchmark records, or invented results**.
 
-The [public summary](https://github.com/Vedant2100/coding-agent-mem) describes the study; the full task harness and benchmark artifacts are not currently available in that repository, so I do not claim the public summary is an independently reproducible experiment.
+## Three ways to retain experience
 
-## 2. When should an agent promote a self-generated skill?
+**Weights only.** A 10-class logistic SGD classifier updates only on the current stage's two digit classes. There is no access to old examples when learning new classes.
 
-In [SkillFalsifier](https://github.com/Vedant2100/skillfalsifier), an agent learns from failures in a small rules-adjudication task. A model proposes candidate skills and the harness checks each candidate on training examples, held-out cases, and adversarial edge cases.
+**Reservoir replay.** The same classifier receives the same **120 parameter-update minibatches per stage**; half of each batch can be drawn from a uniformly sampled memory of at most **160 previous real training examples**. It still updates weights, but it revisits earlier experience.
 
-The project compares:
+**Exemplar memory.** Instead of updating model weights, a simple distance-weighted 3-nearest-neighbor classifier answers using at most **160 real examples** retained by the same online reservoir process. This measures the very different choice of making memory, rather than parameter updating, the primary mechanism.
 
-- **Naive promotion:** accept any skill that improves training accuracy.
-- **Falsification gate:** require no training regression, a positive held-out improvement, and no newly incorrect adversarial examples.
+All three methods are tested on the same held-out split for each seed. The 3-NN approach is **not inference-compute matched** to SGD.
 
-The underlying Python source implements those decisions exactly. You can [try the deployed policy explorer](/skillfalsifier/) to change the three metrics and see the difference. **The sliders are hypothetical inputs, not measured benchmark outcomes.** To reproduce measurements, run the [CLI project](https://github.com/Vedant2100/skillfalsifier).
+## Results from the executed experiment
 
-## What this suggests for continual learning
+I ran the complete five-task sequence for **three seeds**, then measured accuracy on test examples from all tasks encountered so far, on the very first task, and on the newest task.
 
-For agents that learn from a continuing stream of work, I would separate three questions rather than call all of them “memory quality”:
+| Method | Final accuracy across all 10 digits | First task retained (0–1) | Newest task learned (8–9) |
+| --- | ---: | ---: | ---: |
+| Weights only | **18.96%** | 0.00% | 96.97% |
+| Reservoir replay | **91.33%** | 81.32% | 94.70% |
+| Exemplar memory | **92.96%** | 99.27% | 79.92% |
 
-1. **Source quality:** did we extract a valid experience or learning signal?
-2. **Retention and exposure:** did we store the right information, and present it only when it was likely to help?
-3. **Behavioral effect:** when tested on new tasks *and old ones*, did the update improve completion without unacceptable regressions?
+These are the **arithmetic means from the recorded three seeded runs**; see [the result file](https://github.com/Vedant2100/role-work-forge-artifacts/blob/main/projects/prime-intellect-continual-memory/results_summary.json) for per-seed metrics and learning curves, or [run the Python benchmark](https://github.com/Vedant2100/role-work-forge-artifacts/blob/main/projects/prime-intellect-continual-memory/run.py) to regenerate full results.
 
-Those questions matter whether an update lives in model weights, retrieval memory, harness instructions, or a reusable skill. The system should also preserve the ability to inspect failures and roll back a bad update.
+The [interactive ReplayGate dashboard](/replaygate/) lets you inspect **three different measured metrics** across all five checkpoints. It does **not** generate artificial accuracy values or let a slider invent results.
 
-This is an **evaluation design direction**, not a result that one update mechanism is better than another. A serious next experiment would compare memory/harness updates against model-based post-training over a changing task stream, with retention, transfer, forgetting, and cost measured separately.
+## What the numbers do and don't mean
 
-## Artifacts
+In this configuration, adapting weights only to new classes produces severe forgetting of old classes. Rehearsal trades some of the newest-task performance for retained ability. Retrieval-only example memory also retains older classes quite well, but does worse than trained classifiers on the final new classes. Choosing where experience lives changes the tradeoff.
 
-- [Run the SkillFalsifier code](https://github.com/Vedant2100/skillfalsifier) — small reproducible CLI with a model-backed skill generator
-- [Try the live promotion-policy demo](/skillfalsifier/) — interactive, deterministic visualization of the project's policy logic
-- [Read the SWE-ContextBench memory study](/fleet-mem/) — exploratory negative-results research note
-- [Coding-agent memory summary](https://github.com/Vedant2100/coding-agent-mem) — public research overview with full harness not yet released
+This **does not establish** that memory beats weight updates in an LLM, that our strategy improves coding-agent resolution, or that a three-seed linear-classifier result should be deployed in production. This is a **small genuine benchmark** on real handwritten digits, with only one learning-rate and memory configuration.
 
-*Independent research, not affiliated with any employer.*
+A next step toward agent continual learning would evaluate real agent trajectories and regression gates, using fixed versions of the harness and tasks, measuring old-task retention, unseen transfer and any regressions before promoting an update. That next experiment is **not yet executed**, so I don't report fictional numbers for it.
+
+A separate line of my research studies exactly which historical experiences to expose to coding agents: [coding-agent memory governance](/fleet-mem/).
+
+## Reproduce
+
+From [the project folder on GitHub](https://github.com/Vedant2100/role-work-forge-artifacts/tree/main/projects/prime-intellect-continual-memory), install NumPy and scikit-learn, then run:
+
+\`\`\`bash
+OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 OMP_NUM_THREADS=1 python run.py --output results.json
+\`\`\`
+
+The script loads the public data, trains each method for each seed, evaluates all five stages, and saves full run output. No API keys or model-hosted inference are required.
+
+**[New deployed demo](/replaygate/)** · **[Source and reproducibility](https://github.com/Vedant2100/role-work-forge-artifacts/tree/main/projects/prime-intellect-continual-memory)** · **[Measured results](https://github.com/Vedant2100/role-work-forge-artifacts/blob/main/projects/prime-intellect-continual-memory/results_summary.json)**
+
+*Independent learning experiment. Not affiliated with Prime Intellect or a claim about LLM-agent performance.*
