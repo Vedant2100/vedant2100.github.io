@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="description" content="{{ page.description | default: page.excerpt | strip_html | escape }}"/>
+  <title>{{ page.title | escape }} — {{ site.title | escape }}</title>
+  <link rel="stylesheet" href="{{ '/assets/css/research-blog.css' | relative_url }}"/>
+  <link rel="canonical" href="{{ page.url | absolute_url }}"/>
+</head>
+<body>
+<div class="layout-wrapper">
+  <nav class="toc-sidebar" aria-label="Article sections">
+    <div class="toc-sticky">
+      <h3>Contents</h3>
+      <ul>
+        {% for section in page.research_toc %}
+        <li><a href="#{{ section.id }}">{{ section.label }}</a></li>
+        {% endfor %}
+        <li><a href="#references">References</a></li>
+      </ul>
+      <p class="research-mini"><a href="/">← Back to portfolio</a></p>
+    </div>
+  </nav>
+  <main class="main-content">
+    <header class="research-article-header">
+      <p class="research-meta">{{ page.project_label | default: 'Independent technical research' }}</p>
+      <h1>{{ page.title }}</h1>
+      <p class="subtitle">{{ page.subtitle }}</p>
+      <div class="research-links">
+        {% if page.github_url %}<a href="{{ page.github_url }}">Executable source →</a>{% endif %}
+        {% if page.demo_url %}<a href="{{ page.demo_url }}">Interactive results →</a>{% endif %}
+        <a href="/">Portfolio →</a>
+      </div>
+    </header>
+    {{ content }}
+  </main>
+</div>
+<button id="backToTop" class="back-to-top" aria-label="Back to top">↑ Top</button>
+<script>
+(function(){const btn=document.getElementById("backToTop");window.addEventListener("scroll",()=>{if(window.scrollY>500){btn.classList.add("visible")}else{btn.classList.remove("visible")}});btn.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));})();
+</script>
+</body>
+</html>
