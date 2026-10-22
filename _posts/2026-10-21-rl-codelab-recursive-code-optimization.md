@@ -76,15 +76,15 @@ The connected Colab runtime was a **Tesla T4**. PyTorch used its GPU for network
 
 | Method | Geometric mean speedup against original code |
 | --- | ---: |
-| Random | **11.43×** |
-| Online-only DQN | **13.09×** |
-| Hard-target DQN | **13.19×** |
-| Double DQN | **12.36×** |
-| Dueling Double DQN + EMA | **13.99×** |
+| Random | **10.22×** |
+| Online-only DQN | **12.38×** |
+| Hard-target DQN | **12.26×** |
+| Double DQN | **12.21×** |
+| Dueling Double DQN + EMA | **12.02×** |
 
-The combined dueling/Double/EMA system ranked first in this run. Its seed-paired mean log-speedup difference versus random was **+0.202**. A two-sided Wilcoxon comparison produced **p = 0.03125 before correction**; correcting for the four comparisons with Holm's method gave **p = 0.125**. The remaining adjusted p-values were 0.281, 0.281, and 0.438.
+On a fresh Colab T4 rerun, **online-only DQN ranked first**, with a geometric 12.38× speedup versus 10.22× for random. Its seed-paired mean log-speedup difference was **+0.191**. A two-sided Wilcoxon comparison yielded **p = 0.0625 before correction**; with Holm correction for the four comparisons, **all adjusted p-values were 0.25**. In this rerun the combined dueling/Double/EMA model ranked below each other learned controller. This variability itself is a reason not to overinterpret any single run.
 
-**My conclusion is not that soft updates work for RSI.** The experiment found a positive but statistically inconclusive signal. It cannot disentangle which of the combined mechanisms matters, and six seeds are too few for confidence. The large absolute speedups are unsurprising because the original program intentionally uses a costly broadcast distance computation; optimizing that baseline does not establish an advance over an optimized nearest-neighbor library.
+**My conclusion is not that soft updates work for RSI.** The rerun found no statistically reliable improvement from target networks, and its ranking reversed the earlier run. It cannot disentangle which of the combined mechanisms matters, and six seeds are too few for confidence. The large absolute speedups are unsurprising because the original program intentionally uses a costly broadcast distance computation; optimizing that baseline does not establish an advance over an optimized nearest-neighbor library.
 
 ## The most important failure modes
 
