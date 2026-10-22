@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="450" viewBox="0 0 900 450" role="img" aria-label="Geometric heldout k nearest neighbors program runtime speedup versus the initial implementation">
+<rect width="900" height="450" fill="#ffffff"/>
+<text x="65" y="28" font-size="19" font-family="Arial,Helvetica,sans-serif" font-weight="bold" fill="#111827">RL-guided code editing: held-out speedup</text>
+<text x="65" y="46" font-size="12" font-family="Arial,Helvetica,sans-serif" fill="#475569">6 paired seeds × 3 unseen workloads · 5 edit proposals per run · Colab T4</text>
+<line x1="65" x2="855" y1="352.0" y2="352.0" stroke="#e5e7eb"/>
+<text x="56" y="356" text-anchor="end" font-family="Arial" font-size="12" fill="#64748b">0×</text>
+<line x1="65" x2="855" y1="276.0" y2="276.0" stroke="#e5e7eb"/>
+<text x="56" y="280" text-anchor="end" font-family="Arial" font-size="12" fill="#64748b">4×</text>
+<line x1="65" x2="855" y1="200.0" y2="200.0" stroke="#e5e7eb"/>
+<text x="56" y="204" text-anchor="end" font-family="Arial" font-size="12" fill="#64748b">8×</text>
+<line x1="65" x2="855" y1="124.0" y2="124.0" stroke="#e5e7eb"/>
+<text x="56" y="128" text-anchor="end" font-family="Arial" font-size="12" fill="#64748b">12×</text>
+<line x1="65" x2="855" y1="48.0" y2="48.0" stroke="#e5e7eb"/>
+<text x="56" y="52" text-anchor="end" font-family="Arial" font-size="12" fill="#64748b">16×</text>
+<rect x="120" y="134.8" width="90" height="217.2" rx="3" fill="#64748b"/>
+<text x="165" y="125.8" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#111827">11.43×</text>
+<text x="165" y="374" text-anchor="middle" font-family="Arial" font-size="11" fill="#111827">Random edits</text>
+<rect x="267" y="117.2" width="90" height="234.8" rx="3" fill="#64748b"/>
+<text x="312" y="108.2" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#111827">12.36×</text>
+<text x="312" y="374" text-anchor="middle" font-family="Arial" font-size="11" fill="#111827">Double DQN</text>
+<rect x="414" y="103.2" width="90" height="248.8" rx="3" fill="#64748b"/>
+<text x="459" y="94.2" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#111827">13.09×</text>
+<text x="459" y="374" text-anchor="middle" font-family="Arial" font-size="11" fill="#111827">Online DQN</text>
+<rect x="561" y="101.4" width="90" height="250.6" rx="3" fill="#64748b"/>
+<text x="606" y="92.4" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#111827">13.19×</text>
+<text x="606" y="374" text-anchor="middle" font-family="Arial" font-size="11" fill="#111827">Target DQN</text>
+<rect x="708" y="86.2" width="90" height="265.8" rx="3" fill="#2563eb"/>
+<text x="753" y="77.2" text-anchor="middle" font-family="Arial" font-size="14" font-weight="bold" fill="#111827">13.99×</text>
+<text x="753" y="374" text-anchor="middle" font-family="Arial" font-size="11" fill="#111827">Dueling + Double + EMA</text>
+<text x="65" y="422" font-family="Arial" font-size="13" fill="#475569">Exploratory: the leading method's Holm-adjusted p = 0.125 (not significant)</text>
+</svg>
