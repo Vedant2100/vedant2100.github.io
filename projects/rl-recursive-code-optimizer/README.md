@@ -28,13 +28,13 @@ Open [RSI_CodeLab_Colab.ipynb](./RSI_CodeLab_Colab.ipynb) in Colab, set *Runtime
 
 | Method | Geometric held-out speedup from naive code | Paired Wilcoxon p vs random (Holm-adjusted) |
 | --- | ---: | ---: |
-| Random edits | 11.429× | — |
-| Online-only DQN | 13.095× | 0.2813 |
-| DQN with hard target | 13.187× | 0.2813 |
-| Double DQN with hard target | 12.358× | 0.4375 |
-| Dueling Double DQN with soft target | 13.991× | 0.1250 |
+| Random edits | 10.224× | — |
+| Online-only DQN | 12.377× | 0.2500 |
+| DQN with hard target | 12.258× | 0.2500 |
+| Double DQN with hard target | 12.205× | 0.2500 |
+| Dueling Double DQN with soft target | 12.018× | 0.2500 |
 
-**Interpretation:** The highest mean held-out result is from the combined dueling/Double/soft-update system, but **none of the four RL comparisons to random is significant after correction**. This experiment cannot identify which component causes any observed difference because the combined arm changes more than one factor. The very large absolute speedup mainly reflects replacing a deliberately inefficient broadcast implementation with a faster kernel family; it is not evidence of a new algorithm exceeding optimized libraries.
+**Interpretation:** The highest geometric held-out speedup in this repeat was from online-only DQN, not the dueling/Double/soft-update system, and **none of the four RL comparisons to random is significant after correction**. This experiment cannot identify which component causes any observed difference because the combined arm changes more than one factor. The very large absolute speedup mainly reflects replacing a deliberately inefficient broadcast implementation with a faster kernel family; it is not evidence of a new algorithm exceeding optimized libraries.
 
 ![Held-out results](../../images/rsi-codelab-heldout.svg)
 
