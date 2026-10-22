@@ -10,65 +10,65 @@
     "no LLM code generation",
     "cached executable CPU profile used in RL rollouts",
     "six train/evaluation seeds",
-    "shared Colab noise",
-    "no independent rerun"
+    "shared Colab timing noise",
+    "run measurements are machine- and time-dependent"
   ],
   "paired": [
     {
-      "mean_log_gain_vs_random": 0.13604961668820734,
+      "mean_log_gain_vs_random": 0.19110180517757902,
       "method": "online_only",
-      "p_holm": 0.28125,
-      "p_raw": 0.09375
+      "p_holm": 0.25,
+      "p_raw": 0.0625
     },
     {
-      "mean_log_gain_vs_random": 0.14307984173490906,
+      "mean_log_gain_vs_random": 0.18143698832589936,
       "method": "dqn_hard",
-      "p_holm": 0.28125,
-      "p_raw": 0.09375
+      "p_holm": 0.25,
+      "p_raw": 0.0625
     },
     {
-      "mean_log_gain_vs_random": 0.07816154093330026,
+      "mean_log_gain_vs_random": 0.1771087510893763,
       "method": "double_dqn_hard",
-      "p_holm": 0.4375,
-      "p_raw": 0.4375
+      "p_holm": 0.25,
+      "p_raw": 0.0625
     },
     {
-      "mean_log_gain_vs_random": 0.20226578940270432,
+      "mean_log_gain_vs_random": 0.1616316751476158,
       "method": "dueling_double_soft",
-      "p_holm": 0.125,
-      "p_raw": 0.03125
+      "p_holm": 0.25,
+      "p_raw": 0.15625
     }
   ],
   "seed_count": 6,
   "summary": [
     {
-      "geometric_speedup": 13.99126,
-      "mean_accepted_edits": 2.833333,
-      "mean_speedup": 15.377448,
-      "method": "dueling_double_soft"
-    },
-    {
-      "geometric_speedup": 13.187203,
-      "mean_accepted_edits": 2.833333,
-      "mean_speedup": 14.453632,
-      "method": "dqn_hard"
-    },
-    {
-      "geometric_speedup": 13.094819,
-      "mean_accepted_edits": 2.777778,
-      "mean_speedup": 14.579215,
+      "geometric_speedup": 12.377281,
+      "mean_accepted_edits": 3.666667,
+      "mean_speedup": 15.469313,
       "method": "online_only"
     },
     {
-      "geometric_speedup": 12.358309,
-      "mean_accepted_edits": 2.722222,
-      "mean_speedup": 14.558341,
+      "geometric_speedup": 12.258233,
+      "mean_accepted_edits": 3.5,
+      "mean_speedup": 15.459313,
+      "method": "dqn_hard"
+    },
+    {
+      "geometric_speedup": 12.205291,
+      "mean_accepted_edits": 3.222222,
+      "mean_speedup": 15.37464,
       "method": "double_dqn_hard"
     },
     {
-      "geometric_speedup": 11.429149,
-      "mean_accepted_edits": 2.388889,
-      "mean_speedup": 12.651069,
+      "geometric_speedup": 12.017843,
+      "mean_accepted_edits": 3.444444,
+      "mean_speedup": 14.900204,
+      "method": "dueling_double_soft"
+    },
+    {
+      "geometric_speedup": 10.224234,
+      "mean_accepted_edits": 2.833333,
+      "mean_speedup": 13.037474,
       "method": "random"
     }
   ],
