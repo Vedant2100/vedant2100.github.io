@@ -17,7 +17,7 @@ For an IIT Bombay project under Professor Abir De, I implemented a hybrid recomm
 
 ## Evidence and results
 
-The historical CV describes RMSE-based optimization, but gives no verified held-out score or public dataset split. This archive note intentionally avoids creating a quantitative result that is not documented.
+The project record describes RMSE-based optimization but does not include a held-out score or the dataset split.
 
 ## Limitations
 

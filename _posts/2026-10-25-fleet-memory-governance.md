@@ -7,7 +7,7 @@ permalink: /blog/fleet-memory-governance/
 tags: [agents, memory, research]
 ---
 
-[**Open the experiment or artifact**](/fleet-mem/) · [**View source / reference**](https://github.com/Vedant2100/sharedmemgov)
+[Experiment](/fleet-mem/) · [Source](https://github.com/Vedant2100/sharedmemgov)
 
 ## The question
 
@@ -19,7 +19,7 @@ I framed memory governance as two decisions: **SHARE / DO_NOT_SHARE** at the sou
 
 ## Evidence and results
 
-This is an evolving research investigation rather than a finished paper. The [experiment note](/fleet-mem/) distinguishes completed checks from pending comparisons. Its value is as an auditable record of how the problem changed and which failure modes need measuring—not a claim that a new governor already improves agent task success.
+The [experiment note](/fleet-mem/) records the evaluation controls, observed failure modes, and pending comparisons. Results so far do not establish a task-resolution improvement from the memory-governance policies.
 
 ## Limitations
 

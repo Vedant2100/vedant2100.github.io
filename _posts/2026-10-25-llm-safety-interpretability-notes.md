@@ -7,7 +7,7 @@ permalink: /blog/llm-safety-interpretability-notes/
 tags: [safety, interpretability, reading-notes]
 ---
 
-[**View source or reference**](https://github.com/Vedant2100/EE269-Presentation)
+[Source](https://github.com/Vedant2100/EE269-Presentation)
 
 ## The question
 
@@ -19,7 +19,7 @@ For EE269 at UC Riverside, I prepared a paper-based presentation spanning four r
 
 ## Evidence and results
 
-This is a literature synthesis rather than a new empirical benchmark. Its contribution is the selection, explanation, and cross-paper comparison; experimental results belong to the respective papers and should be attributed there.
+The presentation compares methods, findings, and limitations across four published papers. The experimental findings are drawn from those papers.
 
 ## Limitations
 

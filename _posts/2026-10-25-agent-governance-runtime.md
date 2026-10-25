@@ -7,7 +7,7 @@ permalink: /blog/agent-governance-runtime/
 tags: [safety, agents, evaluation]
 ---
 
-[**View source or reference**](https://compfly.ai/resources/blog/agentdojo)
+[Source](https://compfly.ai/resources/blog/agentdojo)
 
 ## The question
 
@@ -19,7 +19,7 @@ During my CompFly AI research internship, I worked on reproducible benchmark har
 
 ## Evidence and results
 
-The [CompFly technical article](https://compfly.ai/resources/blog/agentdojo), **Evaluating Prompt-Injection Controls Beyond Detection**, is the externally hosted write-up linked here so it can be discovered from the portfolio archive. The page you are reading is my short project overview, not a republication of company material.
+The [CompFly technical article, *Evaluating Prompt-Injection Controls Beyond Detection*](https://compfly.ai/resources/blog/agentdojo), discusses the distinction between detecting injected instructions and preventing unsafe downstream actions.
 
 ## Limitations
 

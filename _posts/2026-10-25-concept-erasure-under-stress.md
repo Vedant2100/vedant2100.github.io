@@ -7,7 +7,7 @@ permalink: /blog/concept-erasure-under-stress/
 tags: [vision, safety, diffusion]
 ---
 
-[**View source or reference**](https://vedant2100.github.io/concept-erasure-analysis/)
+[Source](https://vedant2100.github.io/concept-erasure-analysis/)
 
 ## The question
 
@@ -19,7 +19,7 @@ In an EE243 advanced-computer-vision investigation, I examined the ESD concept-e
 
 ## Evidence and results
 
-The primary technical report contains the experiment setup and examples. This archive entry explains the research questions without assigning numerical success rates that have not been checked against the actual result tables.
+The [technical report](https://vedant2100.github.io/concept-erasure-analysis/) contains the experimental setup and visual examples.
 
 ## Limitations
 

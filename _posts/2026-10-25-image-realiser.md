@@ -7,7 +7,7 @@ permalink: /blog/image-realiser/
 tags: [vision, deepfakes, explainability]
 ---
 
-[**View source or reference**](https://github.com/Vedant2100/image-realiser)
+[Source](https://github.com/Vedant2100/image-realiser)
 
 ## The question
 
@@ -19,7 +19,7 @@ Image-realiser pairs a **frozen CLIP ViT-B/32 visual backbone** and trainable di
 
 ## Evidence and results
 
-This is a published implementation and analysis workflow. The README documents a runnable path, but it does not establish cross-generator detection accuracy or robustness. I therefore avoid advertising an unsupported benchmark score.
+The [repository](https://github.com/Vedant2100/image-realiser) documents the training and evaluation workflow. Cross-generator detection accuracy and robustness have not been established in the available results.
 
 ## Limitations
 
