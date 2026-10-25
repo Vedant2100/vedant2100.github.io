@@ -1,9 +1,10 @@
 ---
-layout: single
+layout: editorial
 title: "SkillFalsifier: When an agent learns the wrong lesson"
+description: "A reproducible gate that rejects self-generated agent skills unless they transfer beyond the training errors that inspired them."
 date: 2026-10-19
 permalink: /posts/skillfalsifier/
-author_profile: true
+author_profile: false
 tags:
   - agents
   - evaluations
