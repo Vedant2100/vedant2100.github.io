@@ -41,6 +41,18 @@ for url in blogs:
 for page_html in (index, project_index):
     if "Read article ↗" in page_html or "Read the project write-up ↗" in page_html:
         sys.exit("Redundant link text remains in archive listings")
+if not (root / "images" / "profile.jpg").is_file():
+    sys.exit("Missing real profile photograph")
+if 'src="/images/profile.jpg"' not in home or 'alt="Vedant Borkute"' not in home:
+    sys.exit("Homepage portrait is missing")
+for public_link in (
+    "https://github.com/Vedant2100",
+    "https://www.linkedin.com/in/vedant-borkute/",
+    "https://scholar.google.com/citations?user=PS_CX0AAAAAJ",
+    "mailto:vbork001@ucr.edu",
+):
+    if f'href="{public_link}"' not in home:
+        sys.exit(f"Homepage visible link missing: {public_link}")
 for url in ("/projects/", "/blog/"):
     if url not in home:
         sys.exit(f"Homepage missing {url}")
