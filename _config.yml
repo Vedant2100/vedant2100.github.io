@@ -10,11 +10,11 @@
 locale                   : "en-US"
 site_theme               : "default" # The available themes options are "default", "air", "sunrise", "mint", "dirt" and "contrast"
 default_theme            : "light"
-title                    : "Vedant Borkute | AI Systems & Data Science"
+title                    : "Vedant Borkute"
 masthead_title           : "Vedant"
 title_separator          : "-"
 name                     : &name "Vedant Borkute"
-description              : &description "Vedant Borkute — research engineering in AI agents, memory, safety, computer vision, and reliable machine learning. Projects, technical writing, and experiments."   # Update this with a general description of your site, this is the default if not overridden by a page
+description              : &description "Vedant Borkute — AI agents, memory, safety evaluation, computer vision, and machine learning."   # Update this with a general description of your site, this is the default if not overridden by a page
 url                      : https://vedant2100.github.io # The base hostname & protocol for your site e.g. "https://[your GitHub username].github.io",
                                                            # or if you already have some other page hosted on Github then use "https://[your GitHub username].github.io/[Your Repo Name]"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"

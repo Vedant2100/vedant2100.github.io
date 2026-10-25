@@ -15,6 +15,16 @@ if "undefined" in projects:
 index = (site / "blog" / "index.html").read_text(encoding="utf-8")
 project_index = (site / "projects" / "index.html").read_text(encoding="utf-8")
 home = (site / "index.html").read_text(encoding="utf-8")
+for stale_phrase in (
+    "Every project links to its own write-up",
+    "A working index of my research and engineering projects",
+    "Each entry links to a technical note",
+    "The page you are reading is my short project overview",
+    "This archive entry explains",
+):
+    for page_html in (home, index, project_index):
+        if stale_phrase in page_html:
+            sys.exit(f"Self-referential website copy detected: {stale_phrase}")
 for page_html in (home, index, project_index):
     if any(label in page_html for label in ('class="editorial-subtitle"', 'class="entry__meta"', 'class="editorial-kicker"')):
         sys.exit("Generic labels/subtitles remain in main listings")
@@ -28,6 +38,9 @@ for url in blogs:
         sys.exit(f"Project page missing link to {url}")
     if url not in index:
         sys.exit(f"Blog archive missing article {url}")
+for page_html in (index, project_index):
+    if "Read article ↗" in page_html or "Read the project write-up ↗" in page_html:
+        sys.exit("Redundant link text remains in archive listings")
 for url in ("/projects/", "/blog/"):
     if url not in home:
         sys.exit(f"Homepage missing {url}")

@@ -2,7 +2,7 @@
 layout: editorial
 permalink: /
 title: ""
-description: "Vedant Borkute — AI research engineer working on agents, memory, evaluation, and dependable machine learning."
+description: "Vedant Borkute, MS Computer Science at UC Riverside. Research and engineering in AI agents, machine learning, and computer vision."
 redirect_from:
   - /about/
   - /about.html
@@ -22,7 +22,7 @@ redirect_from:
   {% for project in featured_projects limit: 6 %}
     <article class="entry">
       <h3><a href="{{ project.blog | relative_url }}">{{ project.title }}</a></h3>
-      <p class="entry__links"><a href="{{ project.blog | relative_url }}">Technical write-up ↗</a>{% if project.code %} · <a href="{{ project.code }}">Code / artifact ↗</a>{% endif %}</p>
+      {% if project.code %}<p class="entry__links"><a href="{{ project.code }}">Code</a></p>{% endif %}
     </article>
   {% endfor %}
   </div>

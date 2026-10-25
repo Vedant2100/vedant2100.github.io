@@ -4,27 +4,27 @@ permalink: /llms.txt
 ---
 # Vedant Borkute — AI Research and Engineering
 
-> Vedant Borkute's portfolio: original technical writing and projects in AI agents, memory, safety, computer vision, reinforcement learning, and machine learning systems.
+> AI agents, memory, safety, computer vision, reinforcement learning, and machine learning.
 
-Vedant is completing an MS in Computer Science at UC Riverside in December 2026, after a B.Tech in Computer Science at IIT Bombay. The site distinguishes measured experimental results, exploratory investigations, and historical project descriptions. Each project has a linked technical write-up; use the linked article for evidence and limitations rather than inferring results from a title.
+Vedant Borkute is completing an MS in Computer Science at UC Riverside in December 2026 and holds a B.Tech in Computer Science from IIT Bombay.
 
 ## Start here
 
-- [Homepage]({{ '/' | absolute_url }}): Background, selected work, and contact.
-- [Projects]({{ '/projects/' | absolute_url }}): Complete project index, with links to code, demos, and technical articles.
-- [Blog]({{ '/blog/' | absolute_url }}): Full archive of project write-ups and independent research notes.
-- [Resume]({{ '/cv/' | absolute_url }}): Experience, education, and selected work.
+- [Homepage]({{ '/' | absolute_url }})
+- [Projects]({{ '/projects/' | absolute_url }})
+- [Blog]({{ '/blog/' | absolute_url }})
+- [Resume]({{ '/cv/' | absolute_url }})
 
 ## Project write-ups
 {% for project in site.data.projects %}
 - [{{ project.title }}]({{ project.blog | absolute_url }}): {{ project.summary | strip_html | strip_newlines }}
 {% endfor %}
-## Other research and writing
+## Other writing
 {% assign project_blog_urls = site.data.projects | map: 'blog' %}{% for post in site.posts %}{% unless project_blog_urls contains post.url %}
 - [{{ post.title }}]({{ post.url | absolute_url }}): {{ post.description | default: post.excerpt | strip_html | strip_newlines | truncatewords: 28 }}
 {% endunless %}{% endfor %}
-## Optional
+## Links
 
-- [GitHub profile](https://github.com/Vedant2100): Public source repositories and experiments.
-- [RSS feed]({{ '/feed.xml' | absolute_url }}): Subscribe to new posts.
-- [Sitemap]({{ '/sitemap.xml' | absolute_url }}): Machine-readable listing of published pages.
+- [GitHub](https://github.com/Vedant2100)
+- [RSS]({{ '/feed.xml' | absolute_url }})
+- [Sitemap]({{ '/sitemap.xml' | absolute_url }})
