@@ -15,8 +15,7 @@ if "undefined" in projects:
 index = (site / "blog" / "index.html").read_text(encoding="utf-8")
 project_index = (site / "projects" / "index.html").read_text(encoding="utf-8")
 home = (site / "index.html").read_text(encoding="utf-8")
-for path in (home, index, project_index):
-    page_html = path.read_text(encoding="utf-8")
+for page_html in (home, index, project_index):
     if any(label in page_html for label in ('class="editorial-subtitle"', 'class="entry__meta"', 'class="editorial-kicker"')):
         sys.exit("Generic labels/subtitles remain in main listings")
 if re.search(r'^  area:', projects, flags=re.MULTILINE):
