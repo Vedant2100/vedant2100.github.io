@@ -1,7 +1,9 @@
-# Keep the masthead focused: identity plus the downloadable resume.
 main:
+  - title: "Projects"
+    url: /projects/
+  - title: "Blog"
+    url: /blog/
   - title: "Timeline"
     url: /timeline/
-  - title: "Download Resume"
-    url: /files/Vedant_Resume_09_26.pdf
-    download: "Vedant_Resume_09_26.pdf"
+  - title: "Resume"
+    url: /cv/
