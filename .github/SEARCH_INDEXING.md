@@ -26,3 +26,9 @@ Guidance:
 - https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap
 - https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls
 - https://developers.google.com/search/docs/crawling-indexing/ask-google-to-recrawl
+
+## Optional AI-readable content guide
+
+- `/llms.txt` is generated from the maintained Jekyll project index and posts, so newly published project notes automatically appear in the AI-friendly content guide.
+- HTML pages advertise that guide using `rel="describedby"`. This guide indexes actual pages; it does not override crawler permissions or claim that third-party AI assistants will consume it.
+- **Google Search does not use `llms.txt` for indexing or ranking.** Keep prioritizing the sitemap, internal links, Search Console, and quality original articles. Source: https://developers.google.com/search/docs/fundamentals/ai-optimization-guide

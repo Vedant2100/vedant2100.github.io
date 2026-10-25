@@ -26,9 +26,27 @@ for url in blogs:
 for url in ("/projects/", "/blog/"):
     if url not in home:
         sys.exit(f"Homepage missing {url}")
-for required in (site / "robots.txt", site / "sitemap.xml"):
+for required in (site / "robots.txt", site / "sitemap.xml", site / "llms.txt"):
     if not required.is_file():
         sys.exit(f"Missing {required.name}")
+llms = (site / "llms.txt").read_text(encoding="utf-8")
+if not llms.lstrip().startswith("# Vedant Borkute"):
+    sys.exit("Missing Markdown H1 in generated llms.txt")
+if "{%" in llms or "{{" in llms:
+    sys.exit("Unrendered Liquid in llms.txt")
+for url in blogs:
+    if f"https://vedant2100.github.io{url}" not in llms:
+        sys.exit(f"Missing project in llms.txt: {url}")
+for post in (root / "_posts").glob("*.md"):
+    content = post.read_text(encoding="utf-8")
+    match = re.search(r"^permalink:\\s*(/[^\\s]+)", content, flags=re.MULTILINE)
+    if not match:
+        sys.exit(f"Missing permalink in {post.name}")
+    url = match.group(1)
+    if f"https://vedant2100.github.io{url}" not in llms:
+        sys.exit(f"Missing blog post in llms.txt: {url}")
+if 'rel="describedby"' not in home:
+    sys.exit("Homepage does not advertise llms.txt")
 for pattern in ("_posts/*blog-post*.md", "_posts/*future-post*.md"):
     if list(root.glob(pattern)):
         sys.exit(f"Template content remains: {pattern}")
