@@ -4,9 +4,8 @@ layout: default
 <main id="main" class="editorial-shell" role="main">
   {% if page.title and page.title != "" %}
   <header class="editorial-page-heading">
-    {% if page.date %}<p class="editorial-kicker"><time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%B %-d, %Y" }}</time>{% if page.tags.size > 0 %} / {{ page.tags | first }}{% endif %}</p>{% endif %}
     <h1>{{ page.title }}</h1>
-    {% if page.description %}<p class="editorial-subtitle">{{ page.description }}</p>{% endif %}
+    {% if page.date %}<p class="article-date"><time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%B %-d, %Y" }}</time></p>{% endif %}
   </header>
   {% endif %}
   <article class="editorial-prose">{{ content }}</article>

@@ -15,6 +15,12 @@ if "undefined" in projects:
 index = (site / "blog" / "index.html").read_text(encoding="utf-8")
 project_index = (site / "projects" / "index.html").read_text(encoding="utf-8")
 home = (site / "index.html").read_text(encoding="utf-8")
+for path in (home, index, project_index):
+    page_html = path.read_text(encoding="utf-8")
+    if any(label in page_html for label in ('class="editorial-subtitle"', 'class="entry__meta"', 'class="editorial-kicker"')):
+        sys.exit("Generic labels/subtitles remain in main listings")
+if re.search(r'^  area:', projects, flags=re.MULTILINE):
+    sys.exit("Generic project categories remain in registry")
 for url in blogs:
     page = site / url.strip("/") / "index.html"
     if not page.is_file():
