@@ -1,225 +1,105 @@
-# Coding-agent memory research: citation-verified lineage (as of 2026-10-18)
+# FrontierMemory · evidence-audited research lineage
 
-Based on the Mermaid TD block in Vedant2100/concept-erasure-analysis/index.html. **Arrow A → B only if B explicitly references A.** This is a citation DAG, not evidence of direct method inheritance. Preprint = not independently verified accepted.
+Last checked October 25, 2026. [Live diagram](https://vedant2100.github.io/fleet-mem/lineage/) · [Official FrontierMemory post](https://www.frontiermemory.com/blog/v1/) · [Letta research index](https://www.letta.com/research/).
+
+**Edge semantics:** solid = FrontierMemory explicitly names or links source; dashed = thematic chronology from Letta's own research index (not a blog citation); dotted = a recall-oriented benchmark the FrontierMemory post explicitly contrasts. Exception: MemGPT → Sleep-time is thematic within the organization, not claimed as a FrontierMemory citation.
 
 ```mermaid
-flowchart TD
-    react["ReAct<br/>ICLR 2023"]
-    reflex["Reflexion<br/>NeurIPS 2023"]
-    voyager["Voyager<br/>Preprint 2023"]
-    expel["ExpeL<br/>AAAI 2024"]
-    swebench["SWE-bench<br/>ICLR 2024"]
-    autocoderover["AutoCodeRover<br/>ISSTA 2024"]
-    mem0["Mem0<br/>ECAI 2025"]
-    ctim["CTIM-Rover<br/>REALM 2025 workshop"]
-    agentkb["Agent KB<br/>Preprint 2025"]
-    awm["Agent Workflow Memory<br/>ICML 2025"]
-    synapse["Synapse<br/>ICLR 2024"]
-    swecl["SWE-Bench-CL<br/>Preprint 2025"]
-    sweexp["SWE-Exp<br/>Preprint 2025"]
-    memr1["Memory-R1<br/>ACL 2026 Main"]
-    reasoning["ReasoningBank<br/>ICLR 2026"]
-    sedm["SEDM<br/>Preprint · 2026 rev."]
-    swecontext["SWE-ContextBench<br/>Preprint 2026"]
-    memcollab["MemCollab<br/>Preprint 2026"]
-    mtl["Memory Transfer Learning<br/>EMNLP 2026 Main"]
-    remember["Learning When to Remember<br/>Preprint 2026"]
-    codeskill["CODESKILL<br/>Preprint 2026"]
-    memop["MemOp<br/>Preprint 2026"]
-    learnshare["Learning to Share<br/>ICML 2026"]
-    org["Shared Organizational Memory<br/>Preprint 2026"]
-    distill["Agent Memory Distillation<br/>EMNLP 2026 Findings"]
-    memguard["MemGuard<br/>Preprint 2026"]
-    retain["Learning What to Retain<br/>EMNLP 2026 Main"]
-    vibe["VibeMemBench<br/>Preprint 2026"]
-    jev["Jev-Mem<br/>Preprint 2026"]
-    scope["Scope Before You Persist<br/>Preprint 2026"]
-    aecg["AECG<br/>Preprint 2026"]
-    chronos["Chronos<br/>Preprint 2026"]
-    sepm["SEPM<br/>Preprint 2026"]
-    reflex --> expel
-    voyager --> expel
-    swebench --> autocoderover
-    reflex --> mem0
-    react --> ctim
-    reflex --> ctim
-    expel --> ctim
-    swebench --> ctim
-    autocoderover --> ctim
-    swebench --> swecl
-    swebench --> agentkb
-    expel --> sweexp
-    swebench --> sweexp
-    autocoderover --> sweexp
-    mem0 --> memr1
-    expel --> reasoning
-    swebench --> reasoning
-    sweexp --> reasoning
-    mem0 --> reasoning
-    reflex --> sedm
-    mem0 --> sedm
-    swebench --> swecontext
-    mem0 --> swecontext
-    memr1 --> memcollab
-    reasoning --> memcollab
-    reflex --> mtl
-    swebench --> mtl
-    sweexp --> mtl
-    reasoning --> mtl
-    agentkb --> mtl
-    awm --> mtl
-    synapse --> mtl
-    memr1 --> remember
-    reflex --> codeskill
-    expel --> codeskill
-    swebench --> codeskill
-    mem0 --> codeskill
-    sweexp --> codeskill
-    reasoning --> codeskill
-    swebench --> memop
-    ctim --> memop
-    swecl --> memop
-    swebench --> org
-    autocoderover --> org
-    reflex --> distill
-    expel --> distill
-    reasoning --> distill
-    mtl --> distill
-    reflex --> memguard
-    expel --> memguard
-    swebench --> memguard
-    reasoning --> memguard
-    memr1 --> retain
-    swebench --> vibe
-    mem0 --> vibe
-    swecl --> vibe
-    reflex --> jev
-    expel --> jev
-    mem0 --> jev
-    reflex --> scope
-    reflex --> aecg
-    expel --> aecg
-    reflex --> chronos
-    expel --> chronos
-    swebench --> chronos
-    autocoderover --> chronos
-    sweexp --> chronos
-    reflex --> sepm
-    classDef foundation fill:#eef2ff,stroke:#4338ca,color:#172033,stroke-width:1.3px;
-    classDef coding fill:#e0f2fe,stroke:#0369a1,color:#172033,stroke-width:1.3px;
-    classDef benchmark fill:#dcfce7,stroke:#166534,color:#172033,stroke-width:1.3px;
-    classDef general fill:#f5f3ff,stroke:#6d28d9,color:#172033,stroke-width:1.3px;
-    classDef learned fill:#ffedd5,stroke:#9a3412,color:#172033,stroke-width:1.3px;
-    classDef governance fill:#fce7f3,stroke:#9d174d,color:#172033,stroke-width:1.3px;
-    classDef systems fill:#e2e8f0,stroke:#334155,color:#172033,stroke-width:1.3px;
-    class react foundation;
-    class reflex foundation;
-    class voyager foundation;
-    class expel foundation;
-    class swebench benchmark;
-    class autocoderover foundation;
-    class mem0 general;
-    class ctim coding;
-    class agentkb coding;
-    class awm general;
-    class synapse general;
-    class swecl benchmark;
-    class sweexp coding;
-    class memr1 learned;
-    class reasoning coding;
-    class sedm learned;
-    class swecontext benchmark;
-    class memcollab general;
-    class mtl coding;
-    class remember learned;
-    class codeskill learned;
-    class memop learned;
-    class learnshare learned;
-    class org systems;
-    class distill general;
-    class memguard governance;
-    class retain learned;
-    class vibe benchmark;
-    class jev governance;
-    class scope governance;
-    class aecg governance;
-    class chronos systems;
-    class sepm systems;
+flowchart TB
+    subgraph ORIGIN["Letta earlier research · thematic unless cited"]
+        memgpt["MemGPT (2023)"]
+        sleep["Sleep-time Compute (2025)"]
+        filesystem["Letta Filesystem (2025)"]
+        contextbench["Context-Bench (2025)"]
+        skilluse["Skill Use / Context-Bench (2025)"]
+        skilllearning["Skill Learning (2025)"]
+        token["Token-space learning (2025)"]
+        contextrepo["Context Repositories (2026)"]
+        memorymodels["Memory Models (2026)"]
+        trajectory["Trajectory format (2026)"]
+    end
+    subgraph CODING["Task benchmark sources"]
+        deepswe["DeepSWE (2026)"]
+        skillsbench["SkillsBench (2026)"]
+        automation["AutomationBench (2026)"]
+        apex["APEX-Agents (2026)"]
+        enterprise["EnterpriseOps-Gym (2026)"]
+    end
+    subgraph EVALUATION["Experience and methodology"]
+        harborindex["HarborIndex (2026)"]
+        sweinteract["SWE-Interact (2026)"]
+        studying["Machine Studying (2026)"]
+    end
+    subgraph OTHER["Recall benchmark contrasts"]
+        locomo["LoCoMo (2024)"]
+        longmemeval["LongMemEval (2024)"]
+    end
+    subgraph GOVERNOR["FrontierMemory 1.0"]
+        frontier["FrontierMemory 1.0 (2026)"]
+    end
+    sleep --> frontier
+    filesystem --> frontier
+    deepswe --> frontier
+    skillsbench --> frontier
+    automation --> frontier
+    apex --> frontier
+    enterprise --> frontier
+    harborindex --> frontier
+    sweinteract --> frontier
+    studying --> frontier
+    locomo -. contrasted .-> frontier
+    longmemeval -. contrasted .-> frontier
+    memgpt -. related .-> frontier
+    contextbench -. related .-> frontier
+    skilluse -. related .-> frontier
+    skilllearning -. related .-> frontier
+    token -. related .-> frontier
+    contextrepo -. related .-> frontier
+    memorymodels -. related .-> frontier
+    trajectory -. related .-> frontier
+    memgpt -. related .-> sleep
+    classDef target fill:#fff5eb,stroke:#bc773e,stroke-width:3px
+    class frontier target
 ```
 
-## Edge ledger
+## Primary sources and basis
 
-Every pair was matched against the citing (child) paper's own bibliography. The exact bibliography title and the citing source URL are in `citation_edges.csv`.
+| Work | Classification | Primary link |
+|---|---|---|
+| MemGPT | Thematic context, not cited | [Source](https://arxiv.org/abs/2310.08560) |
+| Sleep-time Compute | Directly named/linked | [Source](https://arxiv.org/abs/2504.13171) |
+| Letta Filesystem | Directly named/linked | [Source](https://www.letta.com/blog/benchmarking-ai-agent-memory/) |
+| Context-Bench | Thematic context, not cited | [Source](https://www.letta.com/blog/context-bench/) |
+| Skill Use / Context-Bench | Thematic context, not cited | [Source](https://www.letta.com/blog/context-bench-skills/) |
+| Skill Learning | Thematic context, not cited | [Source](https://www.letta.com/blog/skill-learning/) |
+| Token-space learning | Thematic context, not cited | [Source](https://www.letta.com/blog/continual-learning/) |
+| Context Repositories | Thematic context, not cited | [Source](https://www.letta.com/blog/context-repositories/) |
+| Memory Models | Thematic context, not cited | [Source](https://www.letta.com/blog/towards-agents-that-learn/) |
+| Trajectory format | Thematic context, not cited | [Source](https://www.letta.com/blog/trajectory/) |
+| DeepSWE | Directly named/linked | [Source](https://deepswe.datacurve.ai/) |
+| SkillsBench | Directly named/linked | [Source](https://arxiv.org/abs/2602.12670) |
+| AutomationBench | Directly named/linked | [Source](https://arxiv.org/abs/2604.18934) |
+| APEX-Agents | Directly named/linked | [Source](https://arxiv.org/abs/2601.14242) |
+| EnterpriseOps-Gym | Directly named/linked | [Source](https://arxiv.org/abs/2603.13594) |
+| HarborIndex | Directly named/linked | [Source](https://harbor-index.org/) |
+| SWE-Interact | Directly named/linked | [Source](https://arxiv.org/abs/2606.30573) |
+| Machine Studying | Directly named/linked | [Source](https://jacobxli.com/blog/2026/machine-studying/) |
+| LoCoMo | Explicit contrast | [Source](https://arxiv.org/abs/2402.17753) |
+| LongMemEval | Explicit contrast | [Source](https://arxiv.org/abs/2410.10813) |
+| FrontierMemory 1.0 | Target benchmark | [Source](https://www.frontiermemory.com/blog/v1/) |
 
-- **Reflexion → ExpeL** — [child paper bibliography](https://ojs.aaai.org/index.php/AAAI/article/view/29936).
-- **Voyager → ExpeL** — [child paper bibliography](https://ojs.aaai.org/index.php/AAAI/article/view/29936).
-- **SWE-bench → AutoCodeRover** — [child paper bibliography](https://2024.issta.org/details/issta-2024-papers/127/AutoCodeRover-Autonomous-Program-Improvement).
-- **Reflexion → Mem0** — [child paper bibliography](https://journals.sagepub.com/doi/10.3233/FAIA251160).
-- **ReAct → CTIM-Rover** — [child paper bibliography](https://arxiv.org/html/2505.23422).
-- **Reflexion → CTIM-Rover** — [child paper bibliography](https://arxiv.org/html/2505.23422).
-- **ExpeL → CTIM-Rover** — [child paper bibliography](https://arxiv.org/html/2505.23422).
-- **SWE-bench → CTIM-Rover** — [child paper bibliography](https://arxiv.org/html/2505.23422).
-- **AutoCodeRover → CTIM-Rover** — [child paper bibliography](https://arxiv.org/html/2505.23422).
-- **SWE-bench → SWE-Bench-CL** — [child paper bibliography](https://arxiv.org/html/2507.00014).
-- **SWE-bench → Agent KB** — [child paper bibliography](https://arxiv.org/html/2507.06229).
-- **ExpeL → SWE-Exp** — [child paper bibliography](https://arxiv.org/html/2507.23361).
-- **SWE-bench → SWE-Exp** — [child paper bibliography](https://arxiv.org/html/2507.23361).
-- **AutoCodeRover → SWE-Exp** — [child paper bibliography](https://arxiv.org/html/2507.23361).
-- **Mem0 → Memory-R1** — [child paper bibliography](https://aclanthology.org/2026.acl-long.583/).
-- **ExpeL → ReasoningBank** — [child paper bibliography](https://openreview.net/forum?id=jL7fwchScm).
-- **SWE-bench → ReasoningBank** — [child paper bibliography](https://openreview.net/forum?id=jL7fwchScm).
-- **SWE-Exp → ReasoningBank** — [child paper bibliography](https://openreview.net/forum?id=jL7fwchScm).
-- **Mem0 → ReasoningBank** — [child paper bibliography](https://openreview.net/forum?id=jL7fwchScm).
-- **Reflexion → SEDM** — [child paper bibliography](https://arxiv.org/html/2509.09498).
-- **Mem0 → SEDM** — [child paper bibliography](https://arxiv.org/html/2509.09498).
-- **SWE-bench → SWE-ContextBench** — [child paper bibliography](https://arxiv.org/html/2602.08316).
-- **Mem0 → SWE-ContextBench** — [child paper bibliography](https://arxiv.org/html/2602.08316).
-- **Memory-R1 → MemCollab** — [child paper bibliography](https://arxiv.org/html/2603.23234).
-- **ReasoningBank → MemCollab** — [child paper bibliography](https://arxiv.org/html/2603.23234).
-- **Reflexion → Memory Transfer Learning** — [child paper bibliography](https://arxiv.org/html/2604.14004).
-- **SWE-bench → Memory Transfer Learning** — [child paper bibliography](https://arxiv.org/html/2604.14004).
-- **SWE-Exp → Memory Transfer Learning** — [child paper bibliography](https://arxiv.org/html/2604.14004).
-- **ReasoningBank → Memory Transfer Learning** — [child paper bibliography](https://arxiv.org/html/2604.14004).
-- **Agent KB → Memory Transfer Learning** — [child paper bibliography](https://arxiv.org/html/2604.14004).
-- **Agent Workflow Memory → Memory Transfer Learning** — [child paper bibliography](https://arxiv.org/html/2604.14004).
-- **Synapse → Memory Transfer Learning** — [child paper bibliography](https://arxiv.org/html/2604.14004).
-- **Memory-R1 → Learning When to Remember** — [child paper bibliography](https://arxiv.org/html/2604.27283).
-- **Reflexion → CODESKILL** — [child paper bibliography](https://arxiv.org/html/2605.25430).
-- **ExpeL → CODESKILL** — [child paper bibliography](https://arxiv.org/html/2605.25430).
-- **SWE-bench → CODESKILL** — [child paper bibliography](https://arxiv.org/html/2605.25430).
-- **Mem0 → CODESKILL** — [child paper bibliography](https://arxiv.org/html/2605.25430).
-- **SWE-Exp → CODESKILL** — [child paper bibliography](https://arxiv.org/html/2605.25430).
-- **ReasoningBank → CODESKILL** — [child paper bibliography](https://arxiv.org/html/2605.25430).
-- **SWE-bench → MemOp** — [child paper bibliography](https://arxiv.org/html/2606.05646).
-- **CTIM-Rover → MemOp** — [child paper bibliography](https://arxiv.org/html/2606.05646).
-- **SWE-Bench-CL → MemOp** — [child paper bibliography](https://arxiv.org/html/2606.05646).
-- **SWE-bench → Shared Organizational Memory** — [child paper bibliography](https://arxiv.org/html/2608.00122).
-- **AutoCodeRover → Shared Organizational Memory** — [child paper bibliography](https://arxiv.org/html/2608.00122).
-- **Reflexion → Agent Memory Distillation** — [child paper bibliography](https://arxiv.org/html/2608.07169).
-- **ExpeL → Agent Memory Distillation** — [child paper bibliography](https://arxiv.org/html/2608.07169).
-- **ReasoningBank → Agent Memory Distillation** — [child paper bibliography](https://arxiv.org/html/2608.07169).
-- **Memory Transfer Learning → Agent Memory Distillation** — [child paper bibliography](https://arxiv.org/html/2608.07169).
-- **Reflexion → MemGuard** — [child paper bibliography](https://arxiv.org/html/2608.21867).
-- **ExpeL → MemGuard** — [child paper bibliography](https://arxiv.org/html/2608.21867).
-- **SWE-bench → MemGuard** — [child paper bibliography](https://arxiv.org/html/2608.21867).
-- **ReasoningBank → MemGuard** — [child paper bibliography](https://arxiv.org/html/2608.21867).
-- **Memory-R1 → Learning What to Retain** — [child paper bibliography](https://arxiv.org/html/2609.00237).
-- **SWE-bench → VibeMemBench** — [child paper bibliography](https://arxiv.org/html/2609.23570).
-- **Mem0 → VibeMemBench** — [child paper bibliography](https://arxiv.org/html/2609.23570).
-- **SWE-Bench-CL → VibeMemBench** — [child paper bibliography](https://arxiv.org/html/2609.23570).
-- **Reflexion → Jev-Mem** — [child paper bibliography](https://arxiv.org/html/2609.23986).
-- **ExpeL → Jev-Mem** — [child paper bibliography](https://arxiv.org/html/2609.23986).
-- **Mem0 → Jev-Mem** — [child paper bibliography](https://arxiv.org/html/2609.23986).
-- **Reflexion → Scope Before You Persist** — [child paper bibliography](https://arxiv.org/html/2609.29144).
-- **Reflexion → AECG** — [child paper bibliography](https://arxiv.org/html/2610.05176).
-- **ExpeL → AECG** — [child paper bibliography](https://arxiv.org/html/2610.05176).
-- **Reflexion → Chronos** — [child paper bibliography](https://arxiv.org/html/2610.11578).
-- **ExpeL → Chronos** — [child paper bibliography](https://arxiv.org/html/2610.11578).
-- **SWE-bench → Chronos** — [child paper bibliography](https://arxiv.org/html/2610.11578).
-- **AutoCodeRover → Chronos** — [child paper bibliography](https://arxiv.org/html/2610.11578).
-- **SWE-Exp → Chronos** — [child paper bibliography](https://arxiv.org/html/2610.11578).
-- **Reflexion → SEPM** — [child paper bibliography](https://arxiv.org/html/2610.14515).
+## Caveats
+- FrontierMemory v1.0 is a published research blog/repository, not independently confirmed peer-reviewed proceedings paper.
+- The source blog has *15* adapted tasks; it reports *219 relevant among 665* prior trajectories. The v1.0 released corpus on our cluster had *674*. Letta's blog does not reconcile the different counts.
+- Direct source benchmarks: DeepSWE, SkillsBench, AutomationBench, APEX-Agents, EnterpriseOps-Gym. Historical trajectories: HarborIndex and DeepSWE; simulated users: precedent SWE-Interact.
+- Gold memory for each task is Letta's reported validation design, not evidence that our own earlier 7B runs were capable of using it.
+- An explicit link does not prove an implementation was copied. Organizational background links are not treated as reference-list citations.
+- Original broad graph: [historical visualization](https://vedant2100.github.io/fleet-mem/lineage/network/); [archived previous Mermaid](lineage_mermaid_legacy_2026-10-20.md).
 
-## Scope note
-
-This is a curated, traceable core of the research literature, not a claim to exhaust every citation or survey every arXiv upload. No arrow should be read as a unique/sole methodological parent. Orphaned relevant papers have no verified edge within the displayed sample.
+## Publication venue mapping
+The page's venue section maps the [19-entry original Markdown list](https://github.com/Vedant2100/coding-agent-mem/blob/main/coding-agent-memory-reading-list.md) plus the [MSR 2027 Data & Tool Showcase](https://2027.msrconf.org/track/msr-2027-data-and-tool-showcase-track).
+- [FORGE Data & Benchmarking](https://conf.researchr.org/track/forge-2027/forge-2027-data-and-benchmarking-track): November 15, 2026, benchmarking papers.
+- [EASE 2027](https://conf.researchr.org/home/ease-2027): January 15 abstract / January 22 paper for research.
+- [AGENTVERIFY dedicated CFP](https://agentverify2027.github.io/cfp.html): November 13, conflicts with an older ICSE aggregate calendar; reconfirm before submission.
+- [ICSE Industry Challenge](https://conf.researchr.org/track/icse-2027/icse-2027-industry-challenge): *Agent Memory in the Wild* is one of its actual listed challenges, but a challenge-specific solution is required.
+- AgenticSE workshop deadline from old MD remains unconfirmed (site requires JavaScript); ICLR workshop contribution dates are workshop-specific.
