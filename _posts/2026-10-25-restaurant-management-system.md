@@ -17,7 +17,7 @@ In an IIT Bombay course project under Professor S. Sudarshan, I built a full-sta
 
 ## Evidence and results
 
-This is an archival project description sourced from my historical CV, not a claim that the product is still deployed or supported. The original source and user-testing materials are not currently linked from the portfolio.
+The project is documented in my historical CV. Public source code, user-testing materials, and an active deployment are not available.
 
 ## Limitations
 

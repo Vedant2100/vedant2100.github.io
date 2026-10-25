@@ -7,7 +7,7 @@ permalink: /blog/trajectory-safety-eval/
 tags: [safety, evaluation, prompt-injection]
 ---
 
-[**Open the experiment or artifact**](/trajectory-safety-eval/)
+[Experiment](/trajectory-safety-eval/)
 
 ## The question
 

@@ -21,6 +21,6 @@ The work reported a **90% reduction in mean absolute percentage error** relative
 
 ## Limitations
 
-This is a retrospective engineering account, not an independently rerunnable benchmark. The relative error reduction should not be generalized to other supply chains without knowing the data splits, horizons, aggregation, and baseline definitions.
+The company dataset and evaluation scripts are not public. The reported error reduction depends on the data splits, forecast horizons, aggregation, and baseline definitions used in that setting.
 
 [← Back to all projects](/projects/)

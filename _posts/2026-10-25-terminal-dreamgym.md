@@ -7,7 +7,7 @@ permalink: /blog/terminal-dreamgym/
 tags: [agents, evaluation, self-improvement]
 ---
 
-[**View source or reference**](https://github.com/Vedant2100/terminal_dreamgym)
+[Source](https://github.com/Vedant2100/terminal_dreamgym)
 
 ## The question
 
@@ -19,7 +19,7 @@ The harness captures a terminal-task failure, diagnoses the missing capability, 
 
 ## Evidence and results
 
-The [repository README](https://github.com/Vedant2100/terminal_dreamgym) links a recorded live-model run and describes how to reproduce the demo and provider-free unit tests. The project includes a runnable evaluation mechanism; this article does **not** assert a broader measured transfer gain without a comparable control run.
+The [repository](https://github.com/Vedant2100/terminal_dreamgym) includes a recorded live-model run, reproduction instructions, and unit tests. A transfer improvement over a comparable baseline has not yet been established.
 
 ## Limitations
 

@@ -7,7 +7,7 @@ permalink: /blog/vegetation-anomaly-pipeline/
 tags: [data-engineering, geospatial, evaluation]
 ---
 
-[**View source or reference**](https://github.com/Vedant2100/CS226-Final-Project)
+[Source](https://github.com/Vedant2100/CS226-Final-Project)
 
 ## The question
 
