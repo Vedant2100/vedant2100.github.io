@@ -39,7 +39,7 @@ for url in blogs:
         sys.exit(f"Missing project in llms.txt: {url}")
 for post in (root / "_posts").glob("*.md"):
     content = post.read_text(encoding="utf-8")
-    match = re.search(r"^permalink:\\s*(/[^\\s]+)", content, flags=re.MULTILINE)
+    match = re.search(r"^permalink:\s*(/[^\s]+)", content, flags=re.MULTILINE)
     if not match:
         sys.exit(f"Missing permalink in {post.name}")
     url = match.group(1)
