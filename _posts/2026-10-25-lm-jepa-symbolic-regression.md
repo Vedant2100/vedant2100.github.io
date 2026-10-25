@@ -7,7 +7,7 @@ permalink: /blog/lm-jepa-symbolic-regression/
 tags: [scientific-ml, representation-learning, symbolic-regression]
 ---
 
-[**View source or reference**](https://github.com/Vedant2100/symreg)
+[Source](https://github.com/Vedant2100/symreg)
 
 ## The question
 

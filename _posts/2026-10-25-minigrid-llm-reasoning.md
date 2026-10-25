@@ -7,7 +7,7 @@ permalink: /blog/minigrid-llm-reasoning/
 tags: [agents, reasoning, evaluation]
 ---
 
-[**View source or reference**](https://github.com/Vedant2100/w26/tree/main/CS_228)
+[Source](https://github.com/Vedant2100/w26/tree/main/CS_228)
 
 ## The question
 

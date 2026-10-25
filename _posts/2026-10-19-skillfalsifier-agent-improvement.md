@@ -12,8 +12,6 @@ tags:
   - self-improvement
 ---
 
-*An independent evaluation of self-generated agent skills.*
-
 [**Try the deployed promotion-policy demo**](/skillfalsifier/) · [**Get the runnable Python code**](https://github.com/Vedant2100/skillfalsifier)
 
 ## The problem
@@ -44,7 +42,7 @@ The stricter **SkillFalsifier gate** requires three conditions: training accurac
 
 That distinction is the project's central failure mode: a skill can increase the score on the examples that inspired it while reducing accuracy elsewhere. Training gains alone are not evidence of reliable improvement.
 
-The [interactive demo](/skillfalsifier/) illustrates the exact deterministic promotion logic in the [source](https://github.com/Vedant2100/skillfalsifier/blob/main/skillfalsifier/promotion.py). The demo inputs are user-controlled hypotheticals, **not fabricated experiment results**. To reproduce empirical results, run the repository on its actual datasets and model backends.
+The [interactive demo](/skillfalsifier/) illustrates the exact deterministic promotion logic in the [source](https://github.com/Vedant2100/skillfalsifier/blob/main/skillfalsifier/promotion.py). The demo accepts hypothetical inputs; empirical scores can be reproduced with the repository datasets and model backends.
 
 ## Limits and why I care
 

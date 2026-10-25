@@ -73,7 +73,7 @@ We used seeds **7, 13, and 29** and evaluated every method on that seed's untouc
 
 <div class="research-figure">
 <svg id="accuracy-chart" viewBox="0 0 800 350" role="img" aria-label="Measured test accuracy across learned tasks after each of five stages. Three lines: weights-only falls from 100% to 19%; replay ends at 91%; retrieval ends at 93%."></svg>
-<div class="figure-caption"><strong>Figure 1.</strong> Mean accuracy on held-out examples from all classes seen so far (3 seeds). The plotted points are drawn from the <a href="https://github.com/Vedant2100/role-work-forge-artifacts/blob/main/projects/prime-intellect-continual-memory/results_summary.json">recorded measurements</a>, not invented demonstration values.</div>
+<div class="figure-caption"><strong>Figure 1.</strong> Mean accuracy on held-out examples from all classes seen so far (3 seeds). The points correspond to the <a href="https://github.com/Vedant2100/role-work-forge-artifacts/blob/main/projects/prime-intellect-continual-memory/results_summary.json">recorded measurements</a>.</div>
 </div>
 
 At the final stage, the weight-only model is still good at classifying the new digits, but its accuracy on the first task has dropped to **0%**. This is the central failure the experiment was meant to expose: a high latest-task score can coexist with almost complete loss of earlier ability.

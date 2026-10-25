@@ -7,7 +7,7 @@ permalink: /blog/institutional-memory-map/
 tags: [agents, memory, literature]
 ---
 
-[**View source or reference**](https://github.com/Vedant2100/sharedmemgov)
+[Source](https://github.com/Vedant2100/sharedmemgov)
 
 ## The question
 
