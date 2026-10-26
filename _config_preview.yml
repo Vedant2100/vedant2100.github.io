@@ -1,0 +1,3 @@
+# Preview links stay on the preview origin; production Jekyll builds ignore this file.
+url: ""
+baseurl: ""
