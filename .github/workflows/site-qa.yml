@@ -1,0 +1,18 @@
+name: Portfolio build and link coverage
+on:
+  pull_request:
+  push:
+    branches: [master]
+jobs:
+  jekyll:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+      - name: Build static site
+        run: bundle exec jekyll build --trace
+      - name: Check project/blog coverage
+        run: python3 scripts/verify_portfolio.py

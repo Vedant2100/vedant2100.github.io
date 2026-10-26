@@ -4,7 +4,7 @@
     "email": "vbork001@ucr.edu",
     "phone": "+1 951-823-2856",
     "website": "https://vedant2100.github.io",
-    "summary": "Data Scientist and Full-Stack Software Engineer with expertise in time-series forecasting, machine learning, and building scalable systems. Currently pursuing MS Computer Science at UC Riverside.",
+    "summary": "Research engineer working across AI agents, memory, safety, computer vision, and dependable machine learning. MS Computer Science, UC Riverside (December 2026).",
     "location": {
       "address": "",
       "postalCode": "92507",
@@ -52,7 +52,7 @@
       "area": "Computer Science",
       "studyType": "Master of Science",
       "startDate": "2025-09",
-      "endDate": "2027-03",
+      "endDate": "2026-12",
       "gpa": null,
       "courses": []
     },
@@ -69,58 +69,82 @@
   "skills": [
     {
       "name": "Programming Languages",
-      "keywords": ["Python", "C++", "JavaScript", "R", "SQL", "Bash", "Prolog", "AWK", "Sed", "Lex", "Yacc", "LATEX", "Neo4J CQL", "MIPS"]
+      "keywords": [
+        "Python",
+        "C++",
+        "JavaScript",
+        "R",
+        "SQL",
+        "Bash",
+        "Prolog",
+        "AWK",
+        "Sed",
+        "Lex",
+        "Yacc",
+        "LATEX",
+        "Neo4J CQL",
+        "MIPS"
+      ]
     },
     {
       "name": "Data Science & ML",
-      "keywords": ["Pandas", "NumPy", "SciPy", "PyTorch", "TensorFlow", "MATLAB", "Scikit-learn"]
+      "keywords": [
+        "Pandas",
+        "NumPy",
+        "SciPy",
+        "PyTorch",
+        "TensorFlow",
+        "MATLAB",
+        "Scikit-learn"
+      ]
     },
     {
       "name": "Data Engineering & Analytics",
-      "keywords": ["SQL", "PostgreSQL", "MongoDB", "Power BI", "Time-series forecasting", "SARIMA", "VAR", "Prophet", "LSTM", "Temporal Convolutional Networks"]
+      "keywords": [
+        "SQL",
+        "PostgreSQL",
+        "MongoDB",
+        "Power BI",
+        "Time-series forecasting",
+        "SARIMA",
+        "VAR",
+        "Prophet",
+        "LSTM",
+        "Temporal Convolutional Networks"
+      ]
     },
     {
       "name": "Web Development",
-      "keywords": ["React", "Django", "Node.js", "REST APIs", "Bootstrap"]
+      "keywords": [
+        "React",
+        "Django",
+        "Node.js",
+        "REST APIs",
+        "Bootstrap"
+      ]
     },
     {
       "name": "Tools & Platforms",
-      "keywords": ["Docker", "Git", "Azure DevOps", "Jira", "Confluence", "DataGrip", "RStudio", "Cursor", "Excel", "PowerPoint", "Word", "Slack"]
+      "keywords": [
+        "Docker",
+        "Git",
+        "Azure DevOps",
+        "Jira",
+        "Confluence",
+        "DataGrip",
+        "RStudio",
+        "Cursor",
+        "Excel",
+        "PowerPoint",
+        "Word",
+        "Slack"
+      ]
     }
   ],
   "languages": [],
   "interests": [],
   "references": [],
-  "publications": [
-    {
-      "name": "Paper Title Number 1",
-      "publisher": "Journal 1",
-      "releaseDate": "2009-10-01",
-      "website": "https://academicpages.github.io/files/paper1.pdf",
-      "summary": "This paper is about the number 1. The number 2 is left for future work."
-    },
-    {
-      "name": "Paper Title Number 2",
-      "publisher": "Journal 1",
-      "releaseDate": "2010-10-01",
-      "website": "https://academicpages.github.io/files/paper2.pdf",
-      "summary": "This paper is about the number 2. The number 3 is left for future work."
-    },
-    {
-      "name": "Paper Title Number 3",
-      "publisher": "Journal 1",
-      "releaseDate": "2015-10-01",
-      "website": "https://academicpages.github.io/files/paper3.pdf",
-      "summary": "This paper is about the number 3. The number 4 is left for future work."
-    },
-    {
-      "name": "Paper Title Number 4",
-      "publisher": "GitHub Journal of Bugs",
-      "releaseDate": "2024-02-17",
-      "website": "https://academicpages.github.io/files/paper3.pdf",
-      "summary": "This paper is about fixing template issue #693."
-    }
-  ],
+  "publications": [],
   "presentations": [
     {
       "name": "Online Competing and Development Environment",
