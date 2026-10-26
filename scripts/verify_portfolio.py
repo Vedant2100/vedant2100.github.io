@@ -43,7 +43,7 @@ for page_html in (index, project_index):
         sys.exit("Redundant link text remains in archive listings")
 if not (root / "images" / "profile.jpg").is_file():
     sys.exit("Missing real profile photograph")
-if 'src="/images/profile.jpg"' not in home or 'alt="Vedant Borkute"' not in home:
+if not re.search(r'<img\\b[^>]*src="[^"]*/images/profile\\.jpg"[^>]*alt="Vedant Borkute"', home):
     sys.exit("Homepage sidebar portrait is missing")
 if 'class="author__avatar"' not in home or 'class="home-hero"' not in home:
     sys.exit("Original sidebar and hero layout are missing")
@@ -53,7 +53,7 @@ for public_link in (
     "https://scholar.google.com/citations?user=PS_CX0AAAAAJ",
     "mailto:vbork001@ucr.edu",
 ):
-    if f'href="{public_link}"' not in home:
+    if f'href="{public_link}"' not in home and f'href="{public_link.rstrip("/")}"' not in home:
         sys.exit(f"Homepage visible link missing: {public_link}")
 for url in ("/projects/", "/blog/"):
     if url not in home:
