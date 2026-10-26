@@ -1,15 +1,4 @@
 ---
-layout: default
+layout: single
 ---
-<main id="main" class="editorial-shell" role="main">
-  {% if page.title and page.title != "" %}
-  <header class="editorial-page-heading">
-    <h1>{{ page.title }}</h1>
-    {% if page.date %}<p class="article-date"><time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%B %-d, %Y" }}</time></p>{% endif %}
-  </header>
-  {% endif %}
-  <article class="editorial-prose">{{ content }}</article>
-  {% if page.date and page.id %}
-    <p class="editorial-article-return"><a href="{{ '/blog/' | relative_url }}">← All writing</a></p>
-  {% endif %}
-</main>
+{{ content }}

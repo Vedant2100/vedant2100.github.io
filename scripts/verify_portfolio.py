@@ -44,7 +44,9 @@ for page_html in (index, project_index):
 if not (root / "images" / "profile.jpg").is_file():
     sys.exit("Missing real profile photograph")
 if 'src="/images/profile.jpg"' not in home or 'alt="Vedant Borkute"' not in home:
-    sys.exit("Homepage portrait is missing")
+    sys.exit("Homepage sidebar portrait is missing")
+if 'class="author__avatar"' not in home or 'class="home-hero"' not in home:
+    sys.exit("Original sidebar and hero layout are missing")
 for public_link in (
     "https://github.com/Vedant2100",
     "https://www.linkedin.com/in/vedant-borkute/",
