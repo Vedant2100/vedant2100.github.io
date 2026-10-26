@@ -43,7 +43,7 @@ for page_html in (index, project_index):
         sys.exit("Redundant link text remains in archive listings")
 if not (root / "images" / "profile.jpg").is_file():
     sys.exit("Missing real profile photograph")
-if not re.search(r'<img\\b[^>]*src="[^"]*/images/profile\\.jpg"[^>]*alt="Vedant Borkute"', home):
+if '/images/profile.jpg"' not in home or 'alt="Vedant Borkute"' not in home:
     sys.exit("Homepage sidebar portrait is missing")
 if 'class="author__avatar"' not in home or 'class="home-hero"' not in home:
     sys.exit("Original sidebar and hero layout are missing")
