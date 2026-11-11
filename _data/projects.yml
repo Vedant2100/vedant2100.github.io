@@ -9,54 +9,25 @@ areas:
     label: Agents & memory
   - id: safety
     label: AI safety & security
-  - id: ml
-    label: Applied ML & vision
-  - id: data
-    label: Data systems & forecasting
+  - id: applied
+    label: Applied ML & tools
 
 projects:
-  - title: Who gets to remember?
-    eyebrow: Multi-agent memory · active research
-    area: agents
-    year: 2026
-    featured: true
-    summary: >-
-      Shared-memory governance for coding-agent fleets. Separates write admission
-      (SHARE / DO_NOT_SHARE) from read exposure (EXPOSE / WITHHOLD) on SWE-ContextBench,
-      with seven preregistered paired arms.
-    result: "Negative result so far: tested memory conditions did not beat a no-memory baseline."
-    links:
-      - { label: Research note, url: /fleet-mem/ }
-      - { label: Lineage audit, url: /fleet-mem/lineage/ }
-      - { label: Pilot code, url: "https://github.com/Vedant2100/agent-fleet-memory-governance" }
-      - { label: Summary repo, url: "https://github.com/Vedant2100/coding-agent-mem" }
-
   - title: Does memory help coding agents?
-    eyebrow: Benchmark audit · paper draft
+    eyebrow: Benchmark audit · paper in prep (FORGE 2027)
     area: agents
-    year: 2026
     featured: true
     summary: >-
-      An audit of the FrontierMemory benchmark: an agent gets notes distilled from ~750
-      past runs, then solves 15 held-out tasks graded by hidden tests.
-    result: "Memory did not help by a measurable amount — and the reasons are the interesting part."
+      An audit of the FrontierMemory benchmark. A model distills notes from ~750 past agent
+      runs; an agent then solves 15 held-out tasks graded by hidden tests. Includes placebo
+      and read-first controls with a preregistered test.
+    result: "Memory 19/135 vs no memory 6/45 — +0.01 per task, p = 0.50. No measurable gain."
     links:
       - { label: Read the audit, url: "https://github.com/Vedant2100/frontiermemory-learning" }
-
-  - title: EvoMemBench held-out study
-    eyebrow: Controlled memory experiments
-    area: agents
-    year: 2026
-    summary: >-
-      Can a frozen agent turn earlier experience into gains on later ALFWorld tasks?
-      Reuses the official EvoMemBench evaluator and adds a strict train/test held-out protocol.
-    links:
-      - { label: GitHub, url: "https://github.com/Vedant2100/evo-mem-bench" }
 
   - title: SkillFalsifier
     eyebrow: Agent evaluation · hackathon
     area: agents
-    year: 2026
     featured: true
     summary: >-
       A falsification gate for self-improving agents: a generated skill must transfer to
@@ -66,10 +37,23 @@ projects:
       - { label: Write-up, url: /posts/skillfalsifier/ }
       - { label: GitHub, url: "https://github.com/Vedant2100/skillfalsifier" }
 
+  - title: Who gets to remember?
+    eyebrow: Multi-agent memory governance · active research
+    area: agents
+    featured: true
+    summary: >-
+      Shared memory for coding-agent fleets, splitting write admission (SHARE / DO_NOT_SHARE)
+      from read exposure (EXPOSE / WITHHOLD). Seven preregistered paired arms on
+      SWE-ContextBench, plus held-out memory studies on EvoMemBench (ALFWorld).
+    result: "So far, no tested memory condition beats a no-memory baseline — selection accuracy isn't enough."
+    links:
+      - { label: Research note, url: /fleet-mem/ }
+      - { label: Pilot code, url: "https://github.com/Vedant2100/agent-fleet-memory-governance" }
+      - { label: EvoMemBench study, url: "https://github.com/Vedant2100/evo-mem-bench" }
+
   - title: ReplayGate
     eyebrow: Continual learning
     area: agents
-    year: 2026
     summary: >-
       A small, reproducible experiment on real UCI handwriting data comparing online
       learning, rehearsal replay, and retrieval memory — what survives when a model learns something new.
@@ -77,62 +61,29 @@ projects:
       - { label: Interactive results, url: /replaygate/ }
       - { label: Write-up, url: /posts/continual-agent-learning/ }
 
-  - title: Terminal DreamGym
-    eyebrow: Agent training · hackathon
-    area: agents
-    year: 2026
-    summary: >-
-      A local wind tunnel for self-improving terminal agents: failures become practice
-      worlds, and recovery skills are tested on held-out and adversarial tasks.
-    links:
-      - { label: GitHub, url: "https://github.com/Vedant2100/terminal_dreamgym" }
-
-  - title: RL CodeLab
-    eyebrow: Reinforcement learning
-    area: agents
-    year: 2026
-    summary: >-
-      Can a Dueling DQN stabilize recursive self-improvement of code? A Colab experiment
-      with calibration and held-out measurements.
-    links:
-      - { label: Write-up, url: /posts/rl-codelab-rsi/ }
-
-  - title: Comparing LLM reasoning strategies
-    eyebrow: AI for navigation
-    area: agents
-    year: 2026
-    summary: >-
-      Reactive, ReAct, Chain-, Tree- and Buffer-of-Thought in MiniGrid with
-      Qwen2.5-7B-Instruct, tracking success, exploration, and token usage.
-    result: "Up to 55% success on LavaGapS6 and 20% on LavaCrossingS9N2."
-    links:
-      - { label: GitHub, url: "https://github.com/Vedant2100/w26/tree/main/CS_228" }
-
   - title: Agent governance at runtime
     eyebrow: CompFly AI · research internship
     area: safety
-    year: 2026
     featured: true
     summary: >-
-      Reproducible evaluations for prompt-injection and high-stakes tool use, lightweight
+      Reproducible evaluations for prompt injection and high-stakes tool use, lightweight
       detection pipelines, and OpenTelemetry traces across agent turns, tool calls, handoffs, and cost.
     links:
       - { label: Technical write-up, url: "https://compfly.ai/resources/blog/agentdojo" }
 
-  - title: Prompt-injection classifier audit
-    eyebrow: Safety evaluation
+  - title: Glassbox
+    eyebrow: Computer-use agents · team hackathon (H Company)
     area: safety
-    year: 2026
     summary: >-
-      An executed, deliberately limited evaluation of prompt-injection text classifiers
-      on a public benchmark under an attack-family holdout.
+      A transparency layer for computer-use agents: a live trace viewer streams each step's
+      reasoning, confidence, and screenshots, and any step marked irreversible hard-pauses
+      until a human approves it.
     links:
-      - { label: Read the audit, url: /trajectory-safety-eval/ }
+      - { label: GitHub, url: "https://github.com/LeiaAnapaula/glassbox" }
 
   - title: Concept erasure under stress
-    eyebrow: EE243 · advanced computer vision
+    eyebrow: EE243 · diffusion model safety
     area: safety
-    year: 2026
     summary: >-
       From ESD to SPEED: experiments on rank saturation, collateral damage, and paraphrase
       evasion in training-free concept erasure for text-to-image diffusion.
@@ -140,74 +91,23 @@ projects:
       - { label: Read the analysis, url: /concept-erasure-analysis/ }
       - { label: GitHub, url: "https://github.com/Vedant2100/concept-erasure-analysis" }
 
-  - title: LLM safety & mechanistic interpretability
-    eyebrow: EE269 · paper presentation
-    area: safety
-    year: 2026
-    summary: >-
-      A graduate paper presentation (Prof. Yinglun Zhu) spanning four recent papers on
-      LLM safety, mechanistic interpretability, and the bridge between them.
-    links:
-      - { label: Slides, url: "https://github.com/Vedant2100/EE269-Presentation" }
-
-  - title: Institutional memory in LLM systems
-    eyebrow: Research map
-    area: safety
-    year: 2026
-    summary: >-
-      An interactive map of shared memory, provenance, consistency, access control, and
-      forgetting in multi-agent systems.
-    links:
-      - { label: GitHub, url: "https://github.com/Vedant2100/sharedmemgov" }
-
-  - title: Image-realiser
-    eyebrow: Synthetic image detection
-    area: ml
-    year: 2026
-    summary: >-
-      A CLIP-based discriminator and convolutional purifier for detecting and suppressing
-      synthetic-image artifacts, with adversarial training, residual maps, and Grad-CAM.
-    links:
-      - { label: GitHub, url: "https://github.com/Vedant2100/image-realiser" }
-
-  - title: LM-JEPA for symbolic regression
-    eyebrow: ML4SCI
-    area: ml
-    year: 2026
-    summary: >-
-      A reduced-size LM-JEPA for scientific discovery, using binary prefix notation to keep
-      generated expressions compact and structurally valid.
-    links:
-      - { label: GitHub, url: "https://github.com/Vedant2100/symreg" }
-
-  - title: Agentic feature engineering
+  - title: Forecasting & agentic AutoML at Finarb
     eyebrow: Finarb AI · shipped to production
-    area: data
-    year: 2024
+    area: applied
     summary: >-
-      A multi-agent LLM system inside an AutoML product: it reads a natural-language ML use
-      case, researches domain factors, generates candidate features, and measures their impact.
-      I built the full pipeline — prompts, guardrails, execution, error handling, and evaluation.
-    links: []
-
-  - title: From noisy data to decisions
-    eyebrow: Finarb AI · time-series forecasting
-    area: data
-    year: 2024
-    summary: >-
-      Forecasting pipelines and AI-assisted analytics for pharmaceutical supply-chain planning.
-    result: "Cut mean absolute percentage error by 90% versus existing baselines."
+      Demand-forecasting pipelines for pharmaceutical supply chains, plus a multi-agent LLM
+      submodule that reads an ML use case, researches domain factors, and generates and
+      evaluates features — prompts, guardrails, execution, and evaluation built end to end.
+    result: "Cut forecast MAPE by 90% versus existing baselines."
     links:
       - { label: Business Wire announcement, url: "https://www.businesswire.com/news/home/20240205191469/en/Golden-State-Medical-Supply-GSMS-selects-Finarb-Analytics-Consulting-as-its-trusted-Partner-for-AI-enabled-Demand-Forecasting-for-their-generics-business" }
 
-  - title: Vegetation anomaly pipeline
-    eyebrow: CS 226 · big data
-    area: data
-    year: 2026
+  - title: AI Weekly Reads
+    eyebrow: Automated research digest
+    area: applied
     summary: >-
-      Cloud-native detection of vegetation stress preceding Mountain Pine Beetle outbreaks:
-      satellite COGs, S3/PostGIS, PySpark NDVI/NDMI, and Z-score detection.
-    result: "15–25× faster indexed queries and about 71% recall."
+      Turns a high-volume Telegram link stream (web, PDF, YouTube) into a weekly digest that
+      summarizes what each source adds to what was already known, published to Substack and EPUB.
     links:
-      - { label: GitHub, url: "https://github.com/Vedant2100/CS226-Final-Project" }
-      - { label: Report, url: "https://github.com/Vedant2100/CS226---Project-Report" }
+      - { label: Read on Substack, url: "https://aiweeklyreads.substack.com/" }
+      - { label: GitHub, url: "https://github.com/Vedant2100/ai-weekly-reads" }
