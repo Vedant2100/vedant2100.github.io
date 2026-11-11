@@ -15,3 +15,20 @@
 <meta name="theme-color" content="#ffffff"/>
 
 <!-- end custom head snippets -->
+
+<link rel="describedby" href="{{ '/llms.txt' | absolute_url }}">
+{% if page.date and page.id %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{ page.title | jsonify }},
+  "description": {{ page.description | default: page.excerpt | default: site.description | strip_html | jsonify }},
+  "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
+  "dateModified": {{ page.modified | default: page.date | date_to_xmlschema | jsonify }},
+  "mainEntityOfPage": {{ page.url | absolute_url | jsonify }},
+  "author": { "@type": "Person", "name": {{ site.name | jsonify }}, "url": {{ site.url | jsonify }} },
+  "publisher": { "@type": "Person", "name": {{ site.name | jsonify }} }
+}
+</script>
+{% endif %}

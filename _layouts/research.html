@@ -9,6 +9,7 @@
   <link rel="canonical" href="{{ page.url | absolute_url }}"/>
 </head>
 <body>
+<nav class="research-global-nav" aria-label="Primary navigation" style="padding:14px 24px;border-bottom:1px solid #ddd;background:#faf9f6;font:14px/1.5 system-ui,sans-serif;display:flex;gap:22px;flex-wrap:wrap"><a href="/">Vedant Borkute</a><a href="/projects/">Projects</a><a href="/blog/">Blog</a><a href="/cv/">Resume</a></nav>
 <div class="layout-wrapper">
   <nav class="toc-sidebar" aria-label="Article sections">
     <div class="toc-sticky">
@@ -24,9 +25,7 @@
   </nav>
   <main class="main-content">
     <header class="research-article-header">
-      <p class="research-meta">{{ page.project_label | default: 'Independent technical research' }}</p>
       <h1>{{ page.title }}</h1>
-      <p class="subtitle">{{ page.subtitle }}</p>
       <div class="research-links">
         {% if page.github_url %}<a href="{{ page.github_url }}">Executable source →</a>{% endif %}
         {% if page.demo_url %}<a href="{{ page.demo_url }}">Interactive results →</a>{% endif %}

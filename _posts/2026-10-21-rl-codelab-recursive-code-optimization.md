@@ -1,9 +1,10 @@
 ---
-layout: single
+layout: editorial
 title: "Can Dueling DQN Stabilize Self-Improving Code? A Colab Experiment"
+description: "A measured Colab experiment on program-optimization controllers, correctness constraints, and target-network stability."
 date: 2026-10-21
 permalink: /posts/rl-codelab-rsi/
-author_profile: true
+author_profile: false
 tags:
   - reinforcement-learning
   - recursive-self-improvement

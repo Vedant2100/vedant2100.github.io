@@ -5,7 +5,6 @@ permalink: /timeline/
 author_profile: true
 ---
 
-<p class="page-intro">A quarterly view of the work, study, and projects shaping my path through intelligent agents and dependable ML systems.</p>
 
 <div class="timeline" aria-label="Quarterly timeline">
   <article class="timeline__item">
