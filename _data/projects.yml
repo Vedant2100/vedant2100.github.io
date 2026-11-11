@@ -1,0 +1,113 @@
+# Single source of truth for every project on the site.
+# - featured: true  -> shows on the homepage (keep it to ~4)
+# - area            -> groups cards on /projects/ (must match an id in `areas` below)
+# - links           -> first link is the primary call to action
+# Add a project here once; the homepage and /projects/ update together.
+
+areas:
+  - id: agents
+    label: Agents & memory
+  - id: safety
+    label: AI safety & security
+  - id: applied
+    label: Applied ML & tools
+
+projects:
+  - title: Does memory help coding agents?
+    eyebrow: Benchmark audit · paper in prep (FORGE 2027)
+    area: agents
+    featured: true
+    summary: >-
+      An audit of the FrontierMemory benchmark. A model distills notes from ~750 past agent
+      runs; an agent then solves 15 held-out tasks graded by hidden tests. Includes placebo
+      and read-first controls with a preregistered test.
+    result: "Memory 19/135 vs no memory 6/45 — +0.01 per task, p = 0.50. No measurable gain."
+    links:
+      - { label: Read the audit, url: "https://github.com/Vedant2100/frontiermemory-learning" }
+
+  - title: SkillFalsifier
+    eyebrow: Agent evaluation · hackathon
+    area: agents
+    featured: true
+    summary: >-
+      A falsification gate for self-improving agents: a generated skill must transfer to
+      held-out and adversarial cases before it is promoted into the playbook.
+    links:
+      - { label: Live demo, url: /skillfalsifier/ }
+      - { label: Write-up, url: /posts/skillfalsifier/ }
+      - { label: GitHub, url: "https://github.com/Vedant2100/skillfalsifier" }
+
+  - title: Who gets to remember?
+    eyebrow: Multi-agent memory governance · active research
+    area: agents
+    featured: true
+    summary: >-
+      Shared memory for coding-agent fleets, splitting write admission (SHARE / DO_NOT_SHARE)
+      from read exposure (EXPOSE / WITHHOLD). Seven preregistered paired arms on
+      SWE-ContextBench, plus held-out memory studies on EvoMemBench (ALFWorld).
+    result: "So far, no tested memory condition beats a no-memory baseline — selection accuracy isn't enough."
+    links:
+      - { label: Research note, url: /fleet-mem/ }
+      - { label: Pilot code, url: "https://github.com/Vedant2100/agent-fleet-memory-governance" }
+      - { label: EvoMemBench study, url: "https://github.com/Vedant2100/evo-mem-bench" }
+
+  - title: ReplayGate
+    eyebrow: Continual learning
+    area: agents
+    summary: >-
+      A small, reproducible experiment on real UCI handwriting data comparing online
+      learning, rehearsal replay, and retrieval memory — what survives when a model learns something new.
+    links:
+      - { label: Interactive results, url: /replaygate/ }
+      - { label: Write-up, url: /posts/continual-agent-learning/ }
+
+  - title: Agent governance at runtime
+    eyebrow: CompFly AI · research internship
+    area: safety
+    featured: true
+    summary: >-
+      Reproducible evaluations for prompt injection and high-stakes tool use, lightweight
+      detection pipelines, and OpenTelemetry traces across agent turns, tool calls, handoffs, and cost.
+    links:
+      - { label: Technical write-up, url: "https://compfly.ai/resources/blog/agentdojo" }
+
+  - title: Glassbox
+    eyebrow: Computer-use agents · team hackathon (H Company)
+    area: safety
+    summary: >-
+      A transparency layer for computer-use agents: a live trace viewer streams each step's
+      reasoning, confidence, and screenshots, and any step marked irreversible hard-pauses
+      until a human approves it.
+    links:
+      - { label: GitHub, url: "https://github.com/LeiaAnapaula/glassbox" }
+
+  - title: Concept erasure under stress
+    eyebrow: EE243 · diffusion model safety
+    area: safety
+    summary: >-
+      From ESD to SPEED: experiments on rank saturation, collateral damage, and paraphrase
+      evasion in training-free concept erasure for text-to-image diffusion.
+    links:
+      - { label: Read the analysis, url: /concept-erasure-analysis/ }
+      - { label: GitHub, url: "https://github.com/Vedant2100/concept-erasure-analysis" }
+
+  - title: Forecasting & agentic AutoML at Finarb
+    eyebrow: Finarb AI · shipped to production
+    area: applied
+    summary: >-
+      Demand-forecasting pipelines for pharmaceutical supply chains, plus a multi-agent LLM
+      submodule that reads an ML use case, researches domain factors, and generates and
+      evaluates features — prompts, guardrails, execution, and evaluation built end to end.
+    result: "Cut forecast MAPE by 90% versus existing baselines."
+    links:
+      - { label: Business Wire announcement, url: "https://www.businesswire.com/news/home/20240205191469/en/Golden-State-Medical-Supply-GSMS-selects-Finarb-Analytics-Consulting-as-its-trusted-Partner-for-AI-enabled-Demand-Forecasting-for-their-generics-business" }
+
+  - title: AI Weekly Reads
+    eyebrow: Automated research digest
+    area: applied
+    summary: >-
+      Turns a high-volume Telegram link stream (web, PDF, YouTube) into a weekly digest that
+      summarizes what each source adds to what was already known, published to Substack and EPUB.
+    links:
+      - { label: Read on Substack, url: "https://aiweeklyreads.substack.com/" }
+      - { label: GitHub, url: "https://github.com/Vedant2100/ai-weekly-reads" }
