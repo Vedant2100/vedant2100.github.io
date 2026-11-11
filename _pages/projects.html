@@ -1,0 +1,48 @@
+---
+layout: single
+title: "Projects"
+permalink: /projects/
+author_profile: true
+redirect_from:
+  - /portfolio/
+  - /best-work/
+---
+
+<p class="page-intro">Everything in one place: research, demos, write-ups, and code. Filter by area.</p>
+
+<div class="project-filter" role="group" aria-label="Filter projects by area">
+  <button type="button" class="project-filter__btn is-active" data-filter="all" aria-pressed="true">All</button>
+  {% for a in site.data.projects.areas %}
+  <button type="button" class="project-filter__btn" data-filter="{{ a.id }}" aria-pressed="false">{{ a.label }}</button>
+  {% endfor %}
+</div>
+
+{% for a in site.data.projects.areas %}
+{% assign items = site.data.projects.projects | where: "area", a.id %}
+<section class="project-section" data-area="{{ a.id }}">
+  <h2 class="project-section__title">{{ a.label }} <span class="project-section__count">{{ items | size }}</span></h2>
+  <div class="project-grid">
+    {% for p in items %}{% include project-card.html project=p %}{% endfor %}
+  </div>
+</section>
+{% endfor %}
+
+<script>
+(function () {
+  var btns = document.querySelectorAll('.project-filter__btn');
+  var sections = document.querySelectorAll('.project-section');
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var f = b.getAttribute('data-filter');
+      btns.forEach(function (x) {
+        var on = x === b;
+        x.classList.toggle('is-active', on);
+        x.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      sections.forEach(function (s) {
+        s.hidden = !(f === 'all' || s.getAttribute('data-area') === f);
+      });
+    });
+  });
+})();
+</script>

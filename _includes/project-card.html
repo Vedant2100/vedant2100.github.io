@@ -1,0 +1,17 @@
+{% assign p = include.project %}
+{% assign primary = p.links | first %}
+<article class="project-card" data-area="{{ p.area }}">
+  <p class="project-card__eyebrow">{{ p.eyebrow }}</p>
+  <h3 class="project-card__title">
+    {% if primary %}<a href="{{ primary.url }}"{% if primary.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ p.title }}</a>{% else %}{{ p.title }}{% endif %}
+  </h3>
+  <p class="project-card__summary">{{ p.summary }}</p>
+  {% if p.result %}<p class="project-card__result">{{ p.result }}</p>{% endif %}
+  {% assign nlinks = p.links | size %}{% if nlinks > 0 %}
+  <ul class="project-card__links">
+    {% for l in p.links %}
+    <li><a href="{{ l.url }}"{% if l.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ l.label }}{% if l.url contains '://' %} ↗{% else %} →{% endif %}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</article>

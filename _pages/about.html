@@ -1,0 +1,57 @@
+---
+layout: single
+permalink: /
+title: ""
+author_profile: true
+redirect_from:
+  - /about/
+  - /about.html
+---
+
+<section class="home-hero">
+  <p class="home-hero__eyebrow">Agents · Evaluation · AI security</p>
+  <h1>Building reliable intelligent systems.</h1>
+  <p class="home-hero__lead">I’m Vedant Borkute — an MS CS student at <strong>UC Riverside</strong> (B.Tech CS, <strong>IIT Bombay</strong>) and Research Intern at <strong>CompFly AI</strong>. I study when agents should remember, what they should be trusted to do, and how to measure it honestly.</p>
+  <p class="home-hero__availability"><span class="status-dot" aria-hidden="true"></span><span>Open to full-time research engineer, ML engineer, and data scientist roles from <strong>February 2027</strong>.</span></p>
+  <div class="home-hero__actions">
+    <a class="btn btn--primary" href="/files/Vedant_Resume_09_26.pdf" download="Vedant_Resume_09_26.pdf">Download resume</a>
+    <a class="btn btn--ghost" href="/projects/">See all projects</a>
+    <a class="btn btn--ghost" href="mailto:vbork001@ucr.edu">Get in touch</a>
+  </div>
+</section>
+
+<div class="section-head">
+  <h2>Featured work</h2>
+  <a class="section-head__more" href="/projects/">All projects →</a>
+</div>
+<div class="project-grid project-grid--two">
+  {% assign featured = site.data.projects.projects | where: "featured", true %}
+  {% for p in featured %}{% include project-card.html project=p %}{% endfor %}
+</div>
+
+<div class="section-head">
+  <h2>Latest writing</h2>
+  <a class="section-head__more" href="/writing/">All posts →</a>
+</div>
+<ul class="post-list">
+  {% for post in site.posts limit:3 %}
+  <li class="post-list__item">
+    <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+    <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+    {% if post.subtitle %}<span class="post-list__sub">{{ post.subtitle }}</span>{% endif %}
+  </li>
+  {% endfor %}
+</ul>
+
+<div class="section-head">
+  <h2>Beyond research</h2>
+</div>
+<ul class="plain-list">
+  <li><strong>Treasurer</strong>, CS Graduate Student Association, UC Riverside.</li>
+  <li><strong>Reader/Grader, CS 228: Deep Learning</strong> with <a href="https://shizhouxing.github.io/" target="_blank" rel="noopener">Prof. Zhouxing Shi</a> — graded assignments and exams and contributed rubric ideas.</li>
+  <li><a href="/cs217-videos/">CS 217 GPU architecture video guide</a> — a curated, syllabus-ordered study companion.</li>
+</ul>
+
+<div class="home-footer-note">
+  <strong>Interested in collaborating?</strong> Email <a href="mailto:vbork001@ucr.edu">vbork001@ucr.edu</a>, or find me on <a href="https://www.linkedin.com/in/vedant-borkute/" target="_blank" rel="noopener">LinkedIn</a> and <a href="https://x.com/vedant275" target="_blank" rel="noopener">X</a>.
+</div>
