@@ -145,10 +145,10 @@
 }
 
 .home-feature {
-  margin: 0 0 0.35rem;
-  padding: 1.5rem 1.65rem 1.55rem;
-  border-left: 3px solid var(--global-base-color);
-  background: var(--global-code-background-color);
+  max-width: 74ch;
+  margin: 0 0 0.5rem;
+  padding: 0.55rem 0 1.7rem;
+  border-bottom: 1px solid var(--global-border-color);
 }
 
 .home-feature h3 {
@@ -325,7 +325,7 @@
   }
 
   .home-feature {
-    padding: 1.2rem 1.15rem;
+    padding: 0.25rem 0 1.35rem;
   }
 
   .home-item {
