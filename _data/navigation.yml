@@ -1,7 +1,11 @@
-# Keep the masthead focused: identity plus the downloadable resume.
+# Keep top-level navigation short; link to evidence before biography.
 main:
+  - title: "Work"
+    url: /#work
+  - title: "Writing"
+    url: /#notes
   - title: "Timeline"
     url: /timeline/
-  - title: "Download Resume"
+  - title: "Resume"
     url: /files/Vedant_Resume_09_26.pdf
     download: "Vedant_Resume_09_26.pdf"
