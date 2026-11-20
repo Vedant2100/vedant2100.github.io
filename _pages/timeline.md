@@ -33,4 +33,9 @@ author_profile: false
     <h3>Agent governance at runtime</h3>
     <p>Joined CompFly as a Research Intern, working on prompt-injection evaluation, runtime security monitoring, and governance for production agents. Also took on the CS GSA Treasurer role.</p>
   </article>
+  <article class="timeline__item">
+    <p class="timeline__period">Q4 2026</p>
+    <h3>Evaluating agents and their memory</h3>
+    <p>Audited the FrontierMemory benchmark (no measurable gain from memory, preregistered), built TrustVal on how agents handle ambiguous tool failures, and ran Provenance Bias on whether agents mistake a verified source for a true claim. Started StaleStream for CS 258, and volunteered at the International Mars Society Convention at the University of Southern California.</p>
+  </article>
 </div>
