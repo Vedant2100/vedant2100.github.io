@@ -25,9 +25,12 @@ redirect_from:
 </header>
 
 <div class="bio">
-  <p>I'm a master's student in Computer Science at the University of California, Riverside, finishing in December 2026. Before that I spent two years as a data scientist at <a href="https://finarb.ai/">Finarb AI</a>, building demand-forecasting systems for pharmaceutical supply chains, and studied Computer Science at Indian Institute of Technology Bombay.</p>
-  <p>Most of my recent work is on evaluating LLM agents: what they do when a tool fails ambiguously or a trusted-looking source is wrong, whether notes from past runs actually help them, and how they hold up against prompt injection, which I worked on as a research intern at CompFly AI this summer.</p>
+  <p>Hi! I'm Vedant. I'm a passionate explorer, currently fascinated by all things deep neural nets and the increasingly capable agents built on top of them.</p>
+  <p>I'm finishing my M.S. in Computer Science at the University of California, Riverside this Fall quarter (Dec. 2026), with a stack of coursework in different areas of ML, especially around LLMs. Nowadays, I've been finding myself increasingly drawn towards making agents more trustworthy, safe and reliable.</p>
+  <p>Before this, I did my B.Tech from Indian Institute of Technology, Bombay, India and worked in Applied ML at <a href="https://finarb.ai/">Finarb</a> on deep learning, time-series forecasting and early analytical agentic workflows.</p>
+  <p>Recently, I completed a research internship at <a href="https://compfly.ai/">CompFly AI</a> in San Francisco, where I was involved in agent safety &amp; reliability evals specifically around indirect prompt injection and high-stakes tool-use scenarios, as well as systems for efficient, safe memory for coding agents to push them towards self improvement over long horizons, which is what my current research focuses on.</p>
   <p>I'm looking for research engineer and ML engineer roles starting <strong>February 2027</strong>. The quickest way to reach me is email.</p>
+  <p>Outside of this, you'll find me on <a href="https://x.com/vedant275">Twitter (X)</a> and at beaches!</p>
 </div>
 
 <section class="home-section" id="work" aria-labelledby="work-heading">
