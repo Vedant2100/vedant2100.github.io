@@ -4,6 +4,7 @@ title: "SkillFalsifier: When an agent learns the wrong lesson"
 date: 2026-10-19
 permalink: /posts/skillfalsifier/
 author_profile: true
+sitemap: false
 tags:
   - agents
   - evaluations

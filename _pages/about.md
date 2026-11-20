@@ -38,7 +38,7 @@ redirect_from:
       <div class="entry__body">
         <h3><a href="https://github.com/Vedant2100/w26/tree/main/CS_228">LLM reasoning strategies for navigation</a></h3>
         <p>A controlled comparison of Reactive, ReAct, Chain-of-Thought, Tree-of-Thought and Buffer-of-Thought agents in MiniGrid with Qwen2.5-7B-Instruct, tracking success, exploration and token cost. Best results: 55% success on LavaGapS6 and 20% on LavaCrossingS9N2. Advised by Prof. Yinglun Zhu.</p>
-        <p class="entry__links"><a href="https://github.com/Vedant2100/w26/tree/main/CS_228">Code and report</a></p>
+        <p class="entry__links"><a href="https://github.com/Vedant2100/w26/tree/main/CS_228">Code</a></p>
       </div>
     </li>
     <li class="entry">
@@ -46,7 +46,7 @@ redirect_from:
       <div class="entry__body">
         <h3><a href="/concept-erasure-analysis/">Concept erasure under stress</a></h3>
         <p>Concept-erasure methods from ESD to SPEED, tested for rank saturation, collateral damage to nearby concepts, and evasion by paraphrased prompts in text-to-image diffusion models. Course project for EE 243.</p>
-        <p class="entry__links"><a href="/concept-erasure-analysis/">Analysis and results</a></p>
+        <p class="entry__links"><a href="/concept-erasure-analysis/">Write-up</a></p>
       </div>
     </li>
   </ol>
@@ -60,7 +60,7 @@ redirect_from:
       <div class="entry__body">
         <h3>Research intern, CompFly AI</h3>
         <p>Built a benchmark harness for agent governance controls covering AgentDojo prompt-injection attacks and ToolEmu high-stakes tool use; benchmarked small transformer classifiers for prompt-injection detection; extended OpenTelemetry tracing across agent turns, tool calls and handoffs.</p>
-        <p class="entry__links"><a href="https://compfly.ai/resources/blog/agentdojo">Technical blog post</a></p>
+        <p class="entry__links"><a href="https://compfly.ai/resources/blog/agentdojo">Blog post</a></p>
       </div>
     </li>
     <li class="entry">
@@ -89,16 +89,17 @@ redirect_from:
 <section class="home-section" id="blog" aria-labelledby="blog-heading">
   <h2 id="blog-heading">Blog</h2>
   <ul class="index index--dated">
-    {% for post in site.posts %}{% assign year = post.date | date: "%Y" | plus: 0 %}{% if year >= 2026 and post.date <= site.time and post.url != "/posts/skillfalsifier/" %}
+    {% for post in site.posts %}{% assign year = post.date | date: "%Y" | plus: 0 %}{% if year >= 2026 and post.date <= site.time and post.sitemap != false %}
     <li><time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: "%b %Y" }}</time> <a href="{{ post.url }}">{{ post.title }}</a></li>
     {% endif %}{% endfor %}
   </ul>
 </section>
 
-<section class="home-section" id="service" aria-labelledby="service-heading">
-  <h2 id="service-heading">Teaching and service</h2>
+<section class="home-section" id="misc" aria-labelledby="misc-heading">
+  <h2 id="misc-heading">Miscellaneous</h2>
   <ul class="index">
     <li>Reader for CS 228 (Deep Learning) with <a href="https://shizhouxing.github.io/">Prof. Zhouxing Shi</a>, University of California, Riverside, Winter 2026.</li>
     <li>Treasurer, Computer Science Graduate Student Association, University of California, Riverside.</li>
+    <li>Volunteer, <a href="https://convention.marssociety.org/">International Mars Society Convention 2026</a>, University of Southern California, October 2026.</li>
   </ul>
 </section>
