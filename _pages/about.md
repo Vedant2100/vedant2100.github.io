@@ -26,13 +26,37 @@ redirect_from:
 
 <div class="bio">
   <p>I'm a master's student in Computer Science at the University of California, Riverside, finishing in December 2026. Before that I spent two years as a data scientist at <a href="https://finarb.ai/">Finarb AI</a>, building demand-forecasting systems for pharmaceutical supply chains, and studied Computer Science at Indian Institute of Technology Bombay.</p>
-  <p>Most of my recent work is on LLM agents: how they reason and plan in sequential tasks, and how to evaluate them against prompt injection and risky tool calls. I worked on the second of these as a research intern at CompFly AI this summer.</p>
+  <p>Most of my recent work is on evaluating LLM agents: what they do when a tool fails ambiguously or a trusted-looking source is wrong, whether notes from past runs actually help them, and how they hold up against prompt injection, which I worked on as a research intern at CompFly AI this summer.</p>
   <p>I'm looking for research engineer and ML engineer roles starting <strong>February 2027</strong>. The quickest way to reach me is email.</p>
 </div>
 
 <section class="home-section" id="work" aria-labelledby="work-heading">
   <h2 id="work-heading">Selected work</h2>
   <ol class="entries">
+    <li class="entry">
+      <p class="entry__when">Nov 2026</p>
+      <div class="entry__body">
+        <h3><a href="https://github.com/Vedant2100/trustval">TrustVal</a></h3>
+        <p>What does an agent do when a tool call fails ambiguously, such as a payment that commits but returns a timeout? Four containerized tasks each inject one fault and grade the final database state. Across 82+ runs, Claude Haiku 4.5, Sonnet 4.6 and GPT-5.3-Codex sometimes retried without checking and created duplicates; Sonnet 4.6 reported success in four of its five failed runs.</p>
+        <p class="entry__links"><a href="https://github.com/Vedant2100/trustval">Code</a><a href="https://github.com/Vedant2100/trustval/blob/main/RESULTS.md">Results</a></p>
+      </div>
+    </li>
+    <li class="entry">
+      <p class="entry__when">Nov 2026</p>
+      <div class="entry__body">
+        <h3><a href="https://github.com/Vedant2100/proof-is-not-truth">Proof Is Not Truth</a></h3>
+        <p>Do tool-using agents treat a verified signature as proof that a claim is true? In 96 recorded episodes with Qwen2.5-7B, verified origin metadata cut false trust from 83% to 33%, but also cut legitimate task completion from 50% to 20%. Exploratory: one model, one seed.</p>
+        <p class="entry__links"><a href="https://github.com/Vedant2100/proof-is-not-truth">Code</a><a href="https://huggingface.co/spaces/Artemis2100/proof-is-not-truth">Demo</a></p>
+      </div>
+    </li>
+    <li class="entry">
+      <p class="entry__when">Oct–Nov 2026</p>
+      <div class="entry__body">
+        <h3><a href="https://github.com/Vedant2100/frontiermemory-learning">Does memory help coding agents?</a></h3>
+        <p>An audit of the FrontierMemory benchmark using its own pipeline with a local open model. Memory distilled from about 750 past runs gave no measurable gain over no memory (+0.01 tasks solved per task, p = 0.50, preregistered), with one exception: the Word2Vec task, which a placebo of the same shape did not help.</p>
+        <p class="entry__links"><a href="https://github.com/Vedant2100/frontiermemory-learning">Code</a><a href="https://github.com/Vedant2100/frontiermemory-learning/blob/main/FINAL-RESULTS.md">Results</a></p>
+      </div>
+    </li>
     <li class="entry">
       <p class="entry__when">Spring 2026</p>
       <div class="entry__body">
@@ -78,6 +102,7 @@ redirect_from:
 <section class="home-section" id="projects" aria-labelledby="projects-heading">
   <h2 id="projects-heading">Other projects</h2>
   <ul class="index">
+    <li><a href="https://github.com/Vedant2100/straightshot">Study Loop</a> <span>A tutor in a single chat that builds an interactive workspace for whatever you want to learn and rewrites its teaching playbook from your results.</span></li>
     <li><a href="https://github.com/Vedant2100/terminal_dreamgym">Terminal DreamGym</a> <span>Turns a terminal agent's failures into practice tasks, then checks recovery on held-out ones.</span></li>
     <li><a href="https://github.com/Vedant2100/CS226-Final-Project">Vegetation anomaly pipeline</a> <span>Satellite imagery, PySpark and PostGIS for early signs of pine-beetle damage (CS 226, <a href="https://github.com/Vedant2100/CS226---Project-Report">report</a>).</span></li>
     <li><a href="https://github.com/Vedant2100/image-realiser">Image-realiser</a> <span>CLIP-based detector and purifier for synthetic-image artifacts, with Grad-CAM explanations.</span></li>
