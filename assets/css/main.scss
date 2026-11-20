@@ -102,8 +102,27 @@ button:focus-visible {
     font-size: 0.94rem;
   }
 
-  .visible-links li:first-child a {
-    margin-left: 0;
+  .visible-links li:first-child {
+    font-weight: 400;
+
+    a {
+      margin-left: 0;
+    }
+  }
+
+  .visible-links li.masthead__menu-item--lg {
+    font-weight: 600;
+  }
+
+  #theme-toggle {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+
+    a {
+      margin-right: 0;
+    }
   }
 }
 
@@ -316,6 +335,11 @@ button:focus-visible {
   display: flex;
   flex-wrap: wrap;
   gap: 0.15rem 1.1rem;
+  font-size: 0.92rem;
+}
+
+.page__content .section-more {
+  margin: 1.25rem 0 0;
   font-size: 0.92rem;
 }
 
