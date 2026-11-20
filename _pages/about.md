@@ -12,9 +12,9 @@ redirect_from:
   <img class="intro__photo" src="/images/profile.jpg" alt="Vedant Borkute" width="132" height="132" fetchpriority="high">
   <div class="intro__text">
     <h1 class="intro__name">Vedant Borkute</h1>
-    <p class="intro__role">MS Computer Science, UC Riverside</p>
+    <p class="intro__role">MS Computer Science, University of California, Riverside</p>
     <p class="intro__links">
-      <a href="mailto:vbork001@ucr.edu">vbork001@ucr.edu</a>
+      <a href="mailto:vbork001@ucr.edu">Email</a>
       <a href="/files/Vedant_Borkute_Resume.pdf">CV</a>
       <a href="https://github.com/Vedant2100">GitHub</a>
       <a href="https://scholar.google.com/citations?user=PS_CX0AAAAAJ">Scholar</a>
@@ -25,7 +25,7 @@ redirect_from:
 </header>
 
 <div class="bio">
-  <p>I'm a master's student in Computer Science at UC Riverside, finishing in December 2026. Before that I spent two years as a data scientist at <a href="https://finarb.ai/">Finarb AI</a>, building demand-forecasting systems for pharmaceutical supply chains, and studied Computer Science at IIT Bombay.</p>
+  <p>I'm a master's student in Computer Science at the University of California, Riverside, finishing in December 2026. Before that I spent two years as a data scientist at <a href="https://finarb.ai/">Finarb AI</a>, building demand-forecasting systems for pharmaceutical supply chains, and studied Computer Science at Indian Institute of Technology Bombay.</p>
   <p>Most of my recent work is on LLM agents: how they reason and plan in sequential tasks, and how to evaluate them against prompt injection and risky tool calls. I worked on the second of these as a research intern at CompFly AI this summer.</p>
   <p>I'm looking for research engineer and ML engineer roles starting <strong>February 2027</strong>. The quickest way to reach me is email.</p>
 </div>
@@ -86,8 +86,8 @@ redirect_from:
   </ul>
 </section>
 
-<section class="home-section" id="writing" aria-labelledby="writing-heading">
-  <h2 id="writing-heading">Writing</h2>
+<section class="home-section" id="blog" aria-labelledby="blog-heading">
+  <h2 id="blog-heading">Blog</h2>
   <ul class="index index--dated">
     {% for post in site.posts %}{% assign year = post.date | date: "%Y" | plus: 0 %}{% if year >= 2026 and post.date <= site.time and post.url != "/posts/skillfalsifier/" %}
     <li><time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: "%b %Y" }}</time> <a href="{{ post.url }}">{{ post.title }}</a></li>
@@ -98,7 +98,7 @@ redirect_from:
 <section class="home-section" id="service" aria-labelledby="service-heading">
   <h2 id="service-heading">Teaching and service</h2>
   <ul class="index">
-    <li>Reader for CS 228 (Deep Learning) with <a href="https://shizhouxing.github.io/">Prof. Zhouxing Shi</a>, UC Riverside, Winter 2026.</li>
-    <li>Treasurer, Computer Science Graduate Student Association, UC Riverside.</li>
+    <li>Reader for CS 228 (Deep Learning) with <a href="https://shizhouxing.github.io/">Prof. Zhouxing Shi</a>, University of California, Riverside, Winter 2026.</li>
+    <li>Treasurer, Computer Science Graduate Student Association, University of California, Riverside.</li>
   </ul>
 </section>

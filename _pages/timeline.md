@@ -10,8 +10,8 @@ author_profile: false
 <div class="timeline" aria-label="Quarterly timeline">
   <article class="timeline__item">
     <p class="timeline__period">Q3 2025</p>
-    <h3>Started graduate study at UC Riverside</h3>
-    <p>Began an MS in Computer Science at UC Riverside after a B.Tech in Computer Science from IIT Bombay.</p>
+    <h3>Started graduate study at the University of California, Riverside</h3>
+    <p>Began an MS in Computer Science at the University of California, Riverside after a B.Tech in Computer Science from Indian Institute of Technology Bombay.</p>
   </article>
   <article class="timeline__item">
     <p class="timeline__period">Q4 2025</p>
