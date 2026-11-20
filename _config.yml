@@ -170,6 +170,7 @@ include:
   - _pages
   - files
 exclude:
+  - DESIGN.md
   - "*.sublime-project"
   - "*.sublime-workspace"
   - .asset-cache
@@ -252,6 +253,14 @@ defaults:
       sitemap: false
   - scope:
       path: "replaygate"
+    values:
+      sitemap: false
+  - scope:
+      path: "files/agent_alignment_2026"
+    values:
+      sitemap: false
+  - scope:
+      path: "projects"
     values:
       sitemap: false
   # _posts
