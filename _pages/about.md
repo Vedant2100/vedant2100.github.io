@@ -51,9 +51,9 @@ redirect_from:
     <li class="entry">
       <p class="entry__when">Nov 2026</p>
       <div class="entry__body">
-        <h3><a href="https://github.com/Vedant2100/proof-is-not-truth">Proof Is Not Truth</a></h3>
+        <h3><a href="https://github.com/Vedant2100/provenance-bias">Provenance Bias</a></h3>
         <p>Do tool-using agents treat a verified signature as proof that a claim is true? In 96 recorded episodes with Qwen2.5-7B, verified origin metadata cut false trust from 83% to 33%, but also cut legitimate task completion from 50% to 20%. Exploratory: one model, one seed.</p>
-        <p class="entry__links"><a href="https://github.com/Vedant2100/proof-is-not-truth">Code</a><a href="https://huggingface.co/spaces/Artemis2100/proof-is-not-truth">Demo</a></p>
+        <p class="entry__links"><a href="https://github.com/Vedant2100/provenance-bias">Code</a><a href="https://huggingface.co/spaces/Artemis2100/proof-is-not-truth">Demo</a></p>
       </div>
     </li>
     <li class="entry">
