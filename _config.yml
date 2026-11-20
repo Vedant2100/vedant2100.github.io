@@ -254,10 +254,6 @@ defaults:
       path: "replaygate"
     values:
       sitemap: false
-  - scope:
-      path: "files/Vedant_Resume_09_26.pdf"
-    values:
-      sitemap: false
   # _posts
   - scope:
       path: ""
