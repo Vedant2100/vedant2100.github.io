@@ -2,118 +2,119 @@
 layout: single
 permalink: /
 title: ""
-author_profile: true
+author_profile: false
 redirect_from:
   - /about/
   - /about.html
 ---
 
-<div class="home-hero">
-  <p class="home-hero__eyebrow">AI SYSTEMS, DATA SCIENCE, AND RESEARCH</p>
-  <h1>Building reliable intelligent systems.</h1>
-  <p class="home-hero__lead">I’m Vedant Borkute, a curious mind with a background in data science and machine learning.</p>
-  <p>Currently pursuing an <strong>MS in Computer Science at UC Riverside</strong> after earning a B.Tech in Computer Science from <strong>IIT Bombay</strong>, I work across intelligent agents, runtime security, deepfake detection, time-series forecasting, and production ML systems.</p>
-  <p class="home-hero__availability"><strong>Seeking full-time roles beginning February 2027</strong> — especially research engineer, machine learning engineer, and data scientist positions focused on intelligent agents, AI safety and security, LLM post-training, and dependable ML systems.</p>
-  <div class="home-hero__actions">
-    <a class="btn btn--primary" href="/files/Vedant_Resume_09_26.pdf" download="Vedant_Resume_09_26.pdf">Download resume</a>
-    <a class="btn" href="mailto:vbork001@ucr.edu">Get in touch</a>
+<header class="intro">
+  <img class="intro__photo" src="/images/profile.jpg" alt="Vedant Borkute" width="132" height="132" fetchpriority="high">
+  <div class="intro__text">
+    <h1 class="intro__name">Vedant Borkute</h1>
+    <p class="intro__role">MS Computer Science, UC Riverside</p>
+    <p class="intro__links">
+      <a href="mailto:vbork001@ucr.edu">vbork001@ucr.edu</a>
+      <a href="/files/Vedant_Resume_09_26.pdf">CV</a>
+      <a href="https://github.com/Vedant2100">GitHub</a>
+      <a href="https://scholar.google.com/citations?user=PS_CX0AAAAAJ">Scholar</a>
+      <a href="https://www.linkedin.com/in/vedant-borkute/">LinkedIn</a>
+      <a href="https://x.com/vedant275">X</a>
+    </p>
   </div>
+</header>
+
+<div class="bio">
+  <p>I'm a master's student in Computer Science at UC Riverside, finishing in December 2026. Before that I spent two years as a data scientist at <a href="https://finarb.ai/">Finarb AI</a>, building demand-forecasting systems for pharmaceutical supply chains, and studied Computer Science at IIT Bombay.</p>
+  <p>Most of my recent work is on LLM agents: how a group of agents should share memory, how to tell whether a skill an agent taught itself actually transfers, and how to evaluate agents against prompt injection and risky tool calls. I worked on the last of these as a research intern at CompFly AI this summer.</p>
+  <p>I'm looking for research engineer and ML engineer roles starting <strong>February 2027</strong>. The quickest way to reach me is email.</p>
 </div>
 
-## Now
+<section class="home-section" id="work" aria-labelledby="work-heading">
+  <h2 id="work-heading">Selected work</h2>
+  <ol class="entries">
+    <li class="entry">
+      <p class="entry__when">2026, ongoing</p>
+      <div class="entry__body">
+        <h3><a href="/fleet-mem/">Shared memory for coding-agent fleets</a></h3>
+        <p>When several coding agents work on one codebase, who should be allowed to write to shared memory, and does reading it actually help? A research note on the benchmark, what failed in earlier attempts, and the controlled write/read study I'm running now.</p>
+        <p class="entry__links"><a href="/fleet-mem/">Research note</a><a href="/replaygate/">ReplayGate experiment</a><a href="/posts/continual-agent-learning/">Continual-learning write-up</a></p>
+      </div>
+    </li>
+    <li class="entry">
+      <p class="entry__when">2026</p>
+      <div class="entry__body">
+        <h3><a href="/posts/skillfalsifier/">SkillFalsifier</a></h3>
+        <p>Self-improving agents tend to keep skills that only help on the examples they were learned from. SkillFalsifier promotes a generated skill only if it holds up on held-out and adversarial tasks without regressions.</p>
+        <p class="entry__links"><a href="/posts/skillfalsifier/">Write-up</a><a href="/skillfalsifier/">Interactive demo</a><a href="https://github.com/Vedant2100/skillfalsifier">Code</a></p>
+      </div>
+    </li>
+    <li class="entry">
+      <p class="entry__when">Spring 2026</p>
+      <div class="entry__body">
+        <h3><a href="https://github.com/Vedant2100/w26/tree/main/CS_228">LLM reasoning strategies for navigation</a></h3>
+        <p>A controlled comparison of Reactive, ReAct, Chain-of-Thought, Tree-of-Thought and Buffer-of-Thought agents in MiniGrid with Qwen2.5-7B-Instruct, tracking success, exploration and token cost. Best results: 55% success on LavaGapS6 and 20% on LavaCrossingS9N2. Advised by Prof. Yinglun Zhu.</p>
+        <p class="entry__links"><a href="https://github.com/Vedant2100/w26/tree/main/CS_228">Code and report</a></p>
+      </div>
+    </li>
+    <li class="entry">
+      <p class="entry__when">Spring 2026</p>
+      <div class="entry__body">
+        <h3><a href="/concept-erasure-analysis/">Concept erasure under stress</a></h3>
+        <p>Concept-erasure methods from ESD to SPEED, tested for rank saturation, collateral damage to nearby concepts, and evasion by paraphrased prompts in text-to-image diffusion models. Course project for EE 243.</p>
+        <p class="entry__links"><a href="/concept-erasure-analysis/">Analysis and results</a></p>
+      </div>
+    </li>
+  </ol>
+</section>
 
-<div class="home-grid home-grid--two">
-  <article class="home-card">
-    <p class="home-card__eyebrow">RESEARCH INTERN: CompFly AI</p>
-    <h3>Agent governance at runtime</h3>
-    <p>I’m building reproducible evaluations for prompt-injection and high-stakes tool-use scenarios, improving lightweight detection pipelines, and extending OpenTelemetry traces across agent turns, tool calls, handoffs, tokens, and cost.</p>
-    <a class="home-card__link" href="https://compfly.ai/resources/blog/agentdojo">Read the related technical write-up →</a>
-  </article>
-</div>
+<section class="home-section" id="experience" aria-labelledby="experience-heading">
+  <h2 id="experience-heading">Experience</h2>
+  <ol class="entries">
+    <li class="entry">
+      <p class="entry__when">Jun–Sep 2026</p>
+      <div class="entry__body">
+        <h3>Research intern, CompFly AI</h3>
+        <p>Built a benchmark harness for agent governance controls covering AgentDojo prompt-injection attacks and ToolEmu high-stakes tool use; benchmarked small transformer classifiers for prompt-injection detection; extended OpenTelemetry tracing across agent turns, tool calls and handoffs.</p>
+        <p class="entry__links"><a href="https://compfly.ai/resources/blog/agentdojo">Technical blog post</a></p>
+      </div>
+    </li>
+    <li class="entry">
+      <p class="entry__when">2023–2025</p>
+      <div class="entry__body">
+        <h3>Data scientist, Finarb AI</h3>
+        <p>Demand forecasting for pharmaceutical supply chains, from SARIMA and Prophet to LSTMs and TCNs, cutting MAPE by 90% against the moving-average baselines in use. Also built LLM agents for feature research and natural-language queries across databases.</p>
+        <p class="entry__links"><a href="https://www.businesswire.com/news/home/20240205191469/en/Golden-State-Medical-Supply-GSMS-selects-Finarb-Analytics-Consulting-as-its-trusted-Partner-for-AI-enabled-Demand-Forecasting-for-their-generics-business">Client announcement</a></p>
+      </div>
+    </li>
+  </ol>
+</section>
 
-## Selected work
+<section class="home-section" id="projects" aria-labelledby="projects-heading">
+  <h2 id="projects-heading">Other projects</h2>
+  <ul class="index">
+    <li><a href="https://github.com/Vedant2100/terminal_dreamgym">Terminal DreamGym</a> <span>Turns a terminal agent's failures into practice tasks, then checks recovery on held-out ones.</span></li>
+    <li><a href="https://github.com/Vedant2100/sharedmemgov">Institutional memory in LLM systems</a> <span>Interactive map of the literature on provenance, consistency, access control and forgetting.</span></li>
+    <li><a href="https://github.com/Vedant2100/CS226-Final-Project">Vegetation anomaly pipeline</a> <span>Satellite imagery, PySpark and PostGIS for early signs of pine-beetle damage (CS 226, <a href="https://github.com/Vedant2100/CS226---Project-Report">report</a>).</span></li>
+    <li><a href="https://github.com/Vedant2100/image-realiser">Image-realiser</a> <span>CLIP-based detector and purifier for synthetic-image artifacts, with Grad-CAM explanations.</span></li>
+    <li><a href="https://github.com/Vedant2100/symreg">LM-JEPA for symbolic regression</a> <span>A reduced-size LM-JEPA that writes expressions in binary prefix notation (ML4SCI screening task).</span></li>
+    <li><a href="https://github.com/Vedant2100/EE269-Presentation">LLM safety and interpretability</a> <span>Paper presentation on four recent papers for EE 269 with Prof. Yinglun Zhu.</span></li>
+  </ul>
+</section>
 
-<div class="home-grid home-grid--two">
-  <article class="home-card">
-    <p class="home-card__eyebrow">MULTI-AGENT MEMORY: ACTIVE RESEARCH</p>
-    <h3><a href="/fleet-mem/">Who gets to remember?</a></h3>
-    <p>A research note on shared memory governance for coding-agent fleets: why the benchmark matters, what failed in earlier experiments, and the controlled write/read study we are running now.</p>
-    <a class="home-card__link" href="/fleet-mem/">Research note →</a> · <a class="home-card__link" href="/posts/continual-agent-learning/">Real-data continual learning write-up →</a> · <a class="home-card__link" href="/replaygate/">ReplayGate live experiment →</a>
-  </article>
-  <article class="home-card home-card--accent">
-    <p class="home-card__eyebrow">EE243: ADVANCED COMPUTER VISION</p>
-    <h3><a href="/concept-erasure-analysis/">Concept erasure under stress</a></h3>
-    <p>A research analysis of ESD through SPEED, with experiments on rank saturation, collateral damage, and paraphrase evasion in text-to-image diffusion models.</p>
-    <a class="home-card__link" href="/concept-erasure-analysis/">Read the analysis →</a>
-  </article>
-  <article class="home-card">
-    <p class="home-card__eyebrow">TIME-SERIES FORECASTING</p>
-    <h3>From noisy data to decisions</h3>
-    <p>At <a href="https://finarb.ai/">Finarb AI</a>, I built forecasting pipelines and AI-assisted analytical workflows for pharmaceutical supply-chain planning, reducing mean absolute percentage error by 90% over existing baselines.</p>
-    <a class="home-card__link" href="https://www.businesswire.com/news/home/20240205191469/en/Golden-State-Medical-Supply-GSMS-selects-Finarb-Analytics-Consulting-as-its-trusted-Partner-for-AI-enabled-Demand-Forecasting-for-their-generics-business">Read the Business Wire announcement →</a>
-  </article>
-  <article class="home-card home-card--accent">
-    <p class="home-card__eyebrow">AI FOR NAVIGATION: LLM REASONING</p>
-    <h3><a href="https://github.com/Vedant2100/w26/tree/main/CS_228">Comparing reasoning strategies</a></h3>
-    <p>I tested Reactive, ReAct, Chain-of-Thought, Tree-of-Thought, and Buffer-of-Thought strategies in MiniGrid using Qwen2.5-7B-Instruct, tracking success, exploration, and token usage.</p>
-    <p><strong>Result:</strong> Up to 55% success on LavaGapS6 and 20% on LavaCrossingS9N2.</p>
-    <a class="home-card__link" href="https://github.com/Vedant2100/w26/tree/main/CS_228">View the project on GitHub →</a>
-  </article>
-  <article class="home-card">
-    <p class="home-card__eyebrow">EE269: PAPER PRESENTATION</p>
-    <h3><a href="https://github.com/Vedant2100/EE269-Presentation">LLM safety & mechanistic interpretability</a></h3>
-    <p>For <strong>EE 269 at UC Riverside</strong> with <strong>Professor Yinglun Zhu</strong>, I prepared a graduate-level paper presentation spanning four recent papers on LLM safety, mechanistic interpretability, and the bridge between them.</p>
-    <a class="home-card__link" href="https://github.com/Vedant2100/EE269-Presentation">View the presentation on GitHub →</a>
-  </article>
-</div>
+<section class="home-section" id="writing" aria-labelledby="writing-heading">
+  <h2 id="writing-heading">Writing</h2>
+  <ul class="index index--dated">
+    {% for post in site.posts %}{% assign year = post.date | date: "%Y" | plus: 0 %}{% if year >= 2026 and post.date <= site.time %}
+    <li><time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: "%b %Y" }}</time> <a href="{{ post.url }}">{{ post.title }}</a></li>
+    {% endif %}{% endfor %}
+  </ul>
+</section>
 
-## Open-source & experiments
-
-<div class="home-grid home-grid--two">
-  <article class="home-card home-card--accent">
-    <p class="home-card__eyebrow">AGENT EVALUATION: HACKATHON</p>
-    <h3><a href="https://github.com/Vedant2100/skillfalsifier">SkillFalsifier</a></h3>
-    <p>A falsification gate for self-improving agents: generated skills must transfer to held-out and adversarial cases before they are promoted.</p>
-    <a class="home-card__link" href="/skillfalsifier/">Try the live policy demo →</a> · <a class="home-card__link" href="/posts/skillfalsifier/">Read the technical blog →</a> · <a href="https://github.com/Vedant2100/skillfalsifier">GitHub ↗</a>
-  </article>
-  <article class="home-card">
-    <p class="home-card__eyebrow">AGENT TRAINING: HACKATHON</p>
-    <h3><a href="https://github.com/Vedant2100/terminal_dreamgym">Terminal DreamGym</a></h3>
-    <p>A local wind tunnel for self-improving terminal agents, turning failures into practice worlds and testing recovery skills against held-out and adversarial tasks.</p>
-    <a class="home-card__link" href="https://github.com/Vedant2100/terminal_dreamgym">View on GitHub →</a>
-  </article>
-  <article class="home-card">
-    <p class="home-card__eyebrow">BIG DATA: CS 226</p>
-    <h3><a href="https://github.com/Vedant2100/CS226-Final-Project">Vegetation anomaly pipeline</a></h3>
-    <p>A cloud-native pipeline for vegetation stress preceding Mountain Pine Beetle outbreaks in Boulder County. It combines satellite COGs, S3/PostGIS, PySpark NDVI/NDMI analysis, and Z-score detection; the report measures 15–25× indexed-query gains and about 71% recall.</p>
-    <a class="home-card__link" href="https://github.com/Vedant2100/CS226-Final-Project">View the project →</a>
-    <a class="home-card__link" href="https://github.com/Vedant2100/CS226---Project-Report">Read the report →</a>
-  </article>
-  <article class="home-card">
-    <p class="home-card__eyebrow">SYNTHETIC IMAGE DETECTION</p>
-    <h3><a href="https://github.com/Vedant2100/image-realiser">Image-realiser</a></h3>
-    <p>A CLIP-based discriminator and convolutional purifier for detecting and suppressing synthetic image artifacts, with adversarial training, residual maps, and Grad-CAM explanations.</p>
-    <a class="home-card__link" href="https://github.com/Vedant2100/image-realiser">View on GitHub →</a>
-  </article>
-  <article class="home-card">
-    <p class="home-card__eyebrow">ML4SCI: SYMBOLIC REGRESSION</p>
-    <h3><a href="https://github.com/Vedant2100/symreg">LM-JEPA for symbolic regression</a></h3>
-    <p>A screening implementation for scientific discovery with a reduced-size LM-JEPA, using binary prefix notation to keep generated mathematical expressions compact and structurally valid.</p>
-    <a class="home-card__link" href="https://github.com/Vedant2100/symreg">View on GitHub →</a>
-  </article>
-  <article class="home-card">
-    <p class="home-card__eyebrow">MULTI-AGENT MEMORY: RESEARCH MAP</p>
-    <h3><a href="https://github.com/Vedant2100/sharedmemgov">Institutional memory in LLM systems</a></h3>
-    <p>An interactive research map for shared memory, provenance, consistency, access control, and forgetting in multi-agent systems.</p>
-    <a class="home-card__link" href="https://github.com/Vedant2100/sharedmemgov">View on GitHub →</a>
-  </article>
-</div>
-
-## Collaboration
-
-- **CS GSA Treasurer**, UC Riverside.
-- **Reader/Grader for a graduate class, CS 228: Deep Learning**, with <a href="https://shizhouxing.github.io/">Professor Zhouxing Shi</a> — evaluated assignments and exams, gave feedback, and contributed rubric ideas.
-
-<div class="home-footer-note">
-  <strong>Interested in collaborating?</strong> Reach me at <a href="mailto:vbork001@ucr.edu">vbork001@ucr.edu</a> or connect through <a href="https://www.linkedin.com/in/vedant-borkute/">LinkedIn</a>, and <a href="https://x.com/vedant275">X</a>.
-</div>
+<section class="home-section" id="service" aria-labelledby="service-heading">
+  <h2 id="service-heading">Teaching and service</h2>
+  <ul class="index">
+    <li>Reader for CS 228 (Deep Learning) with <a href="https://shizhouxing.github.io/">Prof. Zhouxing Shi</a>, UC Riverside, Winter 2026.</li>
+    <li>Treasurer, Computer Science Graduate Student Association, UC Riverside.</li>
+  </ul>
+</section>
