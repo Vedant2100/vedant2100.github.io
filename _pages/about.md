@@ -34,6 +34,13 @@ redirect_from:
   <h2 id="work-heading">Selected work</h2>
   <ol class="entries">
     <li class="entry">
+      <p class="entry__when">Nov 2026, ongoing</p>
+      <div class="entry__body">
+        <h3>StaleStream</h3>
+        <p>Can a small model trained with RL keep a bounded external memory correct across sessions, when facts go stale, arrive out of order, conflict between sources or use aliases? A controlled environment plus GRPO-trained memory writers on Qwen3 models, for CS 258. Results are being re-run with LoRA and three seeds on a fresh test split.</p>
+      </div>
+    </li>
+    <li class="entry">
       <p class="entry__when">Nov 2026</p>
       <div class="entry__body">
         <h3><a href="https://github.com/Vedant2100/trustval">TrustVal</a></h3>
