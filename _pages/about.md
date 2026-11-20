@@ -31,7 +31,7 @@ redirect_from:
 </div>
 
 <section class="home-section" id="work" aria-labelledby="work-heading">
-  <h2 id="work-heading">Selected work</h2>
+  <h2 id="work-heading">Research</h2>
   <ol class="entries">
     <li class="entry">
       <p class="entry__when">Nov 2026, ongoing</p>
