@@ -2,7 +2,7 @@
 layout: single
 title: "Timeline"
 permalink: /timeline/
-author_profile: true
+author_profile: false
 ---
 
 <p class="page-intro">A quarterly view of the work, study, and projects shaping my path through intelligent agents and dependable ML systems.</p>

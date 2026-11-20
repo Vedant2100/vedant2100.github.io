@@ -1,7 +1,10 @@
-# Keep the masthead focused: identity plus the downloadable resume.
+# Short top-level navigation: the homepage sections, the timeline and the CV.
 main:
+  - title: "Work"
+    url: /#work
+  - title: "Writing"
+    url: /#writing
   - title: "Timeline"
     url: /timeline/
-  - title: "Download Resume"
+  - title: "CV"
     url: /files/Vedant_Resume_09_26.pdf
-    download: "Vedant_Resume_09_26.pdf"
