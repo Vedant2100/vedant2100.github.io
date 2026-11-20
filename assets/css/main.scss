@@ -474,6 +474,13 @@ button:focus-visible {
     max-width: $wrap;
     padding: 0 1.25rem;
   }
+
+  .social-icons li,
+  .social-icons a {
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.85rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
