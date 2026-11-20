@@ -1,5 +1,6 @@
 ---
 layout: research
+sitemap: false
 title: "What survives when a model learns something new?"
 subtitle: "ReplayGate: a small, reproducible experiment in continual learning, replay, and forgetting"
 project_label: "Independent research note · October 2026"
