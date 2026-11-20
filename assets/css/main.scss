@@ -97,6 +97,16 @@ button:focus-visible {
 }
 
 .greedy-nav {
+  min-height: 2.75rem;
+  max-width: $measure;
+
+  /* Pages with the profile sidebar have a wider text area. */
+  @media (min-width: 925px) {
+    body:has(#main > .sidebar) & {
+      max-width: none;
+    }
+  }
+
   a {
     margin: 0 0.85rem;
     font-size: 0.94rem;
