@@ -68,7 +68,7 @@ redirect_from:
       <div class="entry__body">
         <h3>Data scientist, Finarb AI</h3>
         <p>Demand forecasting for pharmaceutical supply chains, from SARIMA and Prophet to LSTMs and TCNs, cutting MAPE by 90% against the moving-average baselines in use. Also built LLM agents for feature research and natural-language queries across databases.</p>
-        <p class="entry__links"><a href="https://www.businesswire.com/news/home/20240205191469/en/Golden-State-Medical-Supply-GSMS-selects-Finarb-Analytics-Consulting-as-its-trusted-Partner-for-AI-enabled-Demand-Forecasting-for-their-generics-business">Client announcement</a></p>
+        <p class="entry__links"><a href="https://www.businesswire.com/news/home/20240205191469/en/Golden-State-Medical-Supply-GSMS-selects-Finarb-Analytics-Consulting-as-its-trusted-Partner-for-AI-enabled-Demand-Forecasting-for-their-generics-business">Business impact</a></p>
       </div>
     </li>
   </ol>
