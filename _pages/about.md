@@ -131,7 +131,7 @@ redirect_from:
   <h2 id="misc-heading">Miscellaneous</h2>
   <ul class="index">
     <li>Reader for CS 228 (Deep Learning) with <a href="https://shizhouxing.github.io/">Prof. Zhouxing Shi</a>, University of California, Riverside, Winter 2026.</li>
-    <li>Treasurer, Computer Science Graduate Student Association, University of California, Riverside.</li>
+    <li>Treasurer, <a href="https://www.instagram.com/ucr_csgsa/">Computer Science Graduate Student Association</a>, University of California, Riverside.</li>
     <li>Volunteer, <a href="https://convention.marssociety.org/">International Mars Society Convention 2026</a>, University of Southern California, October 2026.</li>
   </ul>
 </section>
