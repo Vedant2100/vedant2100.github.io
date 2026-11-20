@@ -102,8 +102,16 @@ button:focus-visible {
     font-size: 0.94rem;
   }
 
-  .visible-links li:first-child a {
-    margin-left: 0;
+  .visible-links li:first-child {
+    font-weight: 400;
+
+    a {
+      margin-left: 0;
+    }
+  }
+
+  .visible-links li.masthead__menu-item--lg {
+    font-weight: 600;
   }
 }
 
