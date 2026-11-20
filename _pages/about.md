@@ -26,29 +26,13 @@ redirect_from:
 
 <div class="bio">
   <p>I'm a master's student in Computer Science at UC Riverside, finishing in December 2026. Before that I spent two years as a data scientist at <a href="https://finarb.ai/">Finarb AI</a>, building demand-forecasting systems for pharmaceutical supply chains, and studied Computer Science at IIT Bombay.</p>
-  <p>Most of my recent work is on LLM agents: how a group of agents should share memory, how to tell whether a skill an agent taught itself actually transfers, and how to evaluate agents against prompt injection and risky tool calls. I worked on the last of these as a research intern at CompFly AI this summer.</p>
+  <p>Most of my recent work is on LLM agents: how they reason and plan in sequential tasks, and how to evaluate them against prompt injection and risky tool calls. I worked on the second of these as a research intern at CompFly AI this summer.</p>
   <p>I'm looking for research engineer and ML engineer roles starting <strong>February 2027</strong>. The quickest way to reach me is email.</p>
 </div>
 
 <section class="home-section" id="work" aria-labelledby="work-heading">
   <h2 id="work-heading">Selected work</h2>
   <ol class="entries">
-    <li class="entry">
-      <p class="entry__when">2026, ongoing</p>
-      <div class="entry__body">
-        <h3><a href="/fleet-mem/">Shared memory for coding-agent fleets</a></h3>
-        <p>When several coding agents work on one codebase, who should be allowed to write to shared memory, and does reading it actually help? A research note on the benchmark, what failed in earlier attempts, and the controlled write/read study I'm running now.</p>
-        <p class="entry__links"><a href="/fleet-mem/">Research note</a><a href="/replaygate/">ReplayGate experiment</a><a href="/posts/continual-agent-learning/">Continual-learning write-up</a></p>
-      </div>
-    </li>
-    <li class="entry">
-      <p class="entry__when">2026</p>
-      <div class="entry__body">
-        <h3><a href="/posts/skillfalsifier/">SkillFalsifier</a></h3>
-        <p>Self-improving agents tend to keep skills that only help on the examples they were learned from. SkillFalsifier promotes a generated skill only if it holds up on held-out and adversarial tasks without regressions.</p>
-        <p class="entry__links"><a href="/posts/skillfalsifier/">Write-up</a><a href="/skillfalsifier/">Interactive demo</a><a href="https://github.com/Vedant2100/skillfalsifier">Code</a></p>
-      </div>
-    </li>
     <li class="entry">
       <p class="entry__when">Spring 2026</p>
       <div class="entry__body">
@@ -94,7 +78,6 @@ redirect_from:
   <h2 id="projects-heading">Other projects</h2>
   <ul class="index">
     <li><a href="https://github.com/Vedant2100/terminal_dreamgym">Terminal DreamGym</a> <span>Turns a terminal agent's failures into practice tasks, then checks recovery on held-out ones.</span></li>
-    <li><a href="https://github.com/Vedant2100/sharedmemgov">Institutional memory in LLM systems</a> <span>Interactive map of the literature on provenance, consistency, access control and forgetting.</span></li>
     <li><a href="https://github.com/Vedant2100/CS226-Final-Project">Vegetation anomaly pipeline</a> <span>Satellite imagery, PySpark and PostGIS for early signs of pine-beetle damage (CS 226, <a href="https://github.com/Vedant2100/CS226---Project-Report">report</a>).</span></li>
     <li><a href="https://github.com/Vedant2100/image-realiser">Image-realiser</a> <span>CLIP-based detector and purifier for synthetic-image artifacts, with Grad-CAM explanations.</span></li>
     <li><a href="https://github.com/Vedant2100/symreg">LM-JEPA for symbolic regression</a> <span>A reduced-size LM-JEPA that writes expressions in binary prefix notation (ML4SCI screening task).</span></li>
@@ -105,7 +88,7 @@ redirect_from:
 <section class="home-section" id="writing" aria-labelledby="writing-heading">
   <h2 id="writing-heading">Writing</h2>
   <ul class="index index--dated">
-    {% for post in site.posts %}{% assign year = post.date | date: "%Y" | plus: 0 %}{% if year >= 2026 and post.date <= site.time %}
+    {% for post in site.posts %}{% assign year = post.date | date: "%Y" | plus: 0 %}{% if year >= 2026 and post.date <= site.time and post.url != "/posts/skillfalsifier/" %}
     <li><time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: "%b %Y" }}</time> <a href="{{ post.url }}">{{ post.title }}</a></li>
     {% endif %}{% endfor %}
   </ul>
