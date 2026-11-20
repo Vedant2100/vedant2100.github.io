@@ -113,6 +113,17 @@ button:focus-visible {
   .visible-links li.masthead__menu-item--lg {
     font-weight: 600;
   }
+
+  #theme-toggle {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+
+    a {
+      margin-right: 0;
+    }
+  }
 }
 
 .masthead__menu-item--lg {
@@ -324,6 +335,11 @@ button:focus-visible {
   display: flex;
   flex-wrap: wrap;
   gap: 0.15rem 1.1rem;
+  font-size: 0.92rem;
+}
+
+.page__content .section-more {
+  margin: 1.25rem 0 0;
   font-size: 0.92rem;
 }
 

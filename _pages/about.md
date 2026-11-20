@@ -15,6 +15,7 @@ redirect_from:
     <p class="intro__role">MS Computer Science, UC Riverside</p>
     <p class="intro__links">
       <a href="mailto:vbork001@ucr.edu">vbork001@ucr.edu</a>
+      <a href="/files/Vedant_Borkute_Resume.pdf">CV</a>
       <a href="https://github.com/Vedant2100">GitHub</a>
       <a href="https://scholar.google.com/citations?user=PS_CX0AAAAAJ">Scholar</a>
       <a href="https://www.linkedin.com/in/vedant-borkute/">LinkedIn</a>
@@ -71,6 +72,7 @@ redirect_from:
       </div>
     </li>
   </ol>
+  <p class="section-more"><a href="/timeline/">Full timeline</a></p>
 </section>
 
 <section class="home-section" id="projects" aria-labelledby="projects-heading">
