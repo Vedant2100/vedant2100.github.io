@@ -62,9 +62,9 @@ redirect_from:
     <li class="entry">
       <p class="entry__when">Oct–Nov 2026</p>
       <div class="entry__body">
-        <h3><a href="https://github.com/Vedant2100/frontiermemory-learning">Does memory help coding agents?</a></h3>
+        <h3><a href="/frontiermemory-analysis/">Why agent memory barely helped</a></h3>
         <p>An audit of the FrontierMemory benchmark using its own pipeline with a local open model. Memory distilled from about 750 past runs gave no measurable gain over no memory (+0.01 tasks solved per task, p = 0.50, preregistered), with one exception: the Word2Vec task, which a placebo of the same shape did not help.</p>
-        <p class="entry__links"><a href="https://github.com/Vedant2100/frontiermemory-learning">Code</a><a href="https://github.com/Vedant2100/frontiermemory-learning/blob/main/FINAL-RESULTS.md">Results</a></p>
+        <p class="entry__links"><a href="/frontiermemory-analysis/">Visual analysis</a><a href="https://github.com/Vedant2100/frontiermemory-learning">Code</a><a href="https://github.com/Vedant2100/frontiermemory-learning/blob/main/FINAL-RESULTS.md">Results</a></p>
       </div>
     </li>
     <li class="entry">
